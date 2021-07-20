@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "es2019",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "../../dist",
+    "typeRoots": ["@types", "../../node_modules/@types"],
+    "types": ["react", "jest"],
+    "baseUrl": "../../",
+    "paths": {
+      "src/": ["src/*"]
+    }
+  },
+  "include": ["../../src/server", "../../src/commons"],
+  "exclude": [
+    "**/__mocks__",
+    "**/*.test.ts",
+    "dist",
+    "node_modules",
+    "../client/*",
+    "../client/**/*"
+  ]
+}

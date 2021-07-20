@@ -1,0 +1,305 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Giving Side",
+    "description": "These are the API definitions for Giving Side",
+    "version": "0.1.0",
+    "contact": {
+      "name": "johnrey",
+      "email": "johnrey@symph.co"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001/api/1.0",
+      "description": "Local"
+    }
+  ],
+  "tags": [
+    {
+      "name": "developers",
+      "description": "Operations available to regular developers"
+    }
+  ],
+  "paths": {
+    "/todo/": {
+      "get": {
+        "tags": [
+          "developers"
+        ],
+        "summary": "gets all todo items",
+        "description": "By passing in the appropriate options, you can search for todos in the system",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "json"
+        ],
+        "responses": {
+          "200": {
+            "description": "results from todo items",
+            "schema": {
+              "type": "array"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "developers"
+        ],
+        "summary": "creates a todo item",
+        "description": "By passing in the appropiate options, you can create a todo item",
+        "produces": [
+          "json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created todo item",
+            "required": true,
+            "example": {
+              "description": "This is a description"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "created todo item",
+            "schema": {
+              "type": "json"
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/todo/{todoId}": {
+      "put": {
+        "tags": [
+          "developers"
+        ],
+        "description": "Returns an updated todo item",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": "application/json",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "todoId",
+            "in": "path",
+            "description": "todo item that needs to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated todo item",
+            "required": "true",
+            "schema": {
+              "$ref": "#/components/schemas/Todo"
+            }
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "developers"
+        ],
+        "summary": "Deletes a Todo item",
+        "description": "",
+        "operationId": "deleteTodo",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "todoId",
+            "in": "path",
+            "description": "Todo id to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Todo not found"
+          }
+        }
+      }
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/api/1.0/todo",
+  "components": {
+    "schemas": {
+      "Todo": {
+        "type": "object",
+        "required": [
+          "id",
+          "isDone",
+          "dateCreated",
+          "dateUpdated"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "isDone": {
+            "type": "boolean",
+            "example": "true"
+          },
+          "dateCreated": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2020-12-12T09:12:33.001+0000"
+          },
+          "dateUpdated": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2020-12-12T09:12:33.001+0000"
+          },
+          "description": {
+            "type": "string",
+            "example": "This is a description"
+          }
+        }
+      },
+      "GeneratedId": {
+        "type": "integer",
+        "format": "int64",
+        "example": 1
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "example": "ABC1123"
+              },
+              "message": {
+                "type": "string",
+                "example": "Short error message here"
+              },
+              "description": {
+                "type": "string",
+                "example": "Longer error description here"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ]
+          }
+        },
+        "required": [
+          "error"
+        ]
+      }
+    },
+    "responses": {
+      "BadRequestError": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "error": {
+                "code": "ABC1123",
+                "message": "Invalid parameters",
+                "description": "Invalid parameters"
+              }
+            }
+          }
+        }
+      },
+      "NotFoundError": {
+        "description": "Resource is not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "error": {
+                "code": "ABC1123",
+                "message": "Resource is not found",
+                "description": "Resource is not found"
+              }
+            }
+          }
+        }
+      },
+      "BadGatewayError": {
+        "description": "Bad Gateway",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "error": {
+                "code": "ABC1123",
+                "message": "Bad Gateway",
+                "description": "Bad Gateway"
+              }
+            }
+          }
+        }
+      },
+      "UnexpectedError": {
+        "description": "Unexpected error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

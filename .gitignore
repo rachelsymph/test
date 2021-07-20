@@ -1,0 +1,27 @@
+coverage
+dist
+build
+node_modules
+npm-debug.log
+yarn-error.log
+yarn.lock
+
+# ide
+.idea
+
+# Mac General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# umi
+.umi
+.umi-production
+
+# jslingui
+src/locales/_build
+src/locales/**/*.js
+
+.eslintcache
+src/server/.env
+.env
