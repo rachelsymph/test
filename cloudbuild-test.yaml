@@ -17,7 +17,7 @@ steps:
   waitFor: ['install']
 
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['app', 'deploy', 'app.yaml', 'index.yaml', 'cron.yaml']
+  args: ['app', 'deploy', 'app.yaml', 'index.yaml', 'cron.yaml', '--version=$_VERSION_NAME', '--no-promote']
   waitFor: ['build']
 
 timeout: 1200s
