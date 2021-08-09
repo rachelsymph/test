@@ -15,7 +15,7 @@ async function getDynamicOptions(
   next: NextFunction
 ) {
   try {
-    const products = await findDynamicOptions({
+    const { results: products } = await findDynamicOptions({
       field: req.query.field as FormField,
     });
 

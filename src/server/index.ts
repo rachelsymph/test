@@ -1,23 +1,37 @@
 /* global process */
 
+import 'reflect-metadata';
+import fs from 'fs';
 import http from 'http';
+import https from 'https';
 
 import makeApp from './app';
 import config from './config/config';
 import { logger } from './libs/Logger';
+import { createLegacyDbConnection } from './utils/DbConnectionUtils';
 
 let server: any;
 
 (async function () {
+  await createLegacyDbConnection();
+
   const app = await makeApp();
 
-  server = http.createServer(app);
+  if (config.HTTPS === 'true') {
+    const key = fs.readFileSync('localhost-key.pem', 'utf8');
+    const cert = fs.readFileSync('localhost.pem', 'utf8');
+    const credentials = { key, cert };
+
+    server = https.createServer(credentials, app);
+  } else {
+    server = http.createServer(app);
+  }
 
   server.listen(config.PORT, () => {
     logger.debug('Initializing server');
     logger.debug('Migrating database');
     logger.debug(
-      `Server ready to serve traffic http://${config.HOST}:${config.PORT}`
+      `Server ready to serve traffic https://${config.HOST}:${config.PORT}`
     );
   });
 })();
@@ -37,6 +51,7 @@ function handleUnhandledRejection(reason?: any | null) {
   };
 
   logger.error(error.message, 'Unhandled Rejection');
+
   gracefullyExitProcess();
 }
 

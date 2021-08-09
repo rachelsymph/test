@@ -1,15 +1,19 @@
-import { Query } from '@google-cloud/datastore';
+import { Datastore, Query } from '@google-cloud/datastore';
+
+import { FindResponse } from 'src/commons/types/Response.type';
 
 import datastore from '../libs/DatastoreClient';
 
 type Params<T> = {
-  key: string | any;
   data: T;
+  excludeFromIndexes?: string[];
+  key: string | any;
 };
 
-function batchUpdate<T>(params: Params<T>[]) {
+function batchUpsert<T>(params: Params<T>[]) {
   const newParams = params.map((param) => ({
     data: param.data,
+    excludeFromIndexes: param.excludeFromIndexes,
     key: datastore.key(param.key),
   }));
 
@@ -22,10 +26,9 @@ function batchFindByKeys(keys: Array<string | any>) {
   return datastore.get(newParams);
 }
 
-async function find<T>(query: Query): Promise<T[]> {
-  const [entities] = await datastore.runQuery(query);
-
-  return Promise.all(
+async function find<T>(query: Query): Promise<FindResponse<T>> {
+  const [entities, info] = await datastore.runQuery(query);
+  const entitiesWithId = await Promise.all(
     entities.map(async (entity) => {
       const id = entity[datastore.KEY].id;
 
@@ -35,6 +38,17 @@ async function find<T>(query: Query): Promise<T[]> {
       };
     })
   );
+
+  let cursor = null;
+
+  if (info.moreResults !== Datastore.NO_MORE_RESULTS) {
+    cursor = info.endCursor;
+  }
+
+  return {
+    cursor,
+    results: entitiesWithId,
+  };
 }
 
 function create<T>(params: Params<T>) {
@@ -55,4 +69,4 @@ function deleteEntity(key: string | any) {
   return datastore.delete(datastore.key(key));
 }
 
-export { batchFindByKeys, batchUpdate, create, deleteEntity, find, update };
+export { batchFindByKeys, batchUpsert, create, deleteEntity, find, update };

@@ -3,3 +3,14 @@ indexes:
     properties:
       - name: isDeleted
       - name: keywords
+
+  - kind: Give
+    properties:
+      - name: isDeleted
+      - name: legacyId
+
+  - kind: Give
+    properties:
+      - name: isDeleted
+      - name: dateCreated
+        direction: desc
