@@ -41,9 +41,4 @@ export default createGlobalStyle<ThemeProps>`
     font-size: ${(props) => props.theme.fontSizes.h5};
     line-height: ${rem('24px')};
   }
-
-  h6 {
-    font-size: ${(props) => props.theme.fontSizes.h6};
-    line-height: ${rem('22px')};
-  }
 `;

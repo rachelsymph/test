@@ -18,7 +18,7 @@ export const LayoutStyle = createGlobalStyle<ThemeProps>`
   }
 
   .trigger:hover {
-    color: ${(props) => props.theme.colors.primary1};
+    color: ${(props) => props.theme.colors.teal2};
   }
 
   .site-layout .site-layout-background {

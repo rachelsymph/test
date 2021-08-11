@@ -2,30 +2,27 @@
 import { rem } from 'polished';
 
 const colors = {
-  primary1: '#1890ff',
+  // brand colors
+  teal1: '#2FECFC',
+  teal2: '#0ABCC7',
+  royalBlue: '#193B4E',
 
-  // gray
-  dark_45: '#F9F9F9',
-  dark_50: '#E5E5E5',
-  dark_100: '#CCCCCC',
-  dark_200: '#B2B2B2',
-  dark_300: '#999999',
-  dark_400: '#808080',
-  dark_500: '#666666',
-  dark_600: '#4C4C4C',
-  dark_700: '#333333',
-  dark_900: '#000000',
+  // primary colors
+  gray1: '#262626',
+  gray2: '#71747D',
+  gray3: '#F0F0F0',
+  gray4: '#FFFFFF',
+  gray5: '#11182C',
 
+  // secondary colors
+  blueGray: '#F8FBFD',
 
-  success: '#28B025',
-  error: '#EB5757',
-
-  // extras
-  white: '#FFFFFF',
+  // background
+  white: '#F5F5F5',
 };
 
 const fontFamilies = {
-  regular: "'Rubik', sans-serif",
+  regular: "'Spartan', sans-serif",
 };
 
 const fontWeights = {
@@ -37,16 +34,17 @@ const fontWeights = {
 };
 
 const fontSizes = {
-  h1: rem('38px'),
-  h2: rem('30px'),
-  h3: rem('24px'),
-  h4: rem('18px'),
-  h5: rem('16px'),
-  h6: rem('14px'),
-  body1: rem('14px'),
-  body2: rem('12px'),
+  h1: rem('72px'),
+  h2: rem('64px'),
+  h3: rem('48px'),
+  h4: rem('36px'),
+  h5: rem('30px'),
+  subtitle1: rem('24px'),
+  body: rem('18px'),
   buttonSize: rem('14px'),
-  caption: rem('12px'),
+  overline: rem('14px'),
+  caption1: rem('16px'),
+  caption2: rem('12px'),
 };
 
 const shadows = {
