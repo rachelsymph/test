@@ -4,4 +4,5 @@ export type DefaultProperties = {
   dateUpdated: Date;
   isDeleted: boolean;
   keywords: string[];
+  legacyId?: string | null;
 };

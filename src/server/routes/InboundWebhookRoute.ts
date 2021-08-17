@@ -6,6 +6,21 @@ import { InboundEmailResponse } from 'src/server/types/InboundEmail.type';
 
 const router = Router();
 
+async function test(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { results: customRegexes } = await findCustomRegexes({});
+
+    const result = parseEmail({
+      haystack: '',
+      regexes: customRegexes,
+    });
+
+    return res.send(result);
+  } catch (error) {
+    next(error)
+  }
+}
+
 async function receiveInboundEmailRoute(req: Request, res: Response, next: NextFunction) {
   try {
     const response = req.body as InboundEmailResponse;
@@ -55,6 +70,8 @@ async function receiveInboundEmailRoute(req: Request, res: Response, next: NextF
     next(e);
   }
 }
+
+router.route('/').get(test);
 router.route('/').post(receiveInboundEmailRoute);
 
 export default router;

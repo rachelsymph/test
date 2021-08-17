@@ -4,7 +4,6 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-
 @Entity({ name: 'platform_amount_regexes' })
 export default class PlatformAmountRegex {
   @PrimaryGeneratedColumn()

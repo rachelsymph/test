@@ -18,7 +18,7 @@ export default class Recipient {
   @Column({ length: 150 })
   name: string;
 
-  @Column({ length: 250 })
+  @Column({ length: 350 })
   website: string;
 
   @Column({ length: 100 })

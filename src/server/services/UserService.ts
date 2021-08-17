@@ -1,7 +1,7 @@
 import { User } from 'src/commons/types/User.type';
 import { generateKeywords } from 'src/commons/utils/StringUtils';
 import {
-  batchUpdateUsers as batchUpdateUsersModel,
+  batchUpsertUsers as batchUpsertUsersModel,
   createUser as createUserModel,
   updateUser as updateUserModel,
 } from 'src/server/models/UserModel';
@@ -30,8 +30,8 @@ export async function updateUser(params: Partial<User>) {
   } as unknown) as User);
 }
 
-export async function batchUpdateUsers(params: Partial<User>[]) {
+export async function batchUpsertUsers(params: Partial<User>[]) {
   const cleanedParams = params.map(cleanUserData);
 
-  return batchUpdateUsersModel(cleanedParams);
+  return batchUpsertUsersModel(cleanedParams);
 }

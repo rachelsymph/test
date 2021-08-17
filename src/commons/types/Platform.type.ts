@@ -6,7 +6,6 @@ export type Platform = {
   gives?: Give[];
   isSyncing: boolean;
   lastSyncDate?: Date | null;
-  legacyId?: string;
   name?: string | null;
   platformCompanyTypes?: string[] | null;
   platformStatusTypes?: string[] | null;

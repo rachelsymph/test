@@ -12,7 +12,6 @@ import Donor from './Donor';
 import Platform from './Platform';
 import Recipient from './Recipient';
 
-
 @Entity({ name: 'gives' })
 export default class Give {
   @PrimaryGeneratedColumn()

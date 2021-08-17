@@ -21,7 +21,6 @@ export type Give = {
   htmlBody?: string | null;
   isFeatured?: boolean | null;
   isRecurring?: boolean | null;
-  legacyId?: string;
   platform?: Platform;
   platformId?: string | null;
   platformLegacyId?: string | null;

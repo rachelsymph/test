@@ -16,7 +16,6 @@ export type Recipient = {
   lastSignInAt?: Date | null;
   lastSignInIp?: string | null;
   lastSyncDate?: Date | null;
-  legacyId?: string;
   name?: string | null;
   ogDescription?: string | null;
   ogTitle?: string | null;

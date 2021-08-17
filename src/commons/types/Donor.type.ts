@@ -19,7 +19,6 @@ export type Donor = {
   isAlternateEmail?: boolean;
   lastSignInAt?: Date | null;
   lastSignInIp?: string | null;
-  legacyId?: string | null;
   movementBgColor?: string | null;
   name?: string | null;
   occupation?: string | null;

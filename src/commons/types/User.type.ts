@@ -4,16 +4,21 @@ import { UserStatus } from '../constants/status';
 import { DefaultProperties } from './Common.type';
 
 export type User = {
-  dateCreated: Date;
-  dateUpdated: Date;
+  currentSignInAt?: Date | null;
+  currentSignInIp?: string | null;
   email: string;
+  legacyEncryptedPassword?: string | null;
   firstName: string;
-  isDeleted: boolean;
   lastName: string;
+  lastSignInAt?: Date | null;
+  lastSignInIp?: string | null;
   name: string;
   password: string;
-  phone: string;
+  rememberCreatedAt?: Date | null;
+  resetPasswordSentAt?: Date | null;
+  resetPasswordToken?: string | null;
   role: UserRole;
+  signInCount?: number | null;
   status: UserStatus;
   username: string;
 } & DefaultProperties;

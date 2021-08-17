@@ -1,100 +1,192 @@
 import { NextFunction, Request, Response, Router } from 'express';
 
 import {
+  migrateAlternateEmails,
+  migrateDonorEthnicities,
+  migrateDonorGenders,
+  migrateDonorGroups,
+  migrateDonorLinkedAccounts,
   migrateDonors,
+  migrateDonorStats,
+  migrateEthnicities,
+  migrateFriendlyIdSlugs,
+  migrateGenders,
   migrateGives,
+  migrateGiveTags,
+  migrateGoals,
+  migrateGroupGives,
+  migrateGroupRecipients,
+  migrateGroups,
+  migrateImages,
+  migrateMoments,
+  migrateOrganizations,
+  migratePageRecipients,
+  migratePages,
+  migratePersonalPractices,
+  migratePersonalReflections,
   migratePlatforms,
+  migratePlatformStats,
   migrateRecipients,
+  migrateRecipientStats,
   migrateRegexes,
+  migrateTags,
 } from 'src/server/services/MigrationService';
+
+type MakeMigrationRouteParams = {
+  migrateServiceFn: Function;
+  tableDisplayName: string;
+};
 
 const router = Router();
 
-async function migrateDonorsRoute(req: Request, res: Response, next: NextFunction) {
-  try {
+
+function makeMigrationRoute(params: MakeMigrationRouteParams) {
+  const { migrateServiceFn, tableDisplayName } = params;
+
+  async function migrateRoute(req: Request, res: Response, next: NextFunction) {
     const { page = 1 } = req.body;
-    const { count } = await migrateDonors(page);
 
-    return res.json({
-      message: `Successfully migrated ${count} donors for page ${page}.`,
-    });
-  } catch (e) {
-    req.log.error('Failed to migrate donors', e);
+    try {
+      const { count } = await migrateServiceFn(page);
 
-    next(e);
-  }
-}
+      if (count > 0) {
+        // TODO: Create task
+      }
 
-async function migrateGivesRoute(req: Request, res: Response, next: NextFunction) {
-  try {
-    const { page = 1 } = req.body;
-    const { count } = await migrateGives(page);
+      return res.json({
+        message: `Successfully migrated ${count} ${tableDisplayName} for page ${page}.`,
+      });
+    } catch (e) {
+      req.log.error(`Failed to migrate ${tableDisplayName} for page ${page}.`, e);
 
-    if (count > 0) {
-      // TODO: Create task since there are 14,530 gives
+      next(e);
     }
-
-    return res.json({
-      message: `Successfully migrated ${count} gives for page ${page}.`,
-    });
-  } catch (e) {
-    req.log.error('Failed to migrate gives', e);
-
-    next(e);
   }
+
+  return migrateRoute;
 }
 
-async function migratePlatformsRoute(req: Request, res: Response, next: NextFunction) {
-  try {
-    const { count } = await migratePlatforms();
+const MIGRATION_ROUTE_CONFIG = {
+  '/alternate-emails': {
+    tableDisplayName: 'Alternate Emails',
+    migrateServiceFn: migrateAlternateEmails,
+  },
+  '/donor-ethnicities': {
+    tableDisplayName: 'Donor Ethnicities',
+    migrateServiceFn: migrateDonorEthnicities,
+  },
+  '/donor-genders': {
+    tableDisplayName: 'Donor Genders',
+    migrateServiceFn: migrateDonorGenders,
+  },
+  '/donor-groups': {
+    tableDisplayName: 'Donor Groups',
+    migrateServiceFn: migrateDonorGroups,
+  },
+  '/donor-linked-accounts': {
+    tableDisplayName: 'Donor Linked Accounts',
+    migrateServiceFn: migrateDonorLinkedAccounts,
+  },
+  '/donors': {
+    tableDisplayName: 'Donors',
+    migrateServiceFn: migrateDonors,
+  },
+  '/donor-stats': {
+    tableDisplayName: 'Donor Stats',
+    migrateServiceFn: migrateDonorStats,
+  },
+  '/ethnicities': {
+    tableDisplayName: 'Ethnicities',
+    migrateServiceFn: migrateEthnicities,
+  },
+  '/friendly-id-slugs': {
+    tableDisplayName: 'Friendly ID Slugs',
+    migrateServiceFn: migrateFriendlyIdSlugs,
+  },
+  '/genders': {
+    tableDisplayName: 'Genders',
+    migrateServiceFn: migrateGenders,
+  },
+  '/gives': {
+    tableDisplayName: 'Gives',
+    migrateServiceFn: migrateGives,
+  },
+  '/give-tags': {
+    tableDisplayName: 'Give Tags',
+    migrateServiceFn: migrateGiveTags,
+  },
+  '/goals': {
+    tableDisplayName: 'Goals',
+    migrateServiceFn: migrateGoals,
+  },
+  '/group-gives': {
+    tableDisplayName: 'Group Gives',
+    migrateServiceFn: migrateGroupGives,
+  },
+  '/group-recipients': {
+    tableDisplayName: 'Group Recipients',
+    migrateServiceFn: migrateGroupRecipients,
+  },
+  '/groups': {
+    tableDisplayName: 'Groups',
+    migrateServiceFn: migrateGroups,
+  },
+  '/images': {
+    tableDisplayName: 'Images',
+    migrateServiceFn: migrateImages,
+  },
+  '/moments': {
+    tableDisplayName: 'Moments',
+    migrateServiceFn: migrateMoments,
+  },
+  '/organizations': {
+    tableDisplayName: 'Organizations',
+    migrateServiceFn: migrateOrganizations,
+  },
+  '/page-recipients': {
+    tableDisplayName: 'Page Recipients',
+    migrateServiceFn: migratePageRecipients,
+  },
+  '/pages': {
+    tableDisplayName: 'Pages',
+    migrateServiceFn: migratePages,
+  },
+  '/personal-practices': {
+    tableDisplayName: 'Personal Practices',
+    migrateServiceFn: migratePersonalPractices,
+  },
+  '/personal-reflections': {
+    tableDisplayName: 'Personal Reflections',
+    migrateServiceFn: migratePersonalReflections,
+  },
+  '/platforms': {
+    tableDisplayName: 'Platforms',
+    migrateServiceFn: migratePlatforms,
+  },
+  '/platform-stats': {
+    tableDisplayName: 'Platform Stats',
+    migrateServiceFn: migratePlatformStats,
+  },
+  '/recipients': {
+    tableDisplayName: 'Recipients',
+    migrateServiceFn: migrateRecipients,
+  },
+  '/recipient-stats': {
+    tableDisplayName: 'Recipient Stats',
+    migrateServiceFn: migrateRecipientStats,
+  },
+  '/regexes': {
+    tableDisplayName: 'Regexes',
+    migrateServiceFn: migrateRegexes,
+  },
+  '/tags': {
+    tableDisplayName: 'Tags',
+    migrateServiceFn: migrateTags,
+  },
+};
 
-    return res.json({
-      message: `Successfully migrated ${count} platforms.`,
-    });
-  } catch (e) {
-    req.log.error('Failed to migrate platforms', e);
-
-    next(e);
-  }
-}
-
-async function migrateRecipientsRoute(req: Request, res: Response, next: NextFunction) {
-  try {
-    const { page = 1 } = req.body;
-    const { count } = await migrateRecipients(page);
-
-    if (count > 0) {
-      // TODO: Create task since there are 4,578 recipients
-    }
-
-    return res.json({
-      message: `Successfully migrated ${count} recipients.`,
-    });
-  } catch (e) {
-    req.log.error('Failed to migrate recipients', e);
-
-    next(e);
-  }
-}
-
-async function migrateRegexesRoute(req: Request, res: Response, next: NextFunction) {
-  try {
-    const { count } = await migrateRegexes();
-
-    return res.json({
-      message: `Successfully migrated ${count} regexes.`,
-    });
-  } catch (e) {
-    req.log.error('Failed to migrate regexes', e);
-
-    next(e);
-  }
-}
-
-router.route('/donors').post(migrateDonorsRoute);
-router.route('/gives').post(migrateGivesRoute);
-router.route('/platforms').post(migratePlatformsRoute);
-router.route('/recipients').post(migrateRecipientsRoute);
-router.route('/regexes').post(migrateRegexesRoute);
+Object.entries(MIGRATION_ROUTE_CONFIG).forEach(([routeStr, routeParams]) => {
+  router.route(routeStr).post(makeMigrationRoute(routeParams));
+});
 
 export default router;
