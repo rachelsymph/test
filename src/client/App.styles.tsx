@@ -41,4 +41,36 @@ export default createGlobalStyle<ThemeProps>`
     font-size: ${(props) => props.theme.fontSizes.h5};
     line-height: ${rem('24px')};
   }
+
+  subtitle1 {
+    font-size: ${(props) => props.theme.fontSizes.subtitle1};
+    line-height: ${rem('34px')}; 
+  }
+
+  body {
+    font-size: ${(props) => props.theme.fontSizes.body};
+    line-height: ${rem('20px')};
+  }
+
+  buttonSize {
+    font-size: ${(props) => props.theme.fontSizes.buttonSize};
+    line-height: ${rem('22px')};
+  }
+
+  overline {
+    font-size: ${(props) => props.theme.fontSizes.overline};
+    line-height: ${rem('24px')};
+    text-transform: uppercase;
+  }
+
+  caption1 {
+    font-size: ${(props) => props.theme.fontSizes.caption1};
+    line-height: ${rem('27px')};
+  }
+
+  caption2 {
+    font-size: ${(props) => props.theme.fontSizes.caption2};
+    line-height: ${rem('24px')};
+    
+  }
 `;

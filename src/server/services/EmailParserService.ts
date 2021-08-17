@@ -45,7 +45,7 @@ export function parseEmail(params: Params): ParsedInfo {
   if (!isRecurring) {
     FREQUENCIES.forEach((frequencyValue: string) => {
       const pattern = new RegExp(frequencyValue, 'i');
-      const [matchedValue] = haystack.match(pattern) || '';
+      const [matchedValue, _] = haystack.match(pattern) || [];
       if (matchedValue) {
         isRecurring = true;
         frequency = frequencyValue;

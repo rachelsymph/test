@@ -6,7 +6,7 @@ export const Container = styled.div`
   right: 0;
   top: 0;
   z-index: 1000;
-  background-color: ${(props) => props.theme.colors.white};
+  background-color: ${(props) => props.theme.colors.gray5};
 
   .ant-divider-horizontal {
     margin: 0;
