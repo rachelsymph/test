@@ -5,12 +5,7 @@ import { ThemeContext } from 'styled-components';
 
 import { Card, Text } from 'src/client/components';
 
-import {
-  DetailContent,
-  DetailsContainer,
-  GalleryCover,
-  StyledGalleryCard,
-} from './styles';
+import { DetailContent, DetailsContainer, StyledGalleryCard } from './styles';
 
 type Props = {
   numberOfGives?: number;
@@ -30,8 +25,7 @@ export default function GalleryCard(props: Props) {
     recipient = DEFAULT_RECIPIENT,
   } = props;
   return (
-    <Card>
-      <GalleryCover></GalleryCover>
+    <Card cover={<img alt="example" src="covergallery.png" />}>
       <StyledGalleryCard>
         <Text as={'subtitle1'}>{recipient}</Text>
         <DetailsContainer>

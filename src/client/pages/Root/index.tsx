@@ -1,28 +1,46 @@
-import { Space } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
+import { Dropdown, Menu, Space } from 'antd';
 import React from 'react';
+import { useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import {
   Button,
   Navigation,
   Header,
+  GalleryCard,
   GivingGoalCard,
-  Card,
+  Movement,
+  Text,
+  Feedback,
 } from 'src/client/components';
-import GalleryCard from 'src/client/components/GalleryCard';
+import { GIVING_SIDE_TYPES } from 'src/commons/constants/givingSideTypes';
+import routes from 'src/commons/constants/routes';
 import { Sections } from 'src/commons/constants/sectionTitles';
 
-import { Container, Content, Cover, Donations, Section } from './styles';
+import {
+  Container,
+  Content,
+  Donations,
+  Section,
+  CarouselContainer,
+  CarouselContent,
+  CoverLabel,
+} from './styles';
 type Props = {};
 
-const contentStyle = {
-  color: '#fff',
-  lineHeight: '160px',
-  textAlign: 'center' as const,
-  background: '#364d79',
-};
-
 function handleOpenCreateModal() {}
+
+const breadcrumbItems = [
+  {
+    href: routes.ROOT,
+    title: 'Dashboard',
+  },
+  {
+    href: routes.GIVES,
+    title: 'Gives',
+  },
+];
 
 const seeGalleryButton = (
   <Space>
@@ -32,23 +50,63 @@ const seeGalleryButton = (
   </Space>
 );
 
+const DEFAULT_GIVING_SIDE = 'Strong';
+
 export default function RootPage(props: RouteComponentProps<Props>) {
+  const [givingSide, setGivingSide] = useState<string>(
+    DEFAULT_GIVING_SIDE.toUpperCase()
+  );
+
+  const changeGivingSide = (value: String) => {
+    const newValue = value.toUpperCase();
+    setGivingSide(newValue);
+  };
+
+  const menu = (
+    <Menu>
+      {GIVING_SIDE_TYPES.map((type) => (
+        <Menu.Item key={type}>
+          <a onClick={() => changeGivingSide(type)}>{type}</a>
+        </Menu.Item>
+      ))}
+    </Menu>
+  );
+
   return (
     <Container>
       <Navigation />
-      <Cover src="cover.png" />
+      <CoverLabel>
+        <Text as={'h2'} color={'white'}>
+          My Giving Side is
+        </Text>
+        <Dropdown overlay={menu}>
+          <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
+            <Text as={'h1'} color={'white'}>
+              {givingSide} <DownOutlined />
+            </Text>
+          </a>
+        </Dropdown>
+      </CoverLabel>
       <Content>
         <Header title={Sections.HOME} />
         <Section>
           <GivingGoalCard />
-          <Donations autoplay>
-            <div>
-              <h3 style={contentStyle}>1</h3>
-            </div>
-            <div>
-              <h3 style={contentStyle}>2</h3>
-            </div>
-          </Donations>
+          <CarouselContainer>
+            <Donations autoplay>
+              <CarouselContent>
+                <Text as={'subtitle1'} color={'white'}>
+                  ”We make a living by what we get, but we make a life by what
+                  we give.”
+                </Text>
+              </CarouselContent>
+              <CarouselContent>
+                <Text as={'subtitle1'} color={'white'}>
+                  ”We make a living by what we get, but we make a life by what
+                  we give.”
+                </Text>
+              </CarouselContent>
+            </Donations>
+          </CarouselContainer>
         </Section>
         <Header
           title={Sections.GALLERY}
@@ -59,6 +117,10 @@ export default function RootPage(props: RouteComponentProps<Props>) {
           <GalleryCard />
           <GalleryCard />
           <GalleryCard />
+        </Section>
+        <Section>
+          <Movement />
+          <Feedback />
         </Section>
       </Content>
     </Container>

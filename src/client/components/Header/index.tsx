@@ -16,19 +16,28 @@ type Props = {
   subtitle?: string;
   as?: HTMLTextElement;
   extra?: React.ReactNode;
+  titleColor?: string;
+  subtitleColor?: string;
 };
 
 export default function Header(props: Props) {
-  const { title, subtitle, as = 'h4', extra } = props;
+  const {
+    title,
+    subtitle,
+    as = 'h4',
+    extra,
+    titleColor,
+    subtitleColor,
+  } = props;
 
   return (
     <StyledHeader>
       <StyledTitleHeader>
-        <Text as={as} textType="medium">
+        <Text as={as} textType="medium" color={titleColor}>
           {title}
         </Text>
         <StyledSubHeader>
-          <Text>{subtitle}</Text>
+          <Text color={subtitleColor}>{subtitle}</Text>
         </StyledSubHeader>
       </StyledTitleHeader>
       {extra}

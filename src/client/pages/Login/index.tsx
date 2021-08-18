@@ -59,7 +59,9 @@ export default function LoginPage(props: Props) {
         onFinishFailed={handleFinishFailed}
       >
         <FormHeader>
-          <Text as="h3" textType="medium">Giving Side</Text>
+          <Text as="h3" textType="medium">
+            Giving Side
+          </Text>
           <Text>Login to get started</Text>
         </FormHeader>
         <Form.Item label="Username" name="username" rules={usernameRules}>
@@ -75,7 +77,12 @@ export default function LoginPage(props: Props) {
         </Form.Item>
 
         <Form.Item {...tailLayout}>
-          <Button loading={isLoading} htmlType="submit" size="medium" type="primary">
+          <Button
+            loading={isLoading}
+            htmlType="submit"
+            size="medium"
+            type="primary"
+          >
             Login
           </Button>
         </Form.Item>

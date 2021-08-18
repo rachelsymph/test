@@ -12,10 +12,12 @@ export const StyledCard = styled(Card)`
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-  max-width: 454px;
   min-width: 350px;
   margin: 0;
   .ant-card-body {
     padding: 0;
+  }
+  .ant-card-cover img {
+    border-radius: 20px 20px 0 0;
   }
 `;
