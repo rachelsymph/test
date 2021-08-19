@@ -1,3 +1,4 @@
+import { Menu } from 'antd';
 import styled, { createGlobalStyle } from 'styled-components';
 
 import defaultTheme from 'src/client/themes/default';
@@ -30,4 +31,18 @@ export const LogoWrapper = styled.div`
 
 export const Logo = styled.img`
   width: 25%;
+`;
+
+export const MenuStyle = styled(Menu)`
+  .ant-menu-item.ant-menu-item-only-child.ant-menu-item-active,
+  .ant-menu-item.ant-menu-item-only-child.ant-menu-item-selected,
+  .ant-menu-item.ant-menu-item-only-child.ant-menu-item-hover,
+  .ant-menu-item.ant-menu-item-only-child.ant-menu-item-focus {
+    background-color: ${(props) => props.theme.colors.teal2};
+  }
+  margin-top: 75px;
+  background: ${(props) => props.theme.colors.royalBlue};
+  position: fixed;
+  width: 50px;
+  border-right: 0;
 `;

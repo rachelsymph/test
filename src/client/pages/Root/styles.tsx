@@ -14,7 +14,7 @@ export const CoverLabel = styled.div`
   background: url('/homecover.png');
   align-items: center;
   display: flex;
-  padding: 150px 150px 40px;
+  padding: 120px 120px 40px;
   justify-content: space-evenly;
 `;
 

@@ -2,8 +2,12 @@ import {
   BellOutlined,
   DashboardOutlined,
   DownOutlined,
+  FundOutlined,
+  HeatMapOutlined,
+  HomeOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  SlidersOutlined,
 } from '@ant-design/icons';
 import { Avatar, Breadcrumb, Layout, Menu, Space } from 'antd';
 import { MenuInfo } from 'rc-menu/lib/interface';
@@ -11,9 +15,10 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { logout } from 'src/client/api/AuthApi';
+import { Navigation } from 'src/client/components';
 import routes from 'src/commons/constants/routes';
 
-import { LayoutStyle, Logo, LogoWrapper } from './styles';
+import { LayoutStyle, Logo, LogoWrapper, MenuStyle } from './styles';
 
 type BreadcrumbItem = {
   href?: string;
@@ -41,10 +46,11 @@ const headerStyle = {
 };
 
 const spanStyle = { color: '#fff', marginRight: 4 };
-const menuStyle = { background: '#11182C' };
 const avatarStyle = { marginRight: 8 };
+const siderStyle = { backgroundColor: '#193B4E' };
+const iconStyle = { color: '#fff' };
 
-const layoutStyle = { minHeight: '100vh' };
+const layoutStyle = { minHeight: '100vh', backgroundColor: '#193B4E' };
 
 export default function DonorSiderLayout(props: Props) {
   const { breadcrumbItems, children } = props;
@@ -91,6 +97,7 @@ export default function DonorSiderLayout(props: Props) {
   return (
     <>
       <LayoutStyle />
+      <Navigation />
       <Layout style={layoutStyle}>
         <Sider
           collapsible
@@ -100,49 +107,35 @@ export default function DonorSiderLayout(props: Props) {
           trigger={null}
           width="50px"
           onCollapse={handleCollapse}
+          style={siderStyle}
         >
-          <Menu
+          <MenuStyle
             selectedKeys={selectedMenuItems}
             onClick={handleClickSideMenu as any}
           >
-            <Menu.Item key={routes.ROOT} icon={<DashboardOutlined />} />
-            <Menu.Item key={routes.GIVES} icon={<DashboardOutlined />} />
-            <Menu.Item key={routes.RECIPIENTS} icon={<DashboardOutlined />} />
-            <Menu.Item key={routes.PLATFORMS} icon={<DashboardOutlined />} />
-            <Menu.Item key={routes.REGEXES} icon={<DashboardOutlined />} />
-          </Menu>
+            <Menu.Item
+              key={routes.ROOT}
+              icon={<DashboardOutlined style={iconStyle} />}
+            />
+            <Menu.Item
+              key={routes.GIVES}
+              icon={<HomeOutlined style={iconStyle} />}
+            />
+            <Menu.Item
+              key={routes.RECIPIENTS}
+              icon={<HeatMapOutlined style={iconStyle} />}
+            />
+            <Menu.Item
+              key={routes.PLATFORMS}
+              icon={<SlidersOutlined style={iconStyle} />}
+            />
+            <Menu.Item
+              key={routes.REGEXES}
+              icon={<FundOutlined style={iconStyle} />}
+            />
+          </MenuStyle>
         </Sider>
         <Layout className="site-layout">
-          <Header className="site-layout-background" style={headerStyle}>
-            {triggerDisplay}
-            <LogoWrapper>
-              <Logo src="/logo-white.png" />
-            </LogoWrapper>
-            <Menu key="user" mode="horizontal" onClick={handleClickMenu}>
-              <SubMenu
-                title={
-                  <>
-                    <span style={spanStyle}>
-                      <BellOutlined />
-                    </span>
-                    <Avatar
-                      style={avatarStyle}
-                      src="https://images.ctfassets.net/fyqb993shw99/7go7GRb7ZzJHkNYZfCyppg/0c8cd27be553b7887c1fb955664f03b8/Johnrey-_1.jpg?w=350"
-                    />
-                    <span style={spanStyle}>Hi</span>
-                    <span style={spanStyle}>Johnrey</span>
-                    <span style={spanStyle}>
-                      <DownOutlined />
-                    </span>
-                  </>
-                }
-              >
-                <Menu.Item key="SignOut" onClick={handleClickSignout}>
-                  Sign out
-                </Menu.Item>
-              </SubMenu>
-            </Menu>
-          </Header>
           <Content className="site-layout-background" style={contentStyle}>
             {children}
           </Content>
