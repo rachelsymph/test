@@ -5,38 +5,37 @@ import { ThemeContext } from 'styled-components';
 
 import { Card, Text } from 'src/client/components';
 
+import { GiveSummary } from 'src/commons/types/GiveSummary.type';
+
 import { DetailContent, DetailsContainer, StyledGalleryCard } from './styles';
 
 type Props = {
-  numberOfGives?: number;
-  totalAmountOfGives?: number;
-  recipient?: string;
+  give?: GiveSummary;
 };
-
-const DEFAULT_NUMBER_OF_GIVES = 3;
-const DEFAULT_TOTAL_AMOUNT_GIVES = 230.0;
-const DEFAULT_RECIPIENT = 'Obama Campaign';
 
 export default function GalleryCard(props: Props) {
   const { colors } = useContext(ThemeContext);
-  const {
-    numberOfGives = DEFAULT_NUMBER_OF_GIVES,
-    totalAmountOfGives = DEFAULT_TOTAL_AMOUNT_GIVES,
-    recipient = DEFAULT_RECIPIENT,
-  } = props;
+  const { give } = props;
+  const numberOfGives = give?.numberOfGives;
+  const totalAmountOfGives = give?.totalAmountOfGives;
+  const recipient = give?.recipient;
+  const cover = give?.cover;
+
   return (
-    <Card cover={<img alt="example" src="covergallery.png" />}>
+    <Card cover={cover && <img alt={recipient} src={cover} />}>
       <StyledGalleryCard>
         <Text as={'subtitle1'}>{recipient}</Text>
         <DetailsContainer>
+          {numberOfGives && (
+            <DetailContent>
+              <Text as={'buttonRegular'}>No. of Gives</Text>
+              <Text as={'subtitle1'} color={colors.gray1}>
+                {numberOfGives}
+              </Text>
+            </DetailContent>
+          )}
           <DetailContent>
-            <Text as={'buttonSize'}>No. of Gives</Text>
-            <Text as={'subtitle1'} color={colors.gray1}>
-              {numberOfGives}
-            </Text>
-          </DetailContent>
-          <DetailContent>
-            <Text as={'buttonSize'}>You have given</Text>
+            <Text as={'buttonRegular'}>You have given</Text>
             <Text as={'subtitle1'} color={colors.teal2}>
               ${totalAmountOfGives}
             </Text>

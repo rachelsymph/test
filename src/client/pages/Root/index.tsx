@@ -6,28 +6,21 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import {
   Button,
-  Navigation,
+  DonationCarousel,
+  Feedback,
   Header,
   GalleryCard,
   GivingGoalCard,
   Movement,
   Text,
-  Feedback,
+  Section,
 } from 'src/client/components';
 import DonorSiderLayout from 'src/client/layouts/DonorSiderLayout';
 import { GIVING_SIDE_TYPES } from 'src/commons/constants/givingSideTypes';
 import routes from 'src/commons/constants/routes';
 import { Sections } from 'src/commons/constants/sectionTitles';
 
-import {
-  Container,
-  Content,
-  Donations,
-  Section,
-  CarouselContainer,
-  CarouselContent,
-  CoverLabel,
-} from './styles';
+import { Container, Content, CoverLabel, GalleryStyled } from './styles';
 type Props = {};
 
 function handleOpenCreateModal() {}
@@ -43,6 +36,19 @@ const breadcrumbItems = [
   },
 ];
 
+const DEFAULT_GIVING_SIDE = 'Strong';
+const DEFAULT_NUMBER_OF_GIVES = 3;
+const DEFAULT_TOTAL_AMOUNT_GIVES = '230.00';
+const DEFAULT_RECIPIENT = 'Obama Campaign';
+const DEFAULT_GIVE_COVER = 'covergallery.png';
+
+const give = {
+  numberOfGives: DEFAULT_NUMBER_OF_GIVES,
+  totalAmountOfGives: DEFAULT_TOTAL_AMOUNT_GIVES,
+  recipient: DEFAULT_RECIPIENT,
+  cover: DEFAULT_GIVE_COVER,
+};
+
 const seeGalleryButton = (
   <Space>
     <Button type="primary" onClick={handleOpenCreateModal}>
@@ -51,7 +57,27 @@ const seeGalleryButton = (
   </Space>
 );
 
-const DEFAULT_GIVING_SIDE = 'Strong';
+const homeContent = (
+  <>
+    <GivingGoalCard />
+    <DonationCarousel />
+  </>
+);
+
+const galleryContent = (
+  <GalleryStyled>
+    <GalleryCard give={give} />
+    <GalleryCard give={give} />
+    <GalleryCard give={give} />
+  </GalleryStyled>
+);
+
+const footerContent = (
+  <>
+    <Movement />
+    <Feedback />
+  </>
+);
 
 export default function RootPage(props: RouteComponentProps<Props>) {
   const [givingSide, setGivingSide] = useState<string>(
@@ -92,40 +118,21 @@ export default function RootPage(props: RouteComponentProps<Props>) {
           </Dropdown>
         </CoverLabel>
         <Content>
-          <Header title={Sections.HOME} />
-          <Section>
-            <GivingGoalCard />
-            <CarouselContainer>
-              <Donations autoplay>
-                <CarouselContent>
-                  <Text as={'subtitle1'} color={'white'}>
-                    ”We make a living by what we get, but we make a life by what
-                    we give.”
-                  </Text>
-                </CarouselContent>
-                <CarouselContent>
-                  <Text as={'subtitle1'} color={'white'}>
-                    ”We make a living by what we get, but we make a life by what
-                    we give.”
-                  </Text>
-                </CarouselContent>
-              </Donations>
-            </CarouselContainer>
-          </Section>
-          <Header
-            title={Sections.GALLERY}
-            subtitle="A collection of your help to lorem ipsum dolor"
-            extra={seeGalleryButton}
+          <Section
+            title={<Header title={Sections.HOME} />}
+            content={homeContent}
           />
-          <Section>
-            <GalleryCard />
-            <GalleryCard />
-            <GalleryCard />
-          </Section>
-          <Section>
-            <Movement />
-            <Feedback />
-          </Section>
+          <Section
+            title={
+              <Header
+                title={Sections.GALLERY}
+                subtitle="A collection of your help to lorem ipsum dolor"
+                extra={seeGalleryButton}
+              />
+            }
+            content={galleryContent}
+          />
+          <Section content={footerContent} />
         </Content>
       </Container>
     </DonorSiderLayout>

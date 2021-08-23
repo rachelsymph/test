@@ -47,20 +47,41 @@ export default createGlobalStyle<ThemeProps>`
     line-height: ${rem('34px')}; 
   }
 
+  subtitle2 {
+    font-size: ${(props) => props.theme.fontSizes.subtitle2};
+    font-weight: ${(props) => props.theme.fontWeights.medium};
+    line-height: ${rem('20px')}; 
+    padding-bottom: ${rem('27px')}; 
+  }
+
   body {
     font-size: ${(props) => props.theme.fontSizes.body};
     line-height: ${rem('20px')};
   }
 
-  buttonSize {
+  bodyItalic {
+    font-size: ${(props) => props.theme.fontSizes.body};
+    line-height: ${rem('20px')};
+    font-weight: ${(props) => props.theme.fontWeights.light};
+  }
+
+  buttonMedium {
     font-size: ${(props) => props.theme.fontSizes.buttonSize};
     line-height: ${rem('22px')};
+    font-weight: ${(props) => props.theme.fontWeights.medium};
+  }
+
+  buttonRegular {
+    font-size: ${(props) => props.theme.fontSizes.buttonSize};
+    line-height: ${rem('22px')};
+    font-weight: ${(props) => props.theme.fontWeights.regular};
   }
 
   overline {
     font-size: ${(props) => props.theme.fontSizes.overline};
-    line-height: ${rem('24px')};
+    line-height: ${rem('22px')};
     text-transform: uppercase;
+    font-weight: ${(props) => props.theme.fontWeights.bold};
   }
 
   caption1 {
@@ -70,7 +91,24 @@ export default createGlobalStyle<ThemeProps>`
 
   caption2 {
     font-size: ${(props) => props.theme.fontSizes.caption2};
-    line-height: ${rem('24px')};
-    
+    line-height: ${rem('27px')};
+  }
+
+  caption3 {
+    font-size: ${(props) => props.theme.fontSizes.caption2};
+    line-height: ${rem('18px')};
+  }
+
+  caption4 {
+    font-family: TT Norms;
+    font-size: ${(props) => props.theme.fontSizes.body};
+    line-height: ${rem('21px')};
+  }
+
+  caption5 {
+    font-family: TT Norms;
+    font-size: ${(props) => props.theme.fontSizes.body};
+    line-height: ${rem('21px')};
+    font-weight: ${(props) => props.theme.fontWeights.bold};
   }
 `;

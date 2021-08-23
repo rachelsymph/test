@@ -12,11 +12,16 @@ type HTMLTextElement =
   | 'p'
   | 'a'
   | 'subtitle1'
+  | 'subtitle2'
   | 'body'
-  | 'buttonSize'
+  | 'buttonMedium'
+  | 'buttonRegular'
   | 'overline'
   | 'caption1'
-  | 'caption2';
+  | 'caption2'
+  | 'caption3'
+  | 'caption4'
+  | 'caption5';
 
 type TextType = 'medium' | 'regular' | 'bold';
 

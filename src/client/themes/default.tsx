@@ -40,6 +40,7 @@ const fontSizes = {
   h4: rem('36px'),
   h5: rem('30px'),
   subtitle1: rem('24px'),
+  subtitle2: rem('18px'),
   body: rem('18px'),
   buttonSize: rem('14px'),
   overline: rem('14px'),

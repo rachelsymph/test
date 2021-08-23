@@ -12,10 +12,9 @@ export const StyledCard = styled(Card)`
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-  min-width: 350px;
-  margin: 0;
+  margin: 5px;
   .ant-card-body {
-    padding: 0;
+    padding: 0px;
   }
   .ant-card-cover img {
     border-radius: 20px 20px 0 0;

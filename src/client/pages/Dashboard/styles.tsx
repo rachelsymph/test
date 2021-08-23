@@ -1,4 +1,3 @@
-import { Carousel } from 'antd';
 import styled from 'styled-components';
 
 export const Container = styled.div``;
@@ -14,13 +13,7 @@ export const CoverLabel = styled.div`
   background: url('/homecover.png');
   align-items: center;
   display: flex;
-  padding: 120px 120px 40px;
-  justify-content: space-evenly;
-`;
-
-export const GalleryStyled = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  padding: 150px 150px 40px;
   justify-content: space-evenly;
 `;
 
@@ -30,9 +23,12 @@ export const Icon = styled.img`
   margin-bottom: 38.13px;
 `;
 
-export const Section = styled.div`
+export const GalleryStyled = styled.div`
   display: flex;
-  flex-direction: row;
-  padding-bottom: 60px;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+`;
+
+export const SummaryContent = styled.div`
+  display: flex;
 `;

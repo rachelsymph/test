@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const StyledGalleryCard = styled.div`
   padding 20px;
-  width: 350px;
+  min-width: 258px;
 `;
 
 export const DetailsContainer = styled.div`
