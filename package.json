@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/charts": "^1.2.10",
     "@ant-design/icons": "^4.5.0",
     "@casl/ability": "^5.3.1",
     "@casl/react": "^2.3.0",
@@ -110,10 +111,12 @@
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
       "npm run lint:ts --fix",
-      "npm run prettier"
+      "npm run prettier",
+      "git add ."
     ],
     "src/**/*.{tsx}": [
-      "npm run lint:css"
+      "npm run lint:css",
+      "git add ."
     ]
   },
   "devDependencies": {

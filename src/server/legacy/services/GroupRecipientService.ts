@@ -32,7 +32,9 @@ export default class GroupRecipientService {
   /**
    * Returns paginated group recipients
    */
-  public async getPaginated(params: GetPaginatedParams): Promise<GroupRecipient[]> {
+  public async getPaginated(
+    params: GetPaginatedParams
+  ): Promise<GroupRecipient[]> {
     const { n = config.RECORDS_PER_PAGE, page = 1 } = params;
     const skip = n * (page - 1);
 

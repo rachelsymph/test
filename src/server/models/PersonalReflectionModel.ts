@@ -20,7 +20,7 @@ const {
 } = configureModel<Partial<FindPersonalReflection>, PersonalReflection>({
   entity: Entity.PERSONAL_REFLECTION,
   findKeys: ['keywords', 'legacyId'],
-  excludeFromIndexes: ['message']
+  excludeFromIndexes: ['message'],
 });
 
 export {

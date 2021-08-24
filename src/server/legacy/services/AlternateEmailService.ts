@@ -32,7 +32,9 @@ export default class AlternateEmailService {
   /**
    * Returns paginated alternate emails
    */
-  public async getPaginated(params: GetPaginatedParams): Promise<AlternateEmail[]> {
+  public async getPaginated(
+    params: GetPaginatedParams
+  ): Promise<AlternateEmail[]> {
     const { n = config.RECORDS_PER_PAGE, page = 1 } = params;
     const skip = n * (page - 1);
 

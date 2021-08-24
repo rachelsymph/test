@@ -20,7 +20,7 @@ const {
 } = configureModel<Partial<FindPage>, Page>({
   entity: Entity.PAGE,
   findKeys: ['keywords', 'legacyId'],
-  excludeFromIndexes: ['quotes', 'descriptiveStyle', 'simplyStyle']
+  excludeFromIndexes: ['quotes', 'descriptiveStyle', 'simplyStyle'],
 });
 
 export {

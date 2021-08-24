@@ -32,7 +32,9 @@ export default class OrganizationService {
   /**
    * Returns paginated organizations
    */
-  public async getPaginated(params: GetPaginatedParams): Promise<Organization[]> {
+  public async getPaginated(
+    params: GetPaginatedParams
+  ): Promise<Organization[]> {
     const { n = config.RECORDS_PER_PAGE, page = 1 } = params;
     const skip = n * (page - 1);
 

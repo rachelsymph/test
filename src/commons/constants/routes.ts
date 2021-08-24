@@ -1,4 +1,5 @@
 const routes = {
+  DASHBOARD: '/dashboard',
   GIVES: '/admin/gives',
   LOGIN: '/login',
   PLATFORMS: '/admin/platforms',

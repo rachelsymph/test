@@ -14,7 +14,7 @@ export default class Donor {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(() => Give, give => give.donor)
+  @OneToMany(() => Give, (give) => give.donor)
   gives: Give[];
 
   @Column({ length: 150 })

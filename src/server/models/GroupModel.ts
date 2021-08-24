@@ -20,7 +20,7 @@ const {
 } = configureModel<Partial<FindGroup>, Group>({
   entity: Entity.GROUP,
   findKeys: ['keywords', 'legacyId'],
-  excludeFromIndexes: ['purpose']
+  excludeFromIndexes: ['purpose'],
 });
 
 export {

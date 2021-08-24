@@ -7,7 +7,6 @@ import {
 } from 'src/server/models/UserModel';
 import { cleanUserData } from 'src/server/utils/UserUtils';
 
-
 export async function createUser(params: Partial<User>) {
   const cleanedData = cleanUserData(params);
   const name = `${cleanedData.firstName} ${cleanedData.lastName}`;

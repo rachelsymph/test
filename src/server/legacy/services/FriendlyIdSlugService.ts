@@ -32,7 +32,9 @@ export default class FriendlyIdSlugService {
   /**
    * Returns paginated friendly id slugs
    */
-  public async getPaginated(params: GetPaginatedParams): Promise<FriendlyIdSlug[]> {
+  public async getPaginated(
+    params: GetPaginatedParams
+  ): Promise<FriendlyIdSlug[]> {
     const { n = config.RECORDS_PER_PAGE, page = 1 } = params;
     const skip = n * (page - 1);
 

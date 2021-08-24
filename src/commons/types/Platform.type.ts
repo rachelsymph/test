@@ -2,6 +2,7 @@ import { DefaultProperties } from './Common.type';
 import { Give } from './Give.type';
 
 export type Platform = {
+  cover?: string | null;
   domainName: string;
   gives?: Give[];
   isSyncing: boolean;

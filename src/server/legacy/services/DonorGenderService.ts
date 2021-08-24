@@ -32,7 +32,9 @@ export default class DonorGenderService {
   /**
    * Returns paginated donor genders
    */
-  public async getPaginated(params: GetPaginatedParams): Promise<DonorGender[]> {
+  public async getPaginated(
+    params: GetPaginatedParams
+  ): Promise<DonorGender[]> {
     const { n = config.RECORDS_PER_PAGE, page = 1 } = params;
     const skip = n * (page - 1);
 

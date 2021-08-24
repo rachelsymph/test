@@ -32,7 +32,9 @@ export default class DonorEthnicityService {
   /**
    * Returns paginated donor ethnicities
    */
-  public async getPaginated(params: GetPaginatedParams): Promise<DonorEthnicity[]> {
+  public async getPaginated(
+    params: GetPaginatedParams
+  ): Promise<DonorEthnicity[]> {
     const { n = config.RECORDS_PER_PAGE, page = 1 } = params;
     const skip = n * (page - 1);
 

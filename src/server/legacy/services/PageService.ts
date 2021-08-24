@@ -32,7 +32,9 @@ export default class PageServiceService {
   /**
    * Returns paginated pages
    */
-  public async getPaginated(params: GetPaginatedParams): Promise<PageService[]> {
+  public async getPaginated(
+    params: GetPaginatedParams
+  ): Promise<PageService[]> {
     const { n = config.RECORDS_PER_PAGE, page = 1 } = params;
     const skip = n * (page - 1);
 

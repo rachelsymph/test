@@ -8,7 +8,9 @@ export default class PersonalPracticeService {
   private personalPracticeRepository: Repository<PersonalPractice>;
 
   constructor() {
-    this.personalPracticeRepository = getManager().getRepository(PersonalPractice);
+    this.personalPracticeRepository = getManager().getRepository(
+      PersonalPractice
+    );
   }
 
   /**
@@ -32,7 +34,9 @@ export default class PersonalPracticeService {
   /**
    * Returns paginated personal practices
    */
-  public async getPaginated(params: GetPaginatedParams): Promise<PersonalPractice[]> {
+  public async getPaginated(
+    params: GetPaginatedParams
+  ): Promise<PersonalPractice[]> {
     const { n = config.RECORDS_PER_PAGE, page = 1 } = params;
     const skip = n * (page - 1);
 

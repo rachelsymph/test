@@ -100,7 +100,10 @@ import {
 
 const NUMBER_OF_RECORDS_PER_BATCH = 200;
 
-export async function migrateDonors(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migrateDonors(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const donorService = new DonorService();
   const donors = await donorService.getPaginated({
     n,
@@ -154,8 +157,10 @@ export async function migrateDonors(page: number = 1, n = NUMBER_OF_RECORDS_PER_
   };
 }
 
-
-export async function migrateGives(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migrateGives(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const giveService = new GiveService();
   const gives = await giveService.getPaginated({
     n,
@@ -220,25 +225,27 @@ export async function migrateGives(page: number = 1, n = NUMBER_OF_RECORDS_PER_B
 export async function migratePlatforms() {
   const platformService = new PlatformService();
   const platforms = await platformService.getAll();
-  const platformsTransformed: Partial<Platform>[] = platforms.map((platform) => {
-    const legacyId = platform.id.toString();
+  const platformsTransformed: Partial<Platform>[] = platforms.map(
+    (platform) => {
+      const legacyId = platform.id.toString();
 
-    return {
-      legacyId,
-      dateCreated: parseDate(platform.created_at) as Date,
-      dateUpdated: parseDate(platform.updated_at) as Date,
-      domainName: platform.domain_name,
-      isDeleted: platform.archived,
-      isSyncing: platform.is_syncing,
-      lastSyncDate: parseDate(platform.last_sync_date) as Date,
-      name: platform.name,
-      platformCompanyTypes: platform.platform_company_type,
-      platformStatusTypes: platform.platform_status_type,
-      platformTypes: platform.platform_type,
-      slug: platform.slug,
-      website: platform.website,
-    };
-  });
+      return {
+        legacyId,
+        dateCreated: parseDate(platform.created_at) as Date,
+        dateUpdated: parseDate(platform.updated_at) as Date,
+        domainName: platform.domain_name,
+        isDeleted: platform.archived,
+        isSyncing: platform.is_syncing,
+        lastSyncDate: parseDate(platform.last_sync_date) as Date,
+        name: platform.name,
+        platformCompanyTypes: platform.platform_company_type,
+        platformStatusTypes: platform.platform_status_type,
+        platformTypes: platform.platform_type,
+        slug: platform.slug,
+        website: platform.website,
+      };
+    }
+  );
 
   await batchUpsertPlatforms(platformsTransformed as Platform[]);
 
@@ -250,49 +257,56 @@ export async function migratePlatforms() {
   };
 }
 
-export async function migrateRecipients(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migrateRecipients(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const recipientService = new RecipientService();
   const recipients = await recipientService.getPaginated({
     n,
     page,
   });
 
-  const recipientsTransformed: Partial<Recipient>[] = recipients.map((recipient) => {
-    const legacyId = recipient.id.toString();
-    const guideStarOrgLegacyId = recipient.guidestar_org_id?.toString();
-    const parentRecipientLegacyId = recipient.parent_recipient_id?.toString();
+  const recipientsTransformed: Partial<Recipient>[] = recipients.map(
+    (recipient) => {
+      const legacyId = recipient.id.toString();
+      const guideStarOrgLegacyId = recipient.guidestar_org_id?.toString();
+      const parentRecipientLegacyId = recipient.parent_recipient_id?.toString();
 
-    return {
-      legacyId,
-      guideStarOrgLegacyId,
-      parentRecipientLegacyId,
-      adjective: recipient.adjective,
-      createdBy: recipient.created_by,
-      currentSignInAt: parseDate(recipient.current_sign_in_at) as Date,
-      currentSignInIp: recipient.current_sign_in_ip,
-      dateCreated: parseDate(recipient.created_at) as Date,
-      dateUpdated: parseDate(recipient.updated_at) as Date,
-      domainName: recipient.domain_name,
-      email: recipient.email,
-      encryptedPassword: recipient.encrypted_password,
-      isDeleted: recipient.archived,
-      isSyncing: recipient.is_syncing,
-      lastSignInAt: parseDate(recipient.last_sign_in_at) as Date,
-      lastSignInIp: recipient.last_sign_in_ip,
-      lastSyncDate: recipient.last_sync_date,
-      name: recipient.name,
-      ogDescription: recipient.og_description,
-      ogTitle: recipient.og_title,
-      recipientTypes: recipient.recipient_type,
-      rememberCreatedAt: parseDate(recipient.remember_created_at) as Date,
-      resetPasswordSentAt: parseDate(recipient.reset_password_sent_at) as Date,
-      resetPasswordToken: recipient.reset_password_token,
-      signInCount: recipient.sign_in_count,
-      slug: recipient.slug,
-      taxid: recipient.taxid,
-      website: recipient.website,
-    };
-  });
+      return {
+        legacyId,
+        guideStarOrgLegacyId,
+        parentRecipientLegacyId,
+        adjective: recipient.adjective,
+        createdBy: recipient.created_by,
+        currentSignInAt: parseDate(recipient.current_sign_in_at) as Date,
+        currentSignInIp: recipient.current_sign_in_ip,
+        dateCreated: parseDate(recipient.created_at) as Date,
+        dateUpdated: parseDate(recipient.updated_at) as Date,
+        domainName: recipient.domain_name,
+        email: recipient.email,
+        encryptedPassword: recipient.encrypted_password,
+        isDeleted: recipient.archived,
+        isSyncing: recipient.is_syncing,
+        lastSignInAt: parseDate(recipient.last_sign_in_at) as Date,
+        lastSignInIp: recipient.last_sign_in_ip,
+        lastSyncDate: recipient.last_sync_date,
+        name: recipient.name,
+        ogDescription: recipient.og_description,
+        ogTitle: recipient.og_title,
+        recipientTypes: recipient.recipient_type,
+        rememberCreatedAt: parseDate(recipient.remember_created_at) as Date,
+        resetPasswordSentAt: parseDate(
+          recipient.reset_password_sent_at
+        ) as Date,
+        resetPasswordToken: recipient.reset_password_token,
+        signInCount: recipient.sign_in_count,
+        slug: recipient.slug,
+        taxid: recipient.taxid,
+        website: recipient.website,
+      };
+    }
+  );
 
   await batchUpsertRecipients(recipientsTransformed as Recipient[]);
 
@@ -311,33 +325,43 @@ export async function migrateRegexes() {
   const amountRegexes = await platformAmountRegexService.getAll();
   const recipientRegexes = await platformRecipientRegexService.getAll();
 
-  const amountRegexesTransformed: Partial<CustomRegex>[] = amountRegexes.map((regexItem) => {
-    const platformLegacyId = regexItem.platform_id?.toString();
-    const legacyId = regexItem.id.toString();
+  const amountRegexesTransformed: Partial<CustomRegex>[] = amountRegexes.map(
+    (regexItem) => {
+      const platformLegacyId = regexItem.platform_id?.toString();
+      const legacyId = regexItem.id.toString();
 
-    return {
-      legacyId,
-      platformLegacyId,
-      destinationKey: 'amount',
-      isDeleted: false,
-      pattern: regexItem.regex,
-      tags: ['Amount', 'Platform Amount Regexes', platformLegacyId].map((s) => s.toUpperCase()),
-    };
-  });
+      return {
+        legacyId,
+        platformLegacyId,
+        destinationKey: 'amount',
+        isDeleted: false,
+        pattern: regexItem.regex,
+        tags: ['Amount', 'Platform Amount Regexes', platformLegacyId].map((s) =>
+          s.toUpperCase()
+        ),
+      };
+    }
+  );
 
-  const recipientRegexesTransformed: Partial<CustomRegex>[] = recipientRegexes.map((regexItem) => {
-    const platformLegacyId = regexItem.platform_id?.toString();
-    const legacyId = regexItem.id.toString();
+  const recipientRegexesTransformed: Partial<CustomRegex>[] = recipientRegexes.map(
+    (regexItem) => {
+      const platformLegacyId = regexItem.platform_id?.toString();
+      const legacyId = regexItem.id.toString();
 
-    return {
-      legacyId,
-      platformLegacyId,
-      destinationKey: 'recipientName',
-      isDeleted: false,
-      pattern: regexItem.regex,
-      tags: ['Recipient', 'Platform Recipient Regexes', platformLegacyId].map((s) => s.toUpperCase()),
-    };
-  });
+      return {
+        legacyId,
+        platformLegacyId,
+        destinationKey: 'recipientName',
+        isDeleted: false,
+        pattern: regexItem.regex,
+        tags: [
+          'Recipient',
+          'Platform Recipient Regexes',
+          platformLegacyId,
+        ].map((s) => s.toUpperCase()),
+      };
+    }
+  );
 
   await batchUpsertCustomRegexes(amountRegexesTransformed as CustomRegex[], {
     destinationKey: 'amount',
@@ -356,31 +380,38 @@ export async function migrateRegexes() {
   };
 }
 
-export async function migrateAlternateEmails(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migrateAlternateEmails(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const alternateEmailService = new AlternateEmailService();
   const alternateEmails = await alternateEmailService.getPaginated({
     n,
     page,
   });
 
-  const alternateEmailsTransformed: Partial<AlternateEmail>[] = alternateEmails.map((alternateEmail) => {
-    const legacyId = alternateEmail.id.toString();
-    const donorLegacyId = alternateEmail.donor_id?.toString();
+  const alternateEmailsTransformed: Partial<AlternateEmail>[] = alternateEmails.map(
+    (alternateEmail) => {
+      const legacyId = alternateEmail.id.toString();
+      const donorLegacyId = alternateEmail.donor_id?.toString();
 
-    return {
-      donorLegacyId,
-      legacyId,
-      dateCreated: parseDate(alternateEmail.created_at) as Date,
-      dateUpdated: parseDate(alternateEmail.updated_at) as Date,
-      email: alternateEmail.email,
-      expirationDate: parseDate(alternateEmail.expiry) as Date,
-      isPrimary: alternateEmail.is_primary,
-      isVerified: alternateEmail.verified,
-      token: alternateEmail.token,
-    };
-  });
+      return {
+        donorLegacyId,
+        legacyId,
+        dateCreated: parseDate(alternateEmail.created_at) as Date,
+        dateUpdated: parseDate(alternateEmail.updated_at) as Date,
+        email: alternateEmail.email,
+        expirationDate: parseDate(alternateEmail.expiry) as Date,
+        isPrimary: alternateEmail.is_primary,
+        isVerified: alternateEmail.verified,
+        token: alternateEmail.token,
+      };
+    }
+  );
 
-  await batchUpsertAlternateEmails(alternateEmailsTransformed as AlternateEmail[]);
+  await batchUpsertAlternateEmails(
+    alternateEmailsTransformed as AlternateEmail[]
+  );
 
   return {
     count: alternateEmails.length,
@@ -390,27 +421,34 @@ export async function migrateAlternateEmails(page: number = 1, n = NUMBER_OF_REC
   };
 }
 
-export async function migrateDonorEthnicities(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migrateDonorEthnicities(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const donorEthnicityService = new DonorEthnicityService();
   const donorEthnicities = await donorEthnicityService.getPaginated({
     n,
     page,
   });
 
-  const donorEthnicitiesTransformed: Partial<DonorEthnicity>[] = donorEthnicities.map((donorEthnicity) => {
-    const legacyId = donorEthnicity.id.toString();
-    const donorLegacyId = donorEthnicity.donor_id?.toString();
+  const donorEthnicitiesTransformed: Partial<DonorEthnicity>[] = donorEthnicities.map(
+    (donorEthnicity) => {
+      const legacyId = donorEthnicity.id.toString();
+      const donorLegacyId = donorEthnicity.donor_id?.toString();
 
-    return {
-      donorLegacyId,
-      legacyId,
-      dateCreated: parseDate(donorEthnicity.created_at) as Date,
-      dateUpdated: parseDate(donorEthnicity.updated_at) as Date,
-      specifics: donorEthnicity.specifics,
-    };
-  });
+      return {
+        donorLegacyId,
+        legacyId,
+        dateCreated: parseDate(donorEthnicity.created_at) as Date,
+        dateUpdated: parseDate(donorEthnicity.updated_at) as Date,
+        specifics: donorEthnicity.specifics,
+      };
+    }
+  );
 
-  await batchUpsertDonorEthnicities(donorEthnicitiesTransformed as DonorEthnicity[]);
+  await batchUpsertDonorEthnicities(
+    donorEthnicitiesTransformed as DonorEthnicity[]
+  );
 
   return {
     count: donorEthnicities.length,
@@ -420,26 +458,31 @@ export async function migrateDonorEthnicities(page: number = 1, n = NUMBER_OF_RE
   };
 }
 
-export async function migrateDonorGenders(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migrateDonorGenders(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const donorGenderService = new DonorGenderService();
   const donorGenders = await donorGenderService.getPaginated({
     n,
     page,
   });
 
-  const donorGendersTransformed: Partial<DonorGender>[] = donorGenders.map((donorGender) => {
-    const legacyId = donorGender.id.toString();
-    const donorLegacyId = donorGender.donor_id?.toString();
-    const genderLegacyId = donorGender.gender_id?.toString();
+  const donorGendersTransformed: Partial<DonorGender>[] = donorGenders.map(
+    (donorGender) => {
+      const legacyId = donorGender.id.toString();
+      const donorLegacyId = donorGender.donor_id?.toString();
+      const genderLegacyId = donorGender.gender_id?.toString();
 
-    return {
-      donorLegacyId,
-      genderLegacyId,
-      legacyId,
-      dateCreated: parseDate(donorGender.created_at) as Date,
-      dateUpdated: parseDate(donorGender.updated_at) as Date,
-    };
-  });
+      return {
+        donorLegacyId,
+        genderLegacyId,
+        legacyId,
+        dateCreated: parseDate(donorGender.created_at) as Date,
+        dateUpdated: parseDate(donorGender.updated_at) as Date,
+      };
+    }
+  );
 
   await batchUpsertDonorGenders(donorGendersTransformed as DonorGender[]);
 
@@ -451,32 +494,37 @@ export async function migrateDonorGenders(page: number = 1, n = NUMBER_OF_RECORD
   };
 }
 
-export async function migrateDonorGroups(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migrateDonorGroups(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const donorGroupService = new DonorGroupService();
   const donorGroups = await donorGroupService.getPaginated({
     n,
     page,
   });
 
-  const donorGroupsTransformed: Partial<DonorGroup>[] = donorGroups.map((donorGroup) => {
-    const legacyId = donorGroup.id.toString();
-    const donorLegacyId = donorGroup.donor_id?.toString();
-    const groupLegacyId = donorGroup.group_id?.toString();
+  const donorGroupsTransformed: Partial<DonorGroup>[] = donorGroups.map(
+    (donorGroup) => {
+      const legacyId = donorGroup.id.toString();
+      const donorLegacyId = donorGroup.donor_id?.toString();
+      const groupLegacyId = donorGroup.group_id?.toString();
 
-    return {
-      donorLegacyId,
-      groupLegacyId,
-      legacyId,
-      dateCreated: parseDate(donorGroup.created_at) as Date,
-      dateUpdated: parseDate(donorGroup.updated_at) as Date,
-      isAccepted: donorGroup.accepted,
-      isAdmin: donorGroup.admin,
-      note: donorGroup.note,
-      roles: donorGroup.roles,
-      tags: donorGroup.tags,
-      types: donorGroup.types,
-    };
-  });
+      return {
+        donorLegacyId,
+        groupLegacyId,
+        legacyId,
+        dateCreated: parseDate(donorGroup.created_at) as Date,
+        dateUpdated: parseDate(donorGroup.updated_at) as Date,
+        isAccepted: donorGroup.accepted,
+        isAdmin: donorGroup.admin,
+        note: donorGroup.note,
+        roles: donorGroup.roles,
+        tags: donorGroup.tags,
+        types: donorGroup.types,
+      };
+    }
+  );
 
   await batchUpsertDonorGroups(donorGroupsTransformed as DonorGroup[]);
 
@@ -488,31 +536,38 @@ export async function migrateDonorGroups(page: number = 1, n = NUMBER_OF_RECORDS
   };
 }
 
-export async function migrateDonorLinkedAccounts(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migrateDonorLinkedAccounts(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const donorLinkedAccountService = new DonorLinkedAccountService();
   const donorLinkedAccounts = await donorLinkedAccountService.getPaginated({
     n,
     page,
   });
 
-  const donorLinkedAccountsTransformed: Partial<DonorLinkedAccount>[] = donorLinkedAccounts.map((donorLinkedAccount) => {
-    const legacyId = donorLinkedAccount.id.toString();
-    const donorLegacyId = donorLinkedAccount.donor_id?.toString();
-    const donorAccountLegacyId = donorLinkedAccount.donor_account_id?.toString();
+  const donorLinkedAccountsTransformed: Partial<DonorLinkedAccount>[] = donorLinkedAccounts.map(
+    (donorLinkedAccount) => {
+      const legacyId = donorLinkedAccount.id.toString();
+      const donorLegacyId = donorLinkedAccount.donor_id?.toString();
+      const donorAccountLegacyId = donorLinkedAccount.donor_account_id?.toString();
 
-    return {
-      donorAccountLegacyId,
-      donorLegacyId,
-      legacyId,
-      dateCreated: parseDate(donorLinkedAccount.created_at) as Date,
-      dateUpdated: parseDate(donorLinkedAccount.updated_at) as Date,
-      email: donorLinkedAccount.email,
-      isVerified: donorLinkedAccount.verified,
-      token: donorLinkedAccount.token,
-    };
-  });
+      return {
+        donorAccountLegacyId,
+        donorLegacyId,
+        legacyId,
+        dateCreated: parseDate(donorLinkedAccount.created_at) as Date,
+        dateUpdated: parseDate(donorLinkedAccount.updated_at) as Date,
+        email: donorLinkedAccount.email,
+        isVerified: donorLinkedAccount.verified,
+        token: donorLinkedAccount.token,
+      };
+    }
+  );
 
-  await batchUpsertDonorLinkedAccounts(donorLinkedAccountsTransformed as DonorLinkedAccount[]);
+  await batchUpsertDonorLinkedAccounts(
+    donorLinkedAccountsTransformed as DonorLinkedAccount[]
+  );
 
   return {
     count: donorLinkedAccounts.length,
@@ -522,29 +577,34 @@ export async function migrateDonorLinkedAccounts(page: number = 1, n = NUMBER_OF
   };
 }
 
-export async function migrateDonorStats(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migrateDonorStats(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const donorStatService = new DonorStatService();
   const donorStats = await donorStatService.getPaginated({
     n,
     page,
   });
 
-  const donorStatsTransformed: Partial<DonorStat>[] = donorStats.map((donorStat) => {
-    const legacyId = donorStat.id.toString();
-    const donorLegacyId = donorStat.donor_id?.toString();
+  const donorStatsTransformed: Partial<DonorStat>[] = donorStats.map(
+    (donorStat) => {
+      const legacyId = donorStat.id.toString();
+      const donorLegacyId = donorStat.donor_id?.toString();
 
-    return {
-      donorLegacyId,
-      legacyId,
-      amountTotalDollars: donorStat.amount_total_dollars,
-      amountTotalHours: donorStat.amount_total_hours,
-      dateCreated: parseDate(donorStat.created_at) as Date,
-      dateUpdated: parseDate(donorStat.updated_at) as Date,
-      gives: donorStat.gives,
-      month: donorStat.month,
-      year: donorStat.year,
-    };
-  });
+      return {
+        donorLegacyId,
+        legacyId,
+        amountTotalDollars: donorStat.amount_total_dollars,
+        amountTotalHours: donorStat.amount_total_hours,
+        dateCreated: parseDate(donorStat.created_at) as Date,
+        dateUpdated: parseDate(donorStat.updated_at) as Date,
+        gives: donorStat.gives,
+        month: donorStat.month,
+        year: donorStat.year,
+      };
+    }
+  );
 
   await batchUpsertDonorStats(donorStatsTransformed as DonorStat[]);
 
@@ -556,26 +616,31 @@ export async function migrateDonorStats(page: number = 1, n = NUMBER_OF_RECORDS_
   };
 }
 
-export async function migrateEthnicities(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migrateEthnicities(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const ethnicityService = new EthnicityService();
   const ethnicities = await ethnicityService.getPaginated({
     n,
     page,
   });
 
-  const ethnicitiesTransformed: Partial<Ethnicity>[] = ethnicities.map((ethnicity) => {
-    const legacyId = ethnicity.id.toString();
-    const donorLegacyId = ethnicity.donor_id?.toString();
+  const ethnicitiesTransformed: Partial<Ethnicity>[] = ethnicities.map(
+    (ethnicity) => {
+      const legacyId = ethnicity.id.toString();
+      const donorLegacyId = ethnicity.donor_id?.toString();
 
-    return {
-      donorLegacyId,
-      legacyId,
-      dateCreated: parseDate(ethnicity.created_at) as Date,
-      dateUpdated: parseDate(ethnicity.updated_at) as Date,
-      name: ethnicity.name,
-      sortOrder: ethnicity.sort_order,
-    };
-  });
+      return {
+        donorLegacyId,
+        legacyId,
+        dateCreated: parseDate(ethnicity.created_at) as Date,
+        dateUpdated: parseDate(ethnicity.updated_at) as Date,
+        name: ethnicity.name,
+        sortOrder: ethnicity.sort_order,
+      };
+    }
+  );
 
   await batchUpsertEthnicities(ethnicitiesTransformed as Ethnicity[]);
 
@@ -587,29 +652,36 @@ export async function migrateEthnicities(page: number = 1, n = NUMBER_OF_RECORDS
   };
 }
 
-export async function migrateFriendlyIdSlugs(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migrateFriendlyIdSlugs(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const friendlyIdSlugService = new FriendlyIdSlugService();
   const friendlyIdSlugs = await friendlyIdSlugService.getPaginated({
     n,
     page,
   });
 
-  const friendlyIdSlugsTransformed: Partial<FriendlyIdSlug>[] = friendlyIdSlugs.map((friendlyIdSlug) => {
-    const legacyId = friendlyIdSlug.id.toString();
-    const sluggableLegacyId = friendlyIdSlug.sluggable_id?.toString();
+  const friendlyIdSlugsTransformed: Partial<FriendlyIdSlug>[] = friendlyIdSlugs.map(
+    (friendlyIdSlug) => {
+      const legacyId = friendlyIdSlug.id.toString();
+      const sluggableLegacyId = friendlyIdSlug.sluggable_id?.toString();
 
-    return {
-      sluggableLegacyId,
-      legacyId,
-      dateCreated: parseDate(friendlyIdSlug.created_at) as Date,
-      dateUpdated: new Date(),
-      scope: friendlyIdSlug.scope,
-      slug: friendlyIdSlug.slug,
-      sluggableType: friendlyIdSlug.sluggable_type,
-    };
-  });
+      return {
+        sluggableLegacyId,
+        legacyId,
+        dateCreated: parseDate(friendlyIdSlug.created_at) as Date,
+        dateUpdated: new Date(),
+        scope: friendlyIdSlug.scope,
+        slug: friendlyIdSlug.slug,
+        sluggableType: friendlyIdSlug.sluggable_type,
+      };
+    }
+  );
 
-  await batchUpsertFriendlyIdSlugs(friendlyIdSlugsTransformed as FriendlyIdSlug[]);
+  await batchUpsertFriendlyIdSlugs(
+    friendlyIdSlugsTransformed as FriendlyIdSlug[]
+  );
 
   return {
     count: friendlyIdSlugs.length,
@@ -619,7 +691,10 @@ export async function migrateFriendlyIdSlugs(page: number = 1, n = NUMBER_OF_REC
   };
 }
 
-export async function migrateGenders(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migrateGenders(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const genderService = new GenderService();
   const genders = await genderService.getPaginated({
     n,
@@ -648,7 +723,10 @@ export async function migrateGenders(page: number = 1, n = NUMBER_OF_RECORDS_PER
   };
 }
 
-export async function migrateGiveTags(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migrateGiveTags(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const giveTagService = new GiveTagService();
   const giveTags = await giveTagService.getPaginated({
     n,
@@ -677,7 +755,10 @@ export async function migrateGiveTags(page: number = 1, n = NUMBER_OF_RECORDS_PE
   };
 }
 
-export async function migrateGoals(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migrateGoals(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const goalService = new GoalService();
   const goals = await goalService.getPaginated({
     n,
@@ -711,28 +792,35 @@ export async function migrateGoals(page: number = 1, n = NUMBER_OF_RECORDS_PER_B
   };
 }
 
-export async function migrateGroupRecipients(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migrateGroupRecipients(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const groupRecipientService = new GroupRecipientService();
   const groupRecipients = await groupRecipientService.getPaginated({
     n,
     page,
   });
 
-  const groupRecipientsTransformed: Partial<GroupRecipient>[] = groupRecipients.map((groupRecipient) => {
-    const legacyId = groupRecipient.id.toString();
-    const groupLegacyId = groupRecipient.group_id?.toString();
-    const recipientLegacyId = groupRecipient.recipient_id?.toString();
+  const groupRecipientsTransformed: Partial<GroupRecipient>[] = groupRecipients.map(
+    (groupRecipient) => {
+      const legacyId = groupRecipient.id.toString();
+      const groupLegacyId = groupRecipient.group_id?.toString();
+      const recipientLegacyId = groupRecipient.recipient_id?.toString();
 
-    return {
-      groupLegacyId,
-      legacyId,
-      recipientLegacyId,
-      dateCreated: parseDate(groupRecipient.created_at) as Date,
-      dateUpdated: parseDate(groupRecipient.updated_at) as Date,
-    };
-  });
+      return {
+        groupLegacyId,
+        legacyId,
+        recipientLegacyId,
+        dateCreated: parseDate(groupRecipient.created_at) as Date,
+        dateUpdated: parseDate(groupRecipient.updated_at) as Date,
+      };
+    }
+  );
 
-  await batchUpsertGroupRecipients(groupRecipientsTransformed as GroupRecipient[]);
+  await batchUpsertGroupRecipients(
+    groupRecipientsTransformed as GroupRecipient[]
+  );
 
   return {
     count: groupRecipients.length,
@@ -742,7 +830,10 @@ export async function migrateGroupRecipients(page: number = 1, n = NUMBER_OF_REC
   };
 }
 
-export async function migrateGroups(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migrateGroups(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const groupService = new GroupService();
   const groups = await groupService.getPaginated({
     n,
@@ -782,26 +873,31 @@ export async function migrateGroups(page: number = 1, n = NUMBER_OF_RECORDS_PER_
   };
 }
 
-export async function migrateGroupGives(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migrateGroupGives(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const groupGiveService = new GroupGiveService();
   const groupGives = await groupGiveService.getPaginated({
     n,
     page,
   });
 
-  const groupGivesTransformed: Partial<GroupGive>[] = groupGives.map((groupGive) => {
-    const legacyId = groupGive.id.toString();
-    const groupLegacyId = groupGive.group_id?.toString();
-    const giveLegacyId = groupGive.give_id?.toString();
+  const groupGivesTransformed: Partial<GroupGive>[] = groupGives.map(
+    (groupGive) => {
+      const legacyId = groupGive.id.toString();
+      const groupLegacyId = groupGive.group_id?.toString();
+      const giveLegacyId = groupGive.give_id?.toString();
 
-    return {
-      legacyId,
-      giveLegacyId,
-      groupLegacyId,
-      dateCreated: parseDate(groupGive.created_at) as Date,
-      dateUpdated: parseDate(groupGive.updated_at) as Date,
-    };
-  });
+      return {
+        legacyId,
+        giveLegacyId,
+        groupLegacyId,
+        dateCreated: parseDate(groupGive.created_at) as Date,
+        dateUpdated: parseDate(groupGive.updated_at) as Date,
+      };
+    }
+  );
 
   await batchUpsertGroupGives(groupGivesTransformed as GroupGive[]);
 
@@ -813,7 +909,10 @@ export async function migrateGroupGives(page: number = 1, n = NUMBER_OF_RECORDS_
   };
 }
 
-export async function migrateImages(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migrateImages(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const imageService = new ImageService();
   const images = await imageService.getPaginated({
     n,
@@ -847,7 +946,10 @@ export async function migrateImages(page: number = 1, n = NUMBER_OF_RECORDS_PER_
   };
 }
 
-export async function migrateMoments(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migrateMoments(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const momentService = new MomentService();
   const moments = await momentService.getPaginated({
     n,
@@ -880,30 +982,35 @@ export async function migrateMoments(page: number = 1, n = NUMBER_OF_RECORDS_PER
   };
 }
 
-export async function migrateOrganizations(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migrateOrganizations(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const organizationService = new OrganizationService();
   const organizations = await organizationService.getPaginated({
     n,
     page,
   });
 
-  const organizationsTransformed: Partial<Organization>[] = organizations.map((organization) => {
-    const legacyId = organization.id.toString();
-    const donorLegacyId = organization.donor_id?.toString();
+  const organizationsTransformed: Partial<Organization>[] = organizations.map(
+    (organization) => {
+      const legacyId = organization.id.toString();
+      const donorLegacyId = organization.donor_id?.toString();
 
-    return {
-      legacyId,
-      donorLegacyId,
-      dateCreated: parseDate(organization.created_at) as Date,
-      dateUpdated: parseDate(organization.updated_at) as Date,
-      endDate: parseDate(organization.end_date) as Date,
-      name: organization.name,
-      role: organization.role,
-      startDate: parseDate(organization.start_date) as Date,
-      title: organization.title,
-      website: organization.website,
-    };
-  });
+      return {
+        legacyId,
+        donorLegacyId,
+        dateCreated: parseDate(organization.created_at) as Date,
+        dateUpdated: parseDate(organization.updated_at) as Date,
+        endDate: parseDate(organization.end_date) as Date,
+        name: organization.name,
+        role: organization.role,
+        startDate: parseDate(organization.start_date) as Date,
+        title: organization.title,
+        website: organization.website,
+      };
+    }
+  );
 
   await batchUpsertOrganizations(organizationsTransformed as Organization[]);
 
@@ -915,31 +1022,36 @@ export async function migrateOrganizations(page: number = 1, n = NUMBER_OF_RECOR
   };
 }
 
-export async function migratePageRecipients(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migratePageRecipients(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const pageRecipientService = new PageRecipientService();
   const pageRecipients = await pageRecipientService.getPaginated({
     n,
     page,
   });
 
-  const pageRecipientsTransformed: Partial<PageRecipient>[] = pageRecipients.map((pageRecipient) => {
-    const legacyId = pageRecipient.id.toString();
-    const pageLegacyId = pageRecipient.page_id?.toString();
-    const recipientLegacyId = pageRecipient.recipient_id?.toString();
-    const imageLegacyId = pageRecipient.image_id?.toString();
+  const pageRecipientsTransformed: Partial<PageRecipient>[] = pageRecipients.map(
+    (pageRecipient) => {
+      const legacyId = pageRecipient.id.toString();
+      const pageLegacyId = pageRecipient.page_id?.toString();
+      const recipientLegacyId = pageRecipient.recipient_id?.toString();
+      const imageLegacyId = pageRecipient.image_id?.toString();
 
-    return {
-      legacyId,
-      imageLegacyId,
-      pageLegacyId,
-      recipientLegacyId,
-      comment: pageRecipient.comment,
-      dateCreated: parseDate(pageRecipient.created_at) as Date,
-      dateUpdated: parseDate(pageRecipient.updated_at) as Date,
-      isHighlighted: pageRecipient.highlighted,
-      order: pageRecipient.order,
-    };
-  });
+      return {
+        legacyId,
+        imageLegacyId,
+        pageLegacyId,
+        recipientLegacyId,
+        comment: pageRecipient.comment,
+        dateCreated: parseDate(pageRecipient.created_at) as Date,
+        dateUpdated: parseDate(pageRecipient.updated_at) as Date,
+        isHighlighted: pageRecipient.highlighted,
+        order: pageRecipient.order,
+      };
+    }
+  );
 
   await batchUpsertPageRecipients(pageRecipientsTransformed as PageRecipient[]);
 
@@ -951,7 +1063,10 @@ export async function migratePageRecipients(page: number = 1, n = NUMBER_OF_RECO
   };
 }
 
-export async function migratePages(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migratePages(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const pageService = new PageService();
   const pages = await pageService.getPaginated({
     n,
@@ -989,29 +1104,36 @@ export async function migratePages(page: number = 1, n = NUMBER_OF_RECORDS_PER_B
   };
 }
 
-export async function migratePersonalPractices(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migratePersonalPractices(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const personalPracticeService = new PersonalPracticeService();
   const personalPractices = await personalPracticeService.getPaginated({
     n,
     page,
   });
 
-  const personalPracticesTransformed: Partial<PersonalPractice>[] = personalPractices.map((personalPractice) => {
-    const legacyId = personalPractice.id.toString();
-    const donorLegacyId = personalPractice.donor_id?.toString();
+  const personalPracticesTransformed: Partial<PersonalPractice>[] = personalPractices.map(
+    (personalPractice) => {
+      const legacyId = personalPractice.id.toString();
+      const donorLegacyId = personalPractice.donor_id?.toString();
 
-    return {
-      legacyId,
-      donorLegacyId,
-      dateCreated: parseDate(personalPractice.created_at) as Date,
-      dateUpdated: parseDate(personalPractice.updated_at) as Date,
-      establishedDate: parseDate(personalPractice.established_date) as Date,
-      quote: personalPractice.quote,
-      status: personalPractice.status,
-    };
-  });
+      return {
+        legacyId,
+        donorLegacyId,
+        dateCreated: parseDate(personalPractice.created_at) as Date,
+        dateUpdated: parseDate(personalPractice.updated_at) as Date,
+        establishedDate: parseDate(personalPractice.established_date) as Date,
+        quote: personalPractice.quote,
+        status: personalPractice.status,
+      };
+    }
+  );
 
-  await batchUpsertPersonalPractices(personalPracticesTransformed as PersonalPractice[]);
+  await batchUpsertPersonalPractices(
+    personalPracticesTransformed as PersonalPractice[]
+  );
 
   return {
     count: personalPractices.length,
@@ -1021,29 +1143,36 @@ export async function migratePersonalPractices(page: number = 1, n = NUMBER_OF_R
   };
 }
 
-export async function migratePersonalReflections(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migratePersonalReflections(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const personalReflectionService = new PersonalReflectionService();
   const personalReflections = await personalReflectionService.getPaginated({
     n,
     page,
   });
 
-  const personalReflectionsTransformed: Partial<PersonalReflection>[] = personalReflections.map((personalReflection) => {
-    const legacyId = personalReflection.id.toString();
-    const donorLegacyId = personalReflection.donor_id?.toString();
+  const personalReflectionsTransformed: Partial<PersonalReflection>[] = personalReflections.map(
+    (personalReflection) => {
+      const legacyId = personalReflection.id.toString();
+      const donorLegacyId = personalReflection.donor_id?.toString();
 
-    return {
-      legacyId,
-      donorLegacyId,
-      dateCreated: parseDate(personalReflection.created_at) as Date,
-      dateUpdated: parseDate(personalReflection.updated_at) as Date,
-      establishedDate: parseDate(personalReflection.established_date) as Date,
-      message: personalReflection.message,
-      prompts: personalReflection.prompts,
-    };
-  });
+      return {
+        legacyId,
+        donorLegacyId,
+        dateCreated: parseDate(personalReflection.created_at) as Date,
+        dateUpdated: parseDate(personalReflection.updated_at) as Date,
+        establishedDate: parseDate(personalReflection.established_date) as Date,
+        message: personalReflection.message,
+        prompts: personalReflection.prompts,
+      };
+    }
+  );
 
-  await batchUpsertPersonalReflections(personalReflectionsTransformed as PersonalReflection[]);
+  await batchUpsertPersonalReflections(
+    personalReflectionsTransformed as PersonalReflection[]
+  );
 
   return {
     count: personalReflections.length,
@@ -1053,40 +1182,47 @@ export async function migratePersonalReflections(page: number = 1, n = NUMBER_OF
   };
 }
 
-export async function migratePlatformStats(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migratePlatformStats(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const platformStatService = new PlatformStatService();
   const platformStats = await platformStatService.getPaginated({
     n,
     page,
   });
 
-  const platformStatsTransformed: Partial<PlatformStat>[] = platformStats.map((platformStat) => {
-    const legacyId = platformStat.id.toString();
-    const platformLegacyId = platformStat.platform_id?.toString();
+  const platformStatsTransformed: Partial<PlatformStat>[] = platformStats.map(
+    (platformStat) => {
+      const legacyId = platformStat.id.toString();
+      const platformLegacyId = platformStat.platform_id?.toString();
 
-    return {
-      legacyId,
-      platformLegacyId,
-      dateCreated: parseDate(platformStat.created_at) as Date,
-      dateUpdated: parseDate(platformStat.updated_at) as Date,
-      donorCount: platformStat.donor_count,
-      givesAvgMonths: platformStat.gives_avg_months,
-      givesCount: platformStat.gives_count,
-      givesTotalAmount: platformStat.gives_total_amount,
-      givesTotalAmountAvg: platformStat.gives_total_amount_avg,
-      givesTotalAmountMed: platformStat.gives_total_amount_med,
-      goalsAmount: platformStat.goals_amount,
-      goalsAmountAvg: platformStat.goals_amount_avg,
-      goalsAmountMed: platformStat.goals_amount_med,
-      goalsCount: platformStat.goals_count,
-      otherGivesCount: platformStat.other_gives_count,
-      otherGivesCountAvg: platformStat.other_gives_count_avg,
-      otherGivesCountMed: platformStat.other_gives_count_med,
-      otherGivesTopPlatforms: platformStat.other_gives_top_platforms,
-      otherGivesTopRecipientsByAmount: platformStat.other_gives_top_recipients_by_amount,
-      otherGivesTopRecipientsByCount: platformStat.other_gives_top_recipients_by_count,
-    };
-  });
+      return {
+        legacyId,
+        platformLegacyId,
+        dateCreated: parseDate(platformStat.created_at) as Date,
+        dateUpdated: parseDate(platformStat.updated_at) as Date,
+        donorCount: platformStat.donor_count,
+        givesAvgMonths: platformStat.gives_avg_months,
+        givesCount: platformStat.gives_count,
+        givesTotalAmount: platformStat.gives_total_amount,
+        givesTotalAmountAvg: platformStat.gives_total_amount_avg,
+        givesTotalAmountMed: platformStat.gives_total_amount_med,
+        goalsAmount: platformStat.goals_amount,
+        goalsAmountAvg: platformStat.goals_amount_avg,
+        goalsAmountMed: platformStat.goals_amount_med,
+        goalsCount: platformStat.goals_count,
+        otherGivesCount: platformStat.other_gives_count,
+        otherGivesCountAvg: platformStat.other_gives_count_avg,
+        otherGivesCountMed: platformStat.other_gives_count_med,
+        otherGivesTopPlatforms: platformStat.other_gives_top_platforms,
+        otherGivesTopRecipientsByAmount:
+          platformStat.other_gives_top_recipients_by_amount,
+        otherGivesTopRecipientsByCount:
+          platformStat.other_gives_top_recipients_by_count,
+      };
+    }
+  );
 
   await batchUpsertPlatformStats(platformStatsTransformed as PlatformStat[]);
 
@@ -1098,42 +1234,48 @@ export async function migratePlatformStats(page: number = 1, n = NUMBER_OF_RECOR
   };
 }
 
-export async function migrateRecipientStats(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migrateRecipientStats(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const recipientStatService = new RecipientStatService();
   const recipientStats = await recipientStatService.getPaginated({
     n,
     page,
   });
 
-  const recipientStatsTransformed: Partial<RecipientStat>[] = recipientStats.map((recipientStat) => {
-    const legacyId = recipientStat.id.toString();
-    const recipientLegacyId = recipientStat.recipient_id?.toString();
+  const recipientStatsTransformed: Partial<RecipientStat>[] = recipientStats.map(
+    (recipientStat) => {
+      const legacyId = recipientStat.id.toString();
+      const recipientLegacyId = recipientStat.recipient_id?.toString();
 
-    return {
-      legacyId,
-      recipientLegacyId,
-      dateCreated: parseDate(recipientStat.created_at) as Date,
-      dateUpdated: parseDate(recipientStat.updated_at) as Date,
-      donorCount: recipientStat.donor_count,
-      givesAvgMonths: recipientStat.gives_avg_months,
-      givesCount: recipientStat.gives_count,
-      givesGraphData: recipientStat.gives_graph_data,
-      givesTopPlatforms: recipientStat.gives_top_platforms,
-      givesTopRecipientsByAmount: recipientStat.gives_top_recipients_by_amount,
-      givesTopRecipientsByCount: recipientStat.gives_top_recipients_by_count,
-      givesTotalAmount: recipientStat.gives_total_amount,
-      givesTotalAmountAvg: recipientStat.gives_total_amount_avg,
-      givesTotalAmountMed: recipientStat.gives_total_amount_med,
-      goalsAmount: recipientStat.goals_amount,
-      goalsAmountAvg: recipientStat.goals_amount_avg,
-      goalsAmountMed: recipientStat.goals_amount_med,
-      goalsCount: recipientStat.goals_count,
-      recurringGivesCount: recipientStat.recurring_gives_count,
-      recurringGivesCountAvg: recipientStat.recurring_gives_count_avg,
-      recurringGivesCountMed: recipientStat.recurring_gives_count_med,
-      year: recipientStat.year,
-    };
-  });
+      return {
+        legacyId,
+        recipientLegacyId,
+        dateCreated: parseDate(recipientStat.created_at) as Date,
+        dateUpdated: parseDate(recipientStat.updated_at) as Date,
+        donorCount: recipientStat.donor_count,
+        givesAvgMonths: recipientStat.gives_avg_months,
+        givesCount: recipientStat.gives_count,
+        givesGraphData: recipientStat.gives_graph_data,
+        givesTopPlatforms: recipientStat.gives_top_platforms,
+        givesTopRecipientsByAmount:
+          recipientStat.gives_top_recipients_by_amount,
+        givesTopRecipientsByCount: recipientStat.gives_top_recipients_by_count,
+        givesTotalAmount: recipientStat.gives_total_amount,
+        givesTotalAmountAvg: recipientStat.gives_total_amount_avg,
+        givesTotalAmountMed: recipientStat.gives_total_amount_med,
+        goalsAmount: recipientStat.goals_amount,
+        goalsAmountAvg: recipientStat.goals_amount_avg,
+        goalsAmountMed: recipientStat.goals_amount_med,
+        goalsCount: recipientStat.goals_count,
+        recurringGivesCount: recipientStat.recurring_gives_count,
+        recurringGivesCountAvg: recipientStat.recurring_gives_count_avg,
+        recurringGivesCountMed: recipientStat.recurring_gives_count_med,
+        year: recipientStat.year,
+      };
+    }
+  );
 
   await batchUpsertRecipientStats(recipientStatsTransformed as RecipientStat[]);
 
@@ -1145,7 +1287,10 @@ export async function migrateRecipientStats(page: number = 1, n = NUMBER_OF_RECO
   };
 }
 
-export async function migrateTags(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migrateTags(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const tagService = new TagService();
   const tags = await tagService.getPaginated({
     n,
@@ -1173,7 +1318,10 @@ export async function migrateTags(page: number = 1, n = NUMBER_OF_RECORDS_PER_BA
   };
 }
 
-export async function migrateUsers(page: number = 1, n = NUMBER_OF_RECORDS_PER_BATCH) {
+export async function migrateUsers(
+  page: number = 1,
+  n = NUMBER_OF_RECORDS_PER_BATCH
+) {
   const userService = new UserService();
   const users = await userService.getPaginated({
     n,

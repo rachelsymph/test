@@ -8,7 +8,9 @@ export default class PersonalReflectionService {
   private personalReflectionRepository: Repository<PersonalReflection>;
 
   constructor() {
-    this.personalReflectionRepository = getManager().getRepository(PersonalReflection);
+    this.personalReflectionRepository = getManager().getRepository(
+      PersonalReflection
+    );
   }
 
   /**
@@ -32,7 +34,9 @@ export default class PersonalReflectionService {
   /**
    * Returns paginated personal reflections
    */
-  public async getPaginated(params: GetPaginatedParams): Promise<PersonalReflection[]> {
+  public async getPaginated(
+    params: GetPaginatedParams
+  ): Promise<PersonalReflection[]> {
     const { n = config.RECORDS_PER_PAGE, page = 1 } = params;
     const skip = n * (page - 1);
 

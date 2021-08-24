@@ -9,19 +9,19 @@ export const StyledButton = styled(Button)`
   font-weight: ${(props) => props.theme.fontWeights.medium};
 
   &.ant-btn.ant-btn-primary:not(.ant-btn-dangerous) {
-    background: ${(props) => props.theme.colors.primary1};
-    border-color: ${(props) => props.theme.colors.primary1};
+    background: ${(props) => props.theme.colors.teal2};
+    border-color: ${(props) => props.theme.colors.teal2};
   }
 
   &.ant-btn-secondary {
-    background: ${(props) => props.theme.colors.dark_50};
-    border-color: ${(props) => props.theme.colors.dark_50};
+    background: ${(props) => props.theme.colors.royalBlue};
+    border-color: ${(props) => props.theme.colors.royalBlue};
   }
 
   &.ant-btn-secondary:hover,
   &.ant-btn-secondary:focus {
-    color: ${(props) => props.theme.colors.dark_900};
-    outline-color: ${(props) => props.theme.colors.dark_900};
+    color: ${(props) => props.theme.colors.teal1};
+    outline-color: ${(props) => props.theme.colors.teal1};
   }
 
   &.ant-btn-lg,

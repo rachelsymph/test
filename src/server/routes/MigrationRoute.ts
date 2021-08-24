@@ -56,7 +56,7 @@ function makeMigrationRoute(params: MakeMigrationRouteParams) {
     nextEndpoint,
     nextInitialPage,
     nextTableDisplayName,
-    tableDisplayName
+    tableDisplayName,
   } = params;
 
   async function migrateRoute(req: Request, res: Response, next: NextFunction) {
@@ -91,7 +91,10 @@ function makeMigrationRoute(params: MakeMigrationRouteParams) {
         message: `Successfully migrated ${count} ${tableDisplayName} for page ${page}.`,
       });
     } catch (e) {
-      req.log.error(`Failed to migrate ${tableDisplayName} for page ${page}.`, e);
+      req.log.error(
+        `Failed to migrate ${tableDisplayName} for page ${page}.`,
+        e
+      );
 
       next(e);
     }

@@ -17,15 +17,17 @@ export default class Give {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Donor, donor => donor.gives, { nullable: true })
+  @ManyToOne(() => Donor, (donor) => donor.gives, { nullable: true })
   @JoinColumn({ name: 'donor_id' })
   donor: Donor;
 
-  @ManyToOne(() => Recipient, recipient => recipient.gives, { nullable: true })
+  @ManyToOne(() => Recipient, (recipient) => recipient.gives, {
+    nullable: true,
+  })
   @JoinColumn({ name: 'recipient_id' })
   recipient: Donor;
 
-  @ManyToOne(() => Platform, platform => platform.gives, { nullable: true })
+  @ManyToOne(() => Platform, (platform) => platform.gives, { nullable: true })
   @JoinColumn({ name: 'platform_id' })
   platform: Platform;
 

@@ -9,7 +9,6 @@ import {
 
 import Give from './Give';
 
-
 @Entity({ name: 'recipients' })
 export default class Recipient {
   @PrimaryGeneratedColumn()

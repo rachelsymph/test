@@ -29,7 +29,7 @@ export default class Platform {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToMany(() => Give, give => give.platform)
+  @OneToMany(() => Give, (give) => give.platform)
   gives: Give[];
 
   @Column({ default: false })

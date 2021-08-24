@@ -8,7 +8,9 @@ export default class DonorLinkedAccountService {
   private donorLinkedAccountRepository: Repository<DonorLinkedAccount>;
 
   constructor() {
-    this.donorLinkedAccountRepository = getManager().getRepository(DonorLinkedAccount);
+    this.donorLinkedAccountRepository = getManager().getRepository(
+      DonorLinkedAccount
+    );
   }
 
   /**
@@ -32,7 +34,9 @@ export default class DonorLinkedAccountService {
   /**
    * Returns paginated donor linked accounts
    */
-  public async getPaginated(params: GetPaginatedParams): Promise<DonorLinkedAccount[]> {
+  public async getPaginated(
+    params: GetPaginatedParams
+  ): Promise<DonorLinkedAccount[]> {
     const { n = config.RECORDS_PER_PAGE, page = 1 } = params;
     const skip = n * (page - 1);
 

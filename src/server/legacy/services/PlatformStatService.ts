@@ -32,7 +32,9 @@ export default class PlatformStatService {
   /**
    * Returns paginated platform stats
    */
-  public async getPaginated(params: GetPaginatedParams): Promise<PlatformStat[]> {
+  public async getPaginated(
+    params: GetPaginatedParams
+  ): Promise<PlatformStat[]> {
     const { n = config.RECORDS_PER_PAGE, page = 1 } = params;
     const skip = n * (page - 1);
 

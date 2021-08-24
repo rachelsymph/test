@@ -1,6 +1,12 @@
 import { NextFunction, Request, Response, Router } from 'express';
 
-import { createGive, findCustomRegexes, findDonor, findPlatform, findRecipient } from 'src/server/models';
+import {
+  createGive,
+  findCustomRegexes,
+  findDonor,
+  findPlatform,
+  findRecipient,
+} from 'src/server/models';
 import { parseEmail } from 'src/server/services/EmailParserService';
 import { InboundEmailResponse } from 'src/server/types/InboundEmail.type';
 
@@ -11,17 +17,21 @@ async function test(req: Request, res: Response, next: NextFunction) {
     const { results: customRegexes } = await findCustomRegexes({});
 
     const result = parseEmail({
-      haystack: '',
+      haystack: 'tax deductible recurring',
       regexes: customRegexes,
     });
 
     return res.send(result);
   } catch (error) {
-    next(error)
+    next(error);
   }
 }
 
-async function receiveInboundEmailRoute(req: Request, res: Response, next: NextFunction) {
+async function receiveInboundEmailRoute(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   try {
     const response = req.body as InboundEmailResponse;
     const { results: customRegexes } = await findCustomRegexes({});
@@ -49,13 +59,14 @@ async function receiveInboundEmailRoute(req: Request, res: Response, next: NextF
       amount: Number(result.amount),
       donorId: donor.id,
       donorLegacyId: donor.legacyId,
+      frequency: result.frequency as string,
       fromEmail: response.FromFull.Email,
       fromName: response.FromFull.Name,
       giveDate: new Date(response.Date),
       headers: response.Headers,
       htmlBody: response.HtmlBody,
       isFeatured: false,
-      isRecurring: false, // To be parsed from email
+      isRecurring: Boolean(result.isRecurring),
       platformId: platform.id,
       platformLegacyId: platform.legacyId,
       recipientId: recipient.id,

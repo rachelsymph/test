@@ -32,7 +32,9 @@ export default class RecipientStatService {
   /**
    * Returns paginated recipient stats
    */
-  public async getPaginated(params: GetPaginatedParams): Promise<RecipientStat[]> {
+  public async getPaginated(
+    params: GetPaginatedParams
+  ): Promise<RecipientStat[]> {
     const { n = config.RECORDS_PER_PAGE, page = 1 } = params;
     const skip = n * (page - 1);
 

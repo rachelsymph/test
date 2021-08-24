@@ -32,7 +32,9 @@ export default class PageRecipientService {
   /**
    * Returns paginated page recipients
    */
-  public async getPaginated(params: GetPaginatedParams): Promise<PageRecipient[]> {
+  public async getPaginated(
+    params: GetPaginatedParams
+  ): Promise<PageRecipient[]> {
     const { n = config.RECORDS_PER_PAGE, page = 1 } = params;
     const skip = n * (page - 1);
 

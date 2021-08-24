@@ -14,7 +14,7 @@ export default function Navigation() {
   return (
     <Container>
       <Nav>
-        <Logo src="logo.png" />
+        <Logo src="logo-white.png" />
         <Button
           href={routes.LOGIN}
           size="large"

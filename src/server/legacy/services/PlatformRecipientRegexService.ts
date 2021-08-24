@@ -6,7 +6,9 @@ export default class PlatformRecipientRegexService {
   private platformRecipientRegexRepository: Repository<PlatformRecipientRegex>;
 
   constructor() {
-    this.platformRecipientRegexRepository = getManager().getRepository(PlatformRecipientRegex);
+    this.platformRecipientRegexRepository = getManager().getRepository(
+      PlatformRecipientRegex
+    );
   }
 
   /**
