@@ -64,7 +64,7 @@ function makeMigrationRoute(params: MakeMigrationRouteParams) {
     try {
       const { count } = await migrateServiceFn(page);
 
-      if (!config.IS_PROD) {
+      if (config.IS_PROD) {
         if (count > 0) {
           await createTask({
             delayInSeconds: MIGRATION_INTERVAL_IN_SECONDS,
