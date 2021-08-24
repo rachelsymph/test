@@ -61,11 +61,10 @@ function makeMigrationRoute(params: MakeMigrationRouteParams) {
   async function migrateRoute(req: Request, res: Response, next: NextFunction) {
     const { page = 1 } = req.body;
 
-    req.log.info(req.body);
-    req.log.info(typeof req.body);
+    req.log.info(`Page ${page}`);
 
     try {
-      const { count } = await migrateServiceFn(page);
+      const { count } = await migrateServiceFn(Number(page));
 
       if (config.IS_PROD) {
         if (count > 0) {
@@ -73,7 +72,7 @@ function makeMigrationRoute(params: MakeMigrationRouteParams) {
             delayInSeconds: MIGRATION_INTERVAL_IN_SECONDS,
             path: `/api/1.0/migrations${endpoint}`,
             payload: {
-              page: page + 1, // next page
+              page: Number(page) + 1, // next page
             },
             queueName: config.MIGRATION_TASK_QUEUE_NAME,
           });
