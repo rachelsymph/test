@@ -16,12 +16,13 @@ const config = {
   ACCESS_CONTROL_ORIGIN_URLS:
     process.env.ACCESS_CONTROL_ORIGIN_URLS?.split(',') || [],
   BUCKET: process.env.GCLOUD_STORAGE_BUCKET || 'default',
+  DEFAULT_LOCATION: 'us-central1',
   FILE_SIZE_LIMIT: 10 * 1024 * 1024, // 10 MB
   HOST: process.env.HOST || defaultHost,
-  DEFAULT_LOCATION: 'us-central1',
   HTTPS: process.env.HTTPS,
   IS_PROD: process.env.NODE_ENV === 'production',
   LOG_LEVEL: 'debug',
+  MIGRATION_TASK_QUEUE_NAME: 'migration-task',
   NODE_ENV: process.env.NODE_ENV,
   PORT: process.env.PORT || defaultPort,
   PROJECT_ID: process.env.GOOGLE_CLOUD_PROJECT || '',
