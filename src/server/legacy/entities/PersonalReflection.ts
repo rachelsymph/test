@@ -14,7 +14,7 @@ export default class PersonalReflection {
   @Column({ length: 500, nullable: true })
   message: string;
 
-  @Column({ length: 500, nullable: true })
+  @Column({ type: 'text', nullable: true })
   prompts: string[];
 
   @Column({ nullable: true })

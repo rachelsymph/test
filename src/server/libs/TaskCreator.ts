@@ -19,7 +19,7 @@ const client = new CloudTasksClient();
 
 const DEFAULT_QUEUE_NAME = 'default-queue';
 
-export default async function createTask(params: Params) {
+export async function createTask(params: Params) {
   const {
     delayInSeconds,
     location = config.DEFAULT_LOCATION,

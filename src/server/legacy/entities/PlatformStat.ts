@@ -50,13 +50,13 @@ export default class PlatformStat {
   @Column({ nullable: true })
   other_gives_count_med: number;
 
-  @Column({ nullable: true })
+  @Column({ type: 'text', nullable: true })
   other_gives_top_recipients_by_amount: string[];
 
-  @Column({ nullable: true })
+  @Column({ type: 'text', nullable: true })
   other_gives_top_recipients_by_count: string[];
 
-  @Column({ nullable: true })
+  @Column({ type: 'text', nullable: true })
   other_gives_top_platforms: string[];
 
   @Column({ nullable: true })

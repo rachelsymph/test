@@ -156,6 +156,7 @@ export default function configureModel<
       params.map(async (param: Indexable) => {
         let key = param.id ? [entity, Number(param.id)] : entity;
         let item = await findOne({ id: param.id } as FindParams);
+        let dateUpdated = new Date();
 
         const { legacyId } = param;
 
@@ -165,6 +166,7 @@ export default function configureModel<
             ...additionalFilters as FindParams,
           });
 
+          dateUpdated = param.dateUpdated;
           key = item?.id ? [entity, Number(item.id)] : entity;
         }
 
@@ -180,7 +182,7 @@ export default function configureModel<
           data: {
             ...item,
             ...param,
-            dateUpdated: new Date(),
+            dateUpdated,
           } as Entity,
           excludeFromIndexes,
         };

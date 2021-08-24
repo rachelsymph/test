@@ -29,13 +29,13 @@ export default class DonorGroup {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @Column({ length: 500, nullable: true })
+  @Column({ type: 'text', nullable: true })
   types: string[];
 
-  @Column({ length: 500, nullable: true })
+  @Column({ type: 'text', nullable: true })
   roles: string[];
 
-  @Column({ length: 500, nullable: true })
+  @Column({ type: 'text', nullable: true })
   tags: string[];
 
   @Column({ type: 'text', nullable: true })

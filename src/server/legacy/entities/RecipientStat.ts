@@ -53,16 +53,16 @@ export default class RecipientStat {
   @Column({ nullable: true })
   recurring_gives_count_med: number;
 
-  @Column({ nullable: true })
+  @Column({ type: 'text', nullable: true })
   gives_top_recipients_by_amount: string[];
 
-  @Column({ nullable: true })
+  @Column({ type: 'text', nullable: true })
   gives_top_recipients_by_count: string[];
 
-  @Column({ nullable: true })
+  @Column({ type: 'text', nullable: true })
   gives_top_platforms: string[];
 
-  @Column({ nullable: true })
+  @Column({ type: 'text', nullable: true })
   gives_graph_data: string[];
 
   @Column({ nullable: true })

@@ -32,6 +32,6 @@ export default class DonorStat {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @Column({ nullable: true })
+  @Column({ type: 'text', nullable: true })
   gives: string[];
 }

@@ -14,14 +14,14 @@ export default class Platform {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 150 })
+  @Column({ length: 150, nullable: true })
   name: string;
 
-  @Column({ length: 350 })
+  @Column({ length: 350, nullable: true })
   website: string;
 
-  @Column({ length: 100 })
-  platform_type: string;
+  @Column({ type: 'text', nullable: true })
+  platform_type: string[];
 
   @CreateDateColumn()
   created_at: Date;
@@ -41,11 +41,11 @@ export default class Platform {
   @Column({ length: 100, nullable: true })
   domain_name: string;
 
-  @Column({ length: 100 })
-  platform_company_type: string;
+  @Column({ type: 'text', nullable: true })
+  platform_company_type: string[];
 
-  @Column({ length: 100 })
-  platform_status_type: string;
+  @Column({ type: 'text', nullable: true })
+  platform_status_type: string[];
 
   @Column({ default: false })
   is_syncing: boolean;
