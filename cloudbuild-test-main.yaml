@@ -4,7 +4,7 @@ steps:
   args: ['install']
   id: 'install'
 
-# - name: node:14.17.3
+# - name: node:12.18.4
 #   entrypoint: npm
 #   args: ['run', 'appengine:test']
 #   id: 'test'
@@ -17,7 +17,7 @@ steps:
   waitFor: ['install']
 
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['app', 'deploy', 'app.yaml', 'index.yaml', 'cron.yaml', '--version=$COMMIT_SHA']
+  args: ['app', 'deploy', 'app.yaml', 'index.yaml', 'cron.yaml', '--version=main']
   waitFor: ['build']
 
 timeout: 1200s
