@@ -79,7 +79,7 @@
     "web:build": "cross-env INLINE_RUNTIME_CHUNK=false react-scripts build",
     "test": "react-scripts test --testPathIgnorePatterns=src/server --coverage",
     "eject": "react-scripts eject",
-    "server:build": "cd src/server && tsc && tsc-alias -p tsconfig.json",
+    "server:build": "cd src/server && tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
     "server:test": "cd src/server && cross-env NODE_ENV=test PORT=3002 jest --coverage --detectOpenHandles --forceExit",
     "server:dev": "cd src/server && cross-env TZ=utc ts-node-dev --no-deps --ignore-watch node_modules --debug -r tsconfig-paths/register index.ts",
     "lint": "npm run lint:ts --fix && npm run lint:css",
@@ -175,7 +175,7 @@
     "ts-jest": "^26.4.4",
     "ts-node": "^9.0.0",
     "ts-node-dev": "^1.1.8",
-    "tsc-alias": "^1.3.7",
+    "tsc-alias": "^1.3.2",
     "tsconfig-paths": "^3.9.0"
   },
   "peerDependencies": {
