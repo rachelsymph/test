@@ -5,10 +5,10 @@ import fs from 'fs';
 import http from 'http';
 import https from 'https';
 
-import makeApp from './app';
-import config from './config/config';
-import { logger } from './libs/Logger';
-import { createLegacyDbConnection } from './utils/DbConnectionUtils';
+import makeApp from 'src/server/app';
+import config from 'src/server/config/config';
+import { logger } from 'src/server/libs/Logger';
+import { createLegacyDbConnection } from 'src/server/utils/DbConnectionUtils';
 
 let server: any;
 
