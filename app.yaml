@@ -37,5 +37,5 @@ env_variables:
   TYPEORM_PORT: '5432'
   TYPEORM_SYNCHRONIZE: 'false'
   TYPEORM_LOGGING: 'false'
-  TYPEORM_ENTITIES: 'legacy/entities/**/*.ts'
+  TYPEORM_ENTITIES: 'dist/server/legacy/entities/**/*.js'
   TYPEORM_DRIVER_EXTRA: '{"ssl": {"rejectUnauthorized": false}}'

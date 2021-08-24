@@ -67,22 +67,31 @@ function makeMigrationRoute(params: MakeMigrationRouteParams) {
 
       if (config.IS_PROD) {
         if (count > 0) {
+          const queueName = `Migrating ${tableDisplayName} for page ${
+            page + 1
+          }`.replace(/\s/g, '-');
+
           await createTask({
+            queueName,
             delayInSeconds: MIGRATION_INTERVAL_IN_SECONDS,
             path: `/api/1.0/${endpoint}`,
             payload: {
               page: page + 1, // next page
             },
-            queueName: `Migrating ${tableDisplayName} for page ${page}`,
           });
         } else if (nextEndpoint && nextInitialPage) {
+          const queueName = `Migrating ${nextTableDisplayName} for page ${nextInitialPage}`.replace(
+            /\s/g,
+            '-'
+          );
+
           await createTask({
+            queueName,
             delayInSeconds: MIGRATION_INTERVAL_IN_SECONDS,
             path: `/api/1.0/${nextEndpoint}`,
             payload: {
               page: nextInitialPage,
             },
-            queueName: `Migrating ${nextTableDisplayName} for page ${nextInitialPage}`,
           });
         }
       }
