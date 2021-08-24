@@ -61,6 +61,9 @@ function makeMigrationRoute(params: MakeMigrationRouteParams) {
   async function migrateRoute(req: Request, res: Response, next: NextFunction) {
     const { page = 1 } = req.body;
 
+    req.log.info(req.body);
+    req.log.info(typeof req.body);
+
     try {
       const { count } = await migrateServiceFn(page);
 
