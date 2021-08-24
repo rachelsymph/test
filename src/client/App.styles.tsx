@@ -80,7 +80,7 @@ export default createGlobalStyle<ThemeProps>`
   overline {
     font-size: ${(props) => props.theme.fontSizes.overline};
     line-height: ${rem('22px')};
-    text-transform: uppercase;
+    letter-spacing: 0.13em;
     font-weight: ${(props) => props.theme.fontWeights.bold};
   }
 

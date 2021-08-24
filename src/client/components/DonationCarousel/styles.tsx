@@ -8,7 +8,7 @@ export const CarouselContainer = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   .ant-carousel .slick-list .slick-slide > div > div {
-    height: 300px;
+    height: 380px;
   }
   margin: 5px;
   width: 100%;
@@ -17,7 +17,7 @@ export const CarouselContainer = styled.div`
 export const CarouselContent = styled.div`
   color: ${(props) => props.theme.colors.white};
   text-align: center;
-  padding: 70px 200px 0 200px;
+  padding: 150px 200px 0 200px;
 `;
 
 export const Donations = styled(Carousel)`
@@ -33,9 +33,18 @@ export const Donations = styled(Carousel)`
     border-radius: 100%;
     background: ${(props) => props.theme.colors.white};
   }
+  >
   min-width: 0;
   padding: 10px 20px;
   align-content: center;
   text-align: center;
   background: transparent;
+  display: flex;
+`;
+
+export const DonationDetailContent = styled.div`
+  display: flex !important;
+  flex-direction: column;
+  padding: 250px 0 0 0;
+  text-align: start;
 `;

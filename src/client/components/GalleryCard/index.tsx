@@ -20,28 +20,48 @@ export default function GalleryCard(props: Props) {
   const totalAmountOfGives = give?.totalAmountOfGives;
   const recipient = give?.recipient;
   const cover = give?.cover;
+  const isTop = give?.isTop;
 
   return (
-    <Card cover={cover && <img alt={recipient} src={cover} />}>
-      <StyledGalleryCard>
-        <Text as={'subtitle1'}>{recipient}</Text>
-        <DetailsContainer>
-          {numberOfGives && (
-            <DetailContent>
-              <Text as={'buttonRegular'}>No. of Gives</Text>
-              <Text as={'subtitle1'} color={colors.gray1}>
-                {numberOfGives}
-              </Text>
-            </DetailContent>
-          )}
-          <DetailContent>
-            <Text as={'buttonRegular'}>You have given</Text>
-            <Text as={'subtitle1'} color={colors.teal2}>
-              ${totalAmountOfGives}
-            </Text>
-          </DetailContent>
-        </DetailsContainer>
-      </StyledGalleryCard>
-    </Card>
+    <>
+      {isTop && (
+        <Card cover={cover && <img alt={recipient} src={cover} />}>
+          <StyledGalleryCard>
+            <Text as={'subtitle1'}>{recipient}</Text>
+            <DetailsContainer>
+              {numberOfGives && (
+                <DetailContent>
+                  <Text as={'buttonRegular'}>No. of Gives</Text>
+                  <Text as={'subtitle1'} color={colors.gray1}>
+                    {numberOfGives}
+                  </Text>
+                </DetailContent>
+              )}
+              <DetailContent>
+                <Text as={'buttonRegular'}>You have given</Text>
+                <Text as={'subtitle1'} color={colors.teal2}>
+                  ${totalAmountOfGives}
+                </Text>
+              </DetailContent>
+            </DetailsContainer>
+          </StyledGalleryCard>
+        </Card>
+      )}
+      {!isTop && (
+        <Card>
+          <StyledGalleryCard>
+            <Text as={'subtitle2'}>{recipient}</Text>
+            <DetailsContainer>
+              <DetailContent>
+                <Text as={'caption2'}>You have given</Text>
+                <Text as={'subtitle2'} color={colors.teal2}>
+                  ${totalAmountOfGives}
+                </Text>
+              </DetailContent>
+            </DetailsContainer>
+          </StyledGalleryCard>
+        </Card>
+      )}
+    </>
   );
 }

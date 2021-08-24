@@ -3,7 +3,12 @@ import React from 'react';
 import { Text } from 'src/client/components';
 import { GiveSummary } from 'src/commons/types/GiveSummary.type';
 
-import { CarouselContainer, CarouselContent, Donations } from './styles';
+import {
+  CarouselContainer,
+  CarouselContent,
+  DonationDetailContent,
+  Donations,
+} from './styles';
 
 type Props = {
   gives?: GiveSummary[];
@@ -16,14 +21,14 @@ export function DonationCarousel(props: Props) {
       <Donations autoplay>
         {gives &&
           gives?.map((give) => (
-            <CarouselContent key={give.recipient}>
+            <DonationDetailContent key={give.recipient}>
               <Text as={'subtitle1'} color={'white'}>
                 {give.recipient}
               </Text>
               <Text as={'subtitle2'} color={'white'}>
                 You have given a total of {give.totalAmountOfGives}
               </Text>
-            </CarouselContent>
+            </DonationDetailContent>
           ))}
         {!gives && (
           <CarouselContent>

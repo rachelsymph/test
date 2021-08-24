@@ -9,6 +9,7 @@ import Histogram from './Histogram';
 import Movement from './Movement';
 import Navigation from './Navigation';
 import NumbersCard from './NumbersCard';
+import PlatformCard from './PlatformCard';
 import Section from './Section';
 import Text from './Text';
 
@@ -24,6 +25,7 @@ export {
   Movement,
   Navigation,
   NumbersCard,
+  PlatformCard,
   Section,
   Text,
 };

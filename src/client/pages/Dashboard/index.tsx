@@ -17,6 +17,7 @@ import {
   DonationCarousel,
   Feedback,
   Card,
+  PlatformCard,
 } from 'src/client/components';
 import Historgram from 'src/client/components/Histogram';
 import DonorSiderLayout from 'src/client/layouts/DonorSiderLayout';
@@ -60,16 +61,41 @@ const DEFAULT_BY_THE_NUMBERS_VALUE = '1,321';
 const DEFAULT_PLATFORM_COVER = 'paypal.png';
 const DEFAULT_PLATFORM = 'paypal';
 
-const give = {
+const SAMPLE_GIVE = {
   numberOfGives: DEFAULT_NUMBER_OF_GIVES,
   totalAmountOfGives: DEFAULT_TOTAL_AMOUNT_GIVES,
   recipient: DEFAULT_RECIPIENT,
   cover: DEFAULT_GIVE_COVER,
+  isTop: true,
 };
 
-const give2 = {
+const SAMPLE_GIVE2 = {
   totalAmountOfGives: DEFAULT_TOTAL_AMOUNT_GIVES,
   recipient: DEFAULT_RECIPIENT,
+};
+
+const latestGives = [SAMPLE_GIVE, SAMPLE_GIVE, SAMPLE_GIVE, SAMPLE_GIVE2];
+const topGives = [
+  SAMPLE_GIVE,
+  SAMPLE_GIVE,
+  SAMPLE_GIVE,
+  SAMPLE_GIVE2,
+  SAMPLE_GIVE2,
+  SAMPLE_GIVE2,
+  SAMPLE_GIVE2,
+];
+const topThreeGives = [SAMPLE_GIVE, SAMPLE_GIVE, SAMPLE_GIVE];
+
+const platform = {
+  id: DEFAULT_PLATFORM_COVER,
+  dateCreated: new Date('2019-01-16'),
+  dateUpdated: new Date('2019-01-16'),
+  isDeleted: false,
+  keywords: [],
+  cover: DEFAULT_PLATFORM_COVER,
+  domainName: DEFAULT_PLATFORM,
+  isSyncing: true,
+  name: DEFAULT_PLATFORM,
 };
 
 const gallerySectionStyle = {
@@ -79,6 +105,7 @@ const gallerySectionStyle = {
 
 const topPlatformsSectionStyle = {
   background: `url('/topCover.png')`,
+  backgroundSize: 'cover',
   padding: '60px 30px',
 };
 
@@ -142,19 +169,15 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
   const homeContent = (
     <>
       <GivingGoalCard goal={400.0} currentDonations={100} />
-      <DonationCarousel />
+      <DonationCarousel gives={latestGives} />
     </>
   );
 
   const galleryContent = (
     <GalleryStyled>
-      <GalleryCard give={give} />
-      <GalleryCard give={give} />
-      <GalleryCard give={give} />
-      <GalleryCard give={give2} />
-      <GalleryCard give={give2} />
-      <GalleryCard give={give2} />
-      <GalleryCard give={give2} />
+      {topGives.map((give) => (
+        <GalleryCard give={give} key={give.recipient} />
+      ))}
     </GalleryStyled>
   );
 
@@ -163,39 +186,19 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
       <Historgram />
       <RecurringGivesContainer>
         <Text as="overline">Recurring Gives</Text>
-        <GiveOverTime>
-          <Recipient>
-            <NumberContainer>
-              <Text as="caption1">1</Text>
-            </NumberContainer>
-            <Text as="buttonMedium">{give.recipient}</Text>
-          </Recipient>
-          <Text as="buttonRegular" color={'#0ABCC7'}>
-            {give.totalAmountOfGives}
-          </Text>
-        </GiveOverTime>
-        <GiveOverTime>
-          <Recipient>
-            <NumberContainer>
-              <Text as="caption1">2</Text>
-            </NumberContainer>
-            <Text as="buttonMedium">{give.recipient}</Text>
-          </Recipient>
-          <Text as="buttonRegular" color={'#0ABCC7'}>
-            {give.totalAmountOfGives}
-          </Text>
-        </GiveOverTime>
-        <GiveOverTime>
-          <Recipient>
-            <NumberContainer>
-              <Text as="caption1">3</Text>
-            </NumberContainer>
-            <Text as="buttonMedium">{give.recipient}</Text>
-          </Recipient>
-          <Text as="buttonRegular" color={'#0ABCC7'}>
-            {give.totalAmountOfGives}
-          </Text>
-        </GiveOverTime>
+        {topThreeGives.map((give, key) => (
+          <GiveOverTime key={give.recipient}>
+            <Recipient>
+              <NumberContainer>
+                <Text as="caption1">{key + 1}</Text>
+              </NumberContainer>
+              <Text as="buttonMedium">{give.recipient}</Text>
+            </Recipient>
+            <Text as="buttonRegular" color={'#0ABCC7'}>
+              {give.totalAmountOfGives}
+            </Text>
+          </GiveOverTime>
+        ))}
       </RecurringGivesContainer>
     </>
   );
@@ -208,9 +211,10 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
 
   const topPlatformsContent = (
     <GalleryStyled>
-      <Card
-        cover={<img alt={DEFAULT_PLATFORM} src={DEFAULT_PLATFORM_COVER} />}
-      ></Card>
+      <PlatformCard platform={platform} />
+      <PlatformCard platform={platform} />
+      <PlatformCard platform={platform} />
+      <PlatformCard platform={platform} />
     </GalleryStyled>
   );
 
