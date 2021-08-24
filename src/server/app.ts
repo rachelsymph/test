@@ -12,19 +12,17 @@ import HttpStatus from 'http-status-codes';
 import passport from 'passport';
 import swagger from 'swagger-ui-express';
 
-import { ErrorResponse } from '../commons/types/ErrorResponse.type';
-
-import config from './config/config';
-import BaseError from './errors/BaseError';
-import NotFoundError from './errors/NotFoundError';
-import { logger } from './libs/Logger';
-import { configurePassport } from './libs/Passport';
-import { requestDataLoggerMiddleware } from './middlewares/LoggerMiddleware';
-
-import router from './routes';
-import makeAuthRoutes from './routes/AuthRoute';
-import healthRoutes from './routes/HealthRoute';
-import swaggerDoc from './swagger.json';
+import { ErrorResponse } from 'src/commons/types/ErrorResponse.type';
+import config from 'src/server/config/config';
+import BaseError from 'src/server/errors/BaseError';
+import NotFoundError from 'src/server/errors/NotFoundError';
+import { logger } from 'src/server/libs/Logger';
+import { configurePassport } from 'src/server/libs/Passport';
+import { requestDataLoggerMiddleware } from 'src/server/middlewares/LoggerMiddleware';
+import router from 'src/server/routes';
+import makeAuthRoutes from 'src/server/routes/AuthRoute';
+import healthRoutes from 'src/server/routes/HealthRoute';
+import swaggerDoc from 'src/server/swagger.json';
 
 async function main() {
   const app = express();

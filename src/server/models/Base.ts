@@ -1,6 +1,5 @@
 import { Query } from '@google-cloud/datastore';
 
-
 import { Indexable } from 'src/commons/types/Indexable.type';
 import { FindResponse } from 'src/commons/types/Response.type';
 import config from 'src/server/config/config';
@@ -45,7 +44,10 @@ export default function configureModel<
     return results?.[0] || [];
   }
 
-  async function find(params: FindParams, opts?: FindOpts): Promise<FindResponse<Entity>> {
+  async function find(
+    params: FindParams,
+    opts?: FindOpts
+  ): Promise<FindResponse<Entity>> {
     const { cursor, shouldPaginate, modifyQuery } = opts || {};
 
     let query = datastore.createQuery(entity);
@@ -83,7 +85,7 @@ export default function configureModel<
             id: params.id,
           },
         ] as Entity[],
-      }
+      };
     }
 
     findKeys.forEach((prop) => {
@@ -151,28 +153,33 @@ export default function configureModel<
     return newEntity;
   }
 
-  async function batchUpsertItems(params: Entity[], additionalFilters: Indexable = {}): Promise<Entity[]> {
+  async function batchUpsertItems(
+    params: Entity[],
+    additionalFilters: Indexable = {}
+  ): Promise<Entity[]> {
     const items = await Promise.all(
       params.map(async (param: Indexable) => {
         let key = param.id ? [entity, Number(param.id)] : entity;
         let item = await findOne({ id: param.id } as FindParams);
+        let dateUpdated = new Date();
 
         const { legacyId } = param;
 
         if (!param.id && legacyId) {
           item = await findOne({
             legacyId,
-            ...additionalFilters as FindParams,
+            ...(additionalFilters as FindParams),
           });
 
+          dateUpdated = param.dateUpdated;
           key = item?.id ? [entity, Number(item.id)] : entity;
         }
 
         if (!item) {
-          item = {
+          item = ({
             isDeleted: !!param.isDeleted,
             dateCreated: param.dateCreated ? param.dateCreated : new Date(),
-          } as unknown as Entity;
+          } as unknown) as Entity;
         }
 
         return {
@@ -180,7 +187,7 @@ export default function configureModel<
           data: {
             ...item,
             ...param,
-            dateUpdated: new Date(),
+            dateUpdated,
           } as Entity,
           excludeFromIndexes,
         };

@@ -1,5 +1,10 @@
 import { Give } from 'src/commons/types/Give.type';
-import { findDonor, findGives, findPlatform, findRecipient } from 'src/server/models';
+import {
+  findDonor,
+  findGives,
+  findPlatform,
+  findRecipient,
+} from 'src/server/models';
 
 type GetServiceParams = {
   cursor: string;
@@ -8,13 +13,17 @@ type GetServiceParams = {
 export async function getServices(params: GetServiceParams) {
   const { cursor } = params;
 
-  const { results: gives, cursor: nextCursor } = await findGives({}, {
-    cursor,
-    shouldPaginate: true,
-    modifyQuery: (query) => query.order('dateCreated', {
-      descending: true
-    }),
-  });
+  const { results: gives, cursor: nextCursor } = await findGives(
+    {},
+    {
+      cursor,
+      shouldPaginate: true,
+      modifyQuery: (query) =>
+        query.order('dateCreated', {
+          descending: true,
+        }),
+    }
+  );
 
   const data = await Promise.all(gives.map(transformGive));
 

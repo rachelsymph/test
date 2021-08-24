@@ -6,7 +6,9 @@ export default class PlatformAmountRegexService {
   private platformAmountRegexRepository: Repository<PlatformAmountRegex>;
 
   constructor() {
-    this.platformAmountRegexRepository = getManager().getRepository(PlatformAmountRegex);
+    this.platformAmountRegexRepository = getManager().getRepository(
+      PlatformAmountRegex
+    );
   }
 
   /**

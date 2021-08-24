@@ -1,29 +1,41 @@
 runtime: nodejs14
 
 inbound_services:
-- warmup
+  - warmup
 
 handlers:
-- url: /api/.*
-  script: auto
-  secure: always
-  redirect_http_response_code: 301
+  - url: /api/.*
+    script: auto
+    secure: always
+    redirect_http_response_code: 301
 
-- url: /_ah/warmup
-  script: auto
-  secure: always
-  redirect_http_response_code: 301
+  - url: /_ah/warmup
+    script: auto
+    secure: always
+    redirect_http_response_code: 301
 
-# Serve all static files with url ending with a file extension
-- url: /(.*\..+)$
-  static_files: build/\1
-  upload: build/(.*\..+)$
-  secure: always
-  redirect_http_response_code: 301
+  # Serve all static files with url ending with a file extension
+  - url: /(.*\..+)$
+    static_files: build/\1
+    upload: build/(.*\..+)$
+    secure: always
+    redirect_http_response_code: 301
 
-# Catch all handler to index.html
-- url: /.*
-  static_files: build/index.html
-  upload: build/index.html
-  secure: always
-  redirect_http_response_code: 301
+  # Catch all handler to index.html
+  - url: /.*
+    static_files: build/index.html
+    upload: build/index.html
+    secure: always
+    redirect_http_response_code: 301
+
+env_variables:
+  TYPEORM_CONNECTION: 'postgres'
+  TYPEORM_HOST: 'ec2-107-20-167-241.compute-1.amazonaws.com'
+  TYPEORM_USERNAME: 'afzmlfnvmhvuli'
+  TYPEORM_PASSWORD: '9bdda81fbc35255ab7794069e3d234e63e7a534608a06a331be7e736c6042a6a'
+  TYPEORM_DATABASE: 'dbi0754osgvkie'
+  TYPEORM_PORT: '5432'
+  TYPEORM_SYNCHRONIZE: 'false'
+  TYPEORM_LOGGING: 'false'
+  TYPEORM_ENTITIES: 'legacy/entities/**/*.ts'
+  TYPEORM_DRIVER_EXTRA: '{"ssl": {"rejectUnauthorized": false}}'

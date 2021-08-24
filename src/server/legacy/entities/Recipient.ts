@@ -9,7 +9,6 @@ import {
 
 import Give from './Give';
 
-
 @Entity({ name: 'recipients' })
 export default class Recipient {
   @PrimaryGeneratedColumn()
@@ -18,14 +17,14 @@ export default class Recipient {
   @Column({ length: 150 })
   name: string;
 
-  @Column({ length: 250 })
+  @Column({ length: 350 })
   website: string;
 
   @Column({ length: 100 })
   taxid: string;
 
-  @Column({ length: 100, nullable: true })
-  recipient_type: string;
+  @Column({ type: 'text', nullable: true })
+  recipient_type: string[];
 
   @Column({ nullable: true })
   parent_recipient_id: number;

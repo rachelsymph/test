@@ -1,0 +1,1 @@
+export const MIGRATION_INTERVAL_IN_SECONDS = 3;

@@ -21,12 +21,7 @@ const {
   updateItem: updateGive,
 } = configureModel<Partial<FindGive>, Give>({
   entity: Entity.GIVE,
-  findKeys: [
-    'keywords',
-    'legacyId',
-    'platformId',
-    'recipientId',
-  ],
+  findKeys: ['keywords', 'legacyId', 'platformId', 'recipientId'],
   excludeFromIndexes: [
     'detailEntry',
     'headers',
@@ -34,7 +29,7 @@ const {
     'htmlBody',
     'rawData',
     'textBody',
-  ]
+  ],
 });
 
 export {

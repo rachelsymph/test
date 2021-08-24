@@ -11,7 +11,9 @@ type GetGivesParams = {
   cursor?: string;
 };
 
-export async function getGives(params: GetGivesParams): Promise<ApiResponse<Give[]>> {
+export async function getGives(
+  params: GetGivesParams
+): Promise<ApiResponse<Give[]>> {
   const { data } = await ApiClient.get<ApiResponse<Give[]>>(url, {
     params,
   });
