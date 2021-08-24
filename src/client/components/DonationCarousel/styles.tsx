@@ -5,10 +5,13 @@ export const CarouselContainer = styled.div`
   min-width: 0;
   border-radius: 20px;
   background: url('/donations.png');
+  background-repeat: no-repeat;
+  background-size: cover;
   .ant-carousel .slick-list .slick-slide > div > div {
     height: 300px;
   }
   margin: 5px;
+  width: 100%;
 `;
 
 export const CarouselContent = styled.div`

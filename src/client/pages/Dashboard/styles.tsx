@@ -32,3 +32,37 @@ export const GalleryStyled = styled.div`
 export const SummaryContent = styled.div`
   display: flex;
 `;
+
+export const RecurringGivesContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 320px;
+  width: 400px;
+  padding-left: 20px;
+`;
+
+export const Recipient = styled.div`
+  display: flex;
+  text-align: center;
+`;
+
+export const GiveOverTime = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 400px;
+  justify-content: space-between;
+  padding: 5px 0px;
+  text-align: center;
+`;
+
+export const NumberContainer = styled.div`
+  background-color: ${(props) => props.theme.colors.teal2};
+  color: ${(props) => props.theme.colors.white};
+  border-radius: 20px;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin-right: 5px;
+`;

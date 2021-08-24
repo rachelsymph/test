@@ -15,6 +15,8 @@ import {
   Text,
   Section,
   DonationCarousel,
+  Feedback,
+  Card,
 } from 'src/client/components';
 import Historgram from 'src/client/components/Histogram';
 import DonorSiderLayout from 'src/client/layouts/DonorSiderLayout';
@@ -28,6 +30,10 @@ import {
   Content,
   CoverLabel,
   GalleryStyled,
+  GiveOverTime,
+  NumberContainer,
+  Recipient,
+  RecurringGivesContainer,
   SummaryContent,
 } from './styles';
 type Props = {};
@@ -51,6 +57,8 @@ const DEFAULT_TOTAL_AMOUNT_GIVES = '230.00';
 const DEFAULT_RECIPIENT = 'Obama Campaign';
 const DEFAULT_GIVE_COVER = 'covergallery.png';
 const DEFAULT_BY_THE_NUMBERS_VALUE = '1,321';
+const DEFAULT_PLATFORM_COVER = 'paypal.png';
+const DEFAULT_PLATFORM = 'paypal';
 
 const give = {
   numberOfGives: DEFAULT_NUMBER_OF_GIVES,
@@ -64,9 +72,14 @@ const give2 = {
   recipient: DEFAULT_RECIPIENT,
 };
 
-const sectionStyle = {
+const gallerySectionStyle = {
   padding: '60px 30px',
   backgroundColor: '#F8FBFD',
+};
+
+const topPlatformsSectionStyle = {
+  background: `url('/topCover.png')`,
+  padding: '60px 30px',
 };
 
 const seeGalleryButton = (
@@ -145,6 +158,62 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
     </GalleryStyled>
   );
 
+  const givingOverTimeContent = (
+    <>
+      <Historgram />
+      <RecurringGivesContainer>
+        <Text as="overline">Recurring Gives</Text>
+        <GiveOverTime>
+          <Recipient>
+            <NumberContainer>
+              <Text as="caption1">1</Text>
+            </NumberContainer>
+            <Text as="buttonMedium">{give.recipient}</Text>
+          </Recipient>
+          <Text as="buttonRegular" color={'#0ABCC7'}>
+            {give.totalAmountOfGives}
+          </Text>
+        </GiveOverTime>
+        <GiveOverTime>
+          <Recipient>
+            <NumberContainer>
+              <Text as="caption1">2</Text>
+            </NumberContainer>
+            <Text as="buttonMedium">{give.recipient}</Text>
+          </Recipient>
+          <Text as="buttonRegular" color={'#0ABCC7'}>
+            {give.totalAmountOfGives}
+          </Text>
+        </GiveOverTime>
+        <GiveOverTime>
+          <Recipient>
+            <NumberContainer>
+              <Text as="caption1">3</Text>
+            </NumberContainer>
+            <Text as="buttonMedium">{give.recipient}</Text>
+          </Recipient>
+          <Text as="buttonRegular" color={'#0ABCC7'}>
+            {give.totalAmountOfGives}
+          </Text>
+        </GiveOverTime>
+      </RecurringGivesContainer>
+    </>
+  );
+
+  const typesOfGivingContent = (
+    <>
+      <Historgram />
+    </>
+  );
+
+  const topPlatformsContent = (
+    <GalleryStyled>
+      <Card
+        cover={<img alt={DEFAULT_PLATFORM} src={DEFAULT_PLATFORM_COVER} />}
+      ></Card>
+    </GalleryStyled>
+  );
+
   return (
     <DonorSiderLayout breadcrumbItems={breadcrumbItems} pageTitle="Dashboard">
       <Container>
@@ -178,11 +247,11 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
               />
             }
             content={galleryContent}
-            style={sectionStyle}
+            style={gallerySectionStyle}
           />
           <Section
-            title={<Header title={'Giving Over Time'} />}
-            content={<Historgram />}
+            title={<Header title={Sections.GIVING_OVER_TIME} />}
+            content={givingOverTimeContent}
           />
           <Section content={<DonationCarousel />} />
           <Section
@@ -195,6 +264,16 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
             }
             content={byTheNumbersContent}
           />
+          <Section
+            title={<Header title={Sections.TYPES_OF_GIVING} />}
+            content={typesOfGivingContent}
+          />
+          <Section
+            title={<Header title={Sections.TOP_GIVING_PLATFORMS} />}
+            content={topPlatformsContent}
+            style={topPlatformsSectionStyle}
+          />
+          <Section content={<Feedback />} />
         </Content>
       </Container>
     </DonorSiderLayout>

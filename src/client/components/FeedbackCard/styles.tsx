@@ -10,4 +10,5 @@ export const StyledFeedback = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+  width: 100%;
 `;
