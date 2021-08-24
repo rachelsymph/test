@@ -1,3 +1,4 @@
+export * from './Admin';
 
 import DashboardPage from './Dashboard';
 import LoadingPage from './LoadingPage';

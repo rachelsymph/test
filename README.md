@@ -1,39 +1,49 @@
 ## Giving Side
-A brand new way to see & experience all the giving you do
 
+A brand new way to see & experience all the giving you do
 
 ### Built With
 
-* [React](https://reactjs.org/)
-* [Typescript](https://www.typescriptlang.org/)
-* [App Engine](https://cloud.google.com/appengine)
-* [NodeJS](https://nodejs.org/en/)
-* [AntDesign](https://ant.design/)
-* [Styled Components](https://styled-components.com/)
+- [React](https://reactjs.org/)
+- [Typescript](https://www.typescriptlang.org/)
+- [App Engine](https://cloud.google.com/appengine)
+- [NodeJS](https://nodejs.org/en/)
+- [AntDesign](https://ant.design/)
+- [Styled Components](https://styled-components.com/)
 
 ## Getting Started
+
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
 
-1. npm: ```npm install npm@latest -g```
+1. npm: `npm install npm@latest -g`
+
 ### Installation
 
-1. Clone the repo: ```git clone git@github.com:symphco/givingside-v3.git```
+1. Clone the repo: `git clone git@github.com:symphco/givingside-v3.git`
 
-2. Install NPM packages: ```npm install```
-3. Build the app which is used by the backend for serving: ```npm run build```
+2. Install NPM packages: `npm install`
+3. Build the app which is used by the backend for serving: `npm run build`
 4. Ask **.env** credentials including service account from owner
-5. Run app in the development mode: ```npm run web:dev```
-6. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-7. Run the server in the development mode: ```npm run server:dev```
-8. Open [http://localhost:3001](http://localhost:3001) to view it in the browser.
+5. Generate a localhost certificate using these commands, and add the generated files to src/server root directory:
+
+```
+brew install mkcert nss
+mkcert -install
+mkcert localhost
+```
+
+6. Run app in the development mode: `npm run web:dev`
+7. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+8. Run the server in the development mode: `npm run server:dev`
+9. Open [http://localhost:3001](http://localhost:3001) to view it in the browser.
 
 ## Documentation
 
-1. [Storybook](https://storybook.js.org/): ```npm run storybook```
+1. [Storybook](https://storybook.js.org/): `npm run storybook`
    Open [http://localhost:9001](http://localhost:9001) to view it in the browser.
 
 1. [Swagger](https://swagger.io/): Open [http://localhost:3001/api-docs](http://localhost:3001/api-docs) to view it in the browser.
@@ -61,14 +71,14 @@ Make commits according to its purpose. For example, if you are building a new fe
 
 Commit message template: `[Commit Type][Author] Add user login`
 
-*Commit types:*
+_Commit types:_
 
-* Feature
-* Fix
-* Fix Test
-* Misc
-* Test
-* Adjustment
+- Feature
+- Fix
+- Fix Test
+- Misc
+- Test
+- Adjustment
 
 **3. When ready, create a Pull Request from your branch to `main` branch.**
 

@@ -14,7 +14,7 @@ type FindUser = {
 
 const {
   findOne,
-  batchUpdateItems: batchUpdateUsers,
+  batchUpsertItems: batchUpsertUsers,
   createItem: createUser,
   find: findUsers,
   findByIds: findUserByIds,
@@ -26,7 +26,7 @@ const {
 });
 
 export {
-  batchUpdateUsers,
+  batchUpsertUsers,
   createUser,
   deleteUser,
   findOne,

@@ -17,7 +17,6 @@ import { ErrorResponse } from '../commons/types/ErrorResponse.type';
 import config from './config/config';
 import BaseError from './errors/BaseError';
 import NotFoundError from './errors/NotFoundError';
-import { setNamespace } from './libs/DatastoreClient';
 import { logger } from './libs/Logger';
 import { configurePassport } from './libs/Passport';
 import { requestDataLoggerMiddleware } from './middlewares/LoggerMiddleware';
@@ -70,8 +69,6 @@ async function main() {
   if (!config.IS_PROD) {
     app.use(logger.getLoggerMiddleware());
   }
-
-  setNamespace('newlifecatbalogan');
 
   // health routes
   app.use('/api/1.0/health/live', healthRoutes.isLive);

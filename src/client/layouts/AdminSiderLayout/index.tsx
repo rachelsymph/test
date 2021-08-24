@@ -115,6 +115,18 @@ export default function AdminSiderLayout(props: Props) {
             <Menu.Item key={routes.ROOT} icon={<DashboardOutlined />}>
               Dashboard
             </Menu.Item>
+            <Menu.Item key={routes.GIVES} icon={<DashboardOutlined />}>
+              Gives
+            </Menu.Item>
+            <Menu.Item key={routes.RECIPIENTS} icon={<DashboardOutlined />}>
+              Recipients
+            </Menu.Item>
+            <Menu.Item key={routes.PLATFORMS} icon={<DashboardOutlined />}>
+              Platforms
+            </Menu.Item>
+            <Menu.Item key={routes.REGEXES} icon={<DashboardOutlined />}>
+              Regexes
+            </Menu.Item>
           </Menu>
         </Sider>
         <Layout className="site-layout">

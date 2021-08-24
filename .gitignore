@@ -25,3 +25,6 @@ src/locales/**/*.js
 .eslintcache
 src/server/.env
 .env
+
+src/server/localhost-key.pem
+src/server/localhost.pem

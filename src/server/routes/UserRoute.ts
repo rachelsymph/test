@@ -30,7 +30,7 @@ async function getUserRoute(req: Request, res: Response, next: NextFunction) {
 
 async function getUsersRoute(req: Request, res: Response, next: NextFunction) {
   try {
-    const users = await findUsers({
+    const { results: users } = await findUsers({
       ...req.query,
       keywords: (req.query.q as string)?.toLowerCase(),
     });

@@ -1,0 +1,32 @@
+import { DefaultProperties } from './Common.type';
+import { Give } from './Give.type';
+
+export type Donor = {
+  avatar?: string | null;
+  bio?: string | null;
+  birthday?: string | null;
+  city?: string | null;
+  currentSignInAt?: Date | null;
+  currentSignInIp?: string | null;
+  descriptionCurrent?: string | null;
+  descriptionFirst?: string | null;
+  descriptionPrevious?: string | null;
+  email?: string | null;
+  encryptedPassword?: string | null;
+  ethnicityOther?: string | null;
+  genderOther?: string | null;
+  gives?: Give[];
+  isAlternateEmail?: boolean;
+  lastSignInAt?: Date | null;
+  lastSignInIp?: string | null;
+  movementBgColor?: string | null;
+  name?: string | null;
+  occupation?: string | null;
+  registrationToken?: string | null;
+  rememberCreatedAt?: Date | null;
+  resetPasswordSentAt?: Date | null;
+  resetPasswordToken?: string | null;
+  signInCount?: number | null;
+  state?: string | null;
+  zip?: string | null;
+} & DefaultProperties;

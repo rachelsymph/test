@@ -1,0 +1,32 @@
+import { DefaultProperties } from './Common.type';
+import { Give } from './Give.type';
+
+export type Recipient = {
+  adjective?: string | null;
+  createdBy?: string | null;
+  currentSignInAt?: Date | null;
+  currentSignInIp?: string | null;
+  domainName?: string | null;
+  email?: string | null;
+  encryptedPassword?: string | null;
+  gives?: Give[];
+  guideStarOrgId?: string | null;
+  guideStarOrgLegacyId?: string | null;
+  isSyncing: boolean;
+  lastSignInAt?: Date | null;
+  lastSignInIp?: string | null;
+  lastSyncDate?: Date | null;
+  name?: string | null;
+  ogDescription?: string | null;
+  ogTitle?: string | null;
+  parentRecipientId?: string | null;
+  parentRecipientLegacyId?: string | null;
+  recipientTypes?: string[] | null;
+  rememberCreatedAt?: Date | null;
+  resetPasswordSentAt?: Date | null;
+  resetPasswordToken?: string | null;
+  signInCount?: number | null;
+  slug?: string | null;
+  taxid?: string | null;
+  website?: string | null;
+} & DefaultProperties;
