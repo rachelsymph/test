@@ -26,9 +26,10 @@ This is an example of how to list things you need to use the software and how to
 1. Clone the repo: `git clone git@github.com:symphco/givingside-v3.git`
 
 2. Install NPM packages: `npm install`
-3. Build the app which is used by the backend for serving: `npm run build`
-4. Ask **.env** credentials including service account from owner
-5. Generate a localhost certificate using these commands, and add the generated files to src/server root directory:
+3. Install Husky: `npm run install:husky`
+4. Build the app which is used by the backend for serving: `npm run build`
+5. Ask **.env** credentials including service account from owner
+6. Generate a localhost certificate using these commands, and add the generated files to src/server root directory:
 
 ```
 brew install mkcert nss
