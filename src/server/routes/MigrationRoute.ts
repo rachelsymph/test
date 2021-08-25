@@ -45,7 +45,7 @@ type MakeMigrationRouteParams = {
   tableDisplayName: string;
 };
 
-const MIGRATION_INTERVAL_IN_SECONDS = 5;
+const MIGRATION_INTERVAL_IN_SECONDS = 180;
 
 const router = Router();
 
@@ -59,6 +59,8 @@ function makeMigrationRoute(params: MakeMigrationRouteParams) {
   } = params;
 
   async function migrateRoute(req: Request, res: Response, next: NextFunction) {
+    const shouldCreateTask = (req.body.shouldCreateTask || '1') === '1';
+
     let page = req.body.page;
 
     try {
@@ -73,7 +75,7 @@ function makeMigrationRoute(params: MakeMigrationRouteParams) {
     try {
       const { count } = await migrateServiceFn(Number(page || 1));
 
-      if (config.IS_PROD) {
+      if (config.IS_PROD && shouldCreateTask) {
         if (count > 0) {
           await createTask({
             delayInSeconds: MIGRATION_INTERVAL_IN_SECONDS,

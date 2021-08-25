@@ -98,7 +98,7 @@ import {
   batchUpsertUsers,
 } from 'src/server/models';
 
-const NUMBER_OF_RECORDS_PER_BATCH = 200;
+const NUMBER_OF_RECORDS_PER_BATCH = 50;
 
 export async function migrateDonors(
   page: number = 1,
