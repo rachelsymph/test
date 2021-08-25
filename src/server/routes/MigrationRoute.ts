@@ -45,7 +45,8 @@ type MakeMigrationRouteParams = {
   tableDisplayName: string;
 };
 
-const MIGRATION_INTERVAL_IN_SECONDS = 180;
+const MIGRATION_INTERVAL_IN_SECONDS = 10;
+const MIGRATION_INTERVAL_IN_SECONDS_NEXT_PAGE = 30;
 
 const router = Router();
 
@@ -87,7 +88,7 @@ function makeMigrationRoute(params: MakeMigrationRouteParams) {
           });
         } else if (nextEndpoint && nextInitialPage) {
           await createTask({
-            delayInSeconds: MIGRATION_INTERVAL_IN_SECONDS,
+            delayInSeconds: MIGRATION_INTERVAL_IN_SECONDS_NEXT_PAGE,
             path: `/api/1.0/migrations${nextEndpoint}`,
             payload: {
               page: nextInitialPage,
