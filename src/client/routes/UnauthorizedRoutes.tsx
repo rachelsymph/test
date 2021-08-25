@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import {
   AdminGivesPage,
+  DashboardPage,
   LoginPage,
   PageNotFound,
   RegistrationPage,
@@ -21,6 +22,7 @@ export default function UnauthorizedRoutes(props: Props) {
         <Route exact path={routes.ROOT} component={RootPage} />
 
         {/* unauth for now */}
+        <Route exact path={routes.DASHBOARD} component={DashboardPage} />
         <Route exact path={routes.GIVES} component={AdminGivesPage} />
         <Route component={PageNotFound} />
       </Switch>
