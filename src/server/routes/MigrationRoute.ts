@@ -62,19 +62,21 @@ function makeMigrationRoute(params: MakeMigrationRouteParams) {
   async function migrateRoute(req: Request, res: Response, next: NextFunction) {
     const shouldCreateTask = (req.body.shouldCreateTask || '1') === '1';
 
+    let size = Number(req.body.size || '50');
     let page = req.body.page;
 
     try {
-      ({ page } = JSON.parse(req.body));
+      ({ page, size } = JSON.parse(req.body));
     } catch (error) {
       page = Number(req.body.page);
+      size = Number(req.body.size);
     }
 
     req.log.info(`Req Body Page ${req.body.page}`);
     req.log.info(`Page ${page}`);
 
     try {
-      const { count } = await migrateServiceFn(Number(page || 1));
+      const { count } = await migrateServiceFn(Number(page || 1), Number(size));
 
       if (config.IS_PROD && shouldCreateTask) {
         if (count > 0) {
@@ -82,6 +84,7 @@ function makeMigrationRoute(params: MakeMigrationRouteParams) {
             delayInSeconds: MIGRATION_INTERVAL_IN_SECONDS,
             path: `/api/1.0/migrations${endpoint}`,
             payload: {
+              size,
               page: Number(page) + 1, // next page
             },
             queueName: config.MIGRATION_TASK_QUEUE_NAME,
@@ -91,6 +94,7 @@ function makeMigrationRoute(params: MakeMigrationRouteParams) {
             delayInSeconds: MIGRATION_INTERVAL_IN_SECONDS_NEXT_PAGE,
             path: `/api/1.0/migrations${nextEndpoint}`,
             payload: {
+              size,
               page: nextInitialPage,
             },
             queueName: config.MIGRATION_TASK_QUEUE_NAME,
