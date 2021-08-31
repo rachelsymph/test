@@ -9,6 +9,8 @@ export function transformToTable(give: Give) {
     ...give,
     dateCreated: dateFormat(give.dateCreated, DATE_FORMAT),
     donor: give.donor?.email,
+    note: 'See Note',
+    contributed: give.amount || 0,
     recipient: give.recipient?.name,
     platform: give.platform?.name,
   };

@@ -1,14 +1,12 @@
 import { Row } from 'antd';
 import styled from 'styled-components';
 
-import { device } from 'src/commons/constants/device';
-
 export const Container = styled.div``;
 
 export const Content = styled(Row)`
   margin: auto;
 
-  @media ${device.laptop} {
+  @media ${(props) => props.theme.device.laptop} {
     padding: 95px 15px 15px;
     max-width: ${(props) => props.theme.extras.maxWidth};
     background-color: none;
@@ -34,7 +32,7 @@ export const GalleryStyled = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  @media ${device.desktop} {
+  @media ${(props) => props.theme.device.desktop} {
     padding-top: 50px;
   }
 `;
@@ -56,7 +54,7 @@ export const RecurringGivesList = styled(GalleryStyled)`
 `;
 
 export const SectionContentStyled = styled(GalleryStyled)`
-  @media ${device.desktop} {
+  @media ${(props) => props.theme.device.desktop} {
     flex-flow: nowrap;
   }
 `;

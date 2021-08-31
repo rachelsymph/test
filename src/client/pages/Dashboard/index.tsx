@@ -1,5 +1,14 @@
 import { DeleteOutlined, DownOutlined, EditOutlined } from '@ant-design/icons';
-import { Col, Dropdown, Menu, Popconfirm, Row, Space, Table } from 'antd';
+import {
+  Col,
+  Dropdown,
+  Menu,
+  Popconfirm,
+  Radio,
+  Row,
+  Space,
+  Table,
+} from 'antd';
 
 import React, { useState } from 'react';
 
@@ -15,6 +24,7 @@ import {
   Navigation,
   NumbersCard,
   PlatformCard,
+  RadioButtonGroup,
   RecurringGiveItem,
   Section,
   Text,
@@ -111,11 +121,11 @@ const topPlatformsSectionStyle = {
   padding: '60px 30px',
 };
 
-const seeGalleryButton = (
-  <Col xs={{ span: 0 }} lg={{ span: 4 }}>
+const showAllGivesButton = (
+  <Col xs={{ span: 0 }} lg={{ push: 10, span: 4 }}>
     <Space>
       <Button type="primary" onClick={handleOpenCreateModal}>
-        See Gallery
+        Show all Gives
       </Button>
     </Space>
   </Col>
@@ -304,7 +314,8 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
           columns={columns}
           dataSource={data?.data.map(transformToTable)}
           loading={isLoading}
-          pagination={false}
+          pagination={{ pageSize: 5 }}
+          scroll={{ y: 300 }}
         />
       </Col>
     </Row>
@@ -325,6 +336,28 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
         <PlatformCard platform={platform} />
       </Col>
     </Row>
+  );
+
+  function onChange(e: any) {}
+
+  const radioGroupGallery = (
+    <RadioButtonGroup
+      value1={'Amount'}
+      value2={'Frequency'}
+      onChange={onChange}
+    />
+  );
+
+  const radioGroupGivingOverTime = (
+    <RadioButtonGroup value1={'Amount'} value2={'Time'} onChange={onChange} />
+  );
+
+  const radioGroupHome = (
+    <RadioButtonGroup
+      value1={'This Year'}
+      value2={'All Time'}
+      onChange={onChange}
+    />
   );
 
   return (
@@ -348,7 +381,7 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
         </CoverLabel>
         <Content>
           <Section
-            title={<Header title={Sections.HOME} />}
+            title={<Header extra={radioGroupHome} title={Sections.HOME} />}
             content={homeContent}
           />
           <Section
@@ -356,22 +389,30 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
               <Header
                 title={Sections.GALLERY}
                 subtitle="A collection of your help to lorem ipsum dolor"
-                extra={seeGalleryButton}
+                extra={radioGroupGallery}
               />
             }
             content={
-              <GalleryStyled>
-                {topGives.map((give) => (
-                  <GalleryCard give={give} key={give.recipient} />
-                ))}
-              </GalleryStyled>
+              <>
+                <GalleryStyled>
+                  {topGives.map((give) => (
+                    <GalleryCard give={give} key={give.recipient} />
+                  ))}
+                </GalleryStyled>
+                {showAllGivesButton}
+              </>
             }
             style={gallerySectionStyle}
           />
           <Section
-            title={<Header title={Sections.GIVING_OVER_TIME} />}
             content={givingOverTimeContent}
             borded={true}
+            title={
+              <Header
+                extra={radioGroupGivingOverTime}
+                title={Sections.GIVING_OVER_TIME}
+              />
+            }
           />
           <Section content={<DonationCarousel />} />
           <Section

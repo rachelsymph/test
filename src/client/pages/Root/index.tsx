@@ -1,5 +1,5 @@
 import { DownOutlined } from '@ant-design/icons';
-import { Dropdown, Menu, Space } from 'antd';
+import { Col, Dropdown, Menu, Row, Space } from 'antd';
 import React from 'react';
 import { useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
