@@ -10,6 +10,7 @@ import Movement from './Movement';
 import Navigation from './Navigation';
 import NumbersCard from './NumbersCard';
 import PlatformCard from './PlatformCard';
+import RecurringGiveItem from './RecurringGiveItem';
 import Section from './Section';
 import Text from './Text';
 
@@ -26,6 +27,7 @@ export {
   Navigation,
   NumbersCard,
   PlatformCard,
+  RecurringGiveItem,
   Section,
   Text,
 };

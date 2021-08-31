@@ -38,16 +38,19 @@ const breadcrumbItems = [
 
 const DEFAULT_GIVING_SIDE = 'Strong';
 const DEFAULT_NUMBER_OF_GIVES = 3;
-const DEFAULT_TOTAL_AMOUNT_GIVES = '230.00';
+const DEFAULT_TOTAL_AMOUNT_GIVES = 230.0;
 const DEFAULT_RECIPIENT = 'Obama Campaign';
 const DEFAULT_GIVE_COVER = 'covergallery.png';
 
-const give = {
+const SAMPLE_GIVE = {
   numberOfGives: DEFAULT_NUMBER_OF_GIVES,
   totalAmountOfGives: DEFAULT_TOTAL_AMOUNT_GIVES,
   recipient: DEFAULT_RECIPIENT,
   cover: DEFAULT_GIVE_COVER,
+  isTop: true,
 };
+
+const topGives = [SAMPLE_GIVE, SAMPLE_GIVE, SAMPLE_GIVE];
 
 const seeGalleryButton = (
   <Space>
@@ -66,9 +69,11 @@ const homeContent = (
 
 const galleryContent = (
   <GalleryStyled>
-    <GalleryCard give={give} />
-    <GalleryCard give={give} />
-    <GalleryCard give={give} />
+    <GalleryStyled>
+      {topGives.map((give) => (
+        <GalleryCard give={give} key={give.recipient} />
+      ))}
+    </GalleryStyled>
   </GalleryStyled>
 );
 

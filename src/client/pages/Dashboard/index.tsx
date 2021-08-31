@@ -1,40 +1,43 @@
-import { Column } from '@ant-design/charts';
-import { DownOutlined } from '@ant-design/icons';
-import { Dropdown, Menu, Space } from 'antd';
+import { DeleteOutlined, DownOutlined, EditOutlined } from '@ant-design/icons';
+import { Col, Dropdown, Menu, Popconfirm, Row, Space, Table } from 'antd';
+
 import React, { useState } from 'react';
+
 import { RouteComponentProps } from 'react-router-dom';
 
 import {
   Button,
-  Navigation,
-  Header,
-  Histogram,
-  GalleryCard,
-  GivingGoalCard,
-  NumbersCard,
-  Text,
-  Section,
   DonationCarousel,
   Feedback,
-  Card,
+  GalleryCard,
+  GivingGoalCard,
+  Header,
+  Navigation,
+  NumbersCard,
   PlatformCard,
+  RecurringGiveItem,
+  Section,
+  Text,
 } from 'src/client/components';
-import Historgram from 'src/client/components/Histogram';
+import Histogram from 'src/client/components/Histogram';
+import { useGetGives } from 'src/client/hooks/queries';
 import DonorSiderLayout from 'src/client/layouts/DonorSiderLayout';
+import { transformToTable } from 'src/client/utils/GiveUtils';
 import { BY_THE_NUMBERS_TITLES } from 'src/commons/constants/byTheNumbersTitles';
+import { ChartFields } from 'src/commons/constants/fields';
 import { GIVING_SIDE_TYPES } from 'src/commons/constants/givingSideTypes';
 import routes from 'src/commons/constants/routes';
 import { Sections } from 'src/commons/constants/sectionTitles';
+import { Indexable } from 'src/commons/types/Indexable.type';
 
 import {
   Container,
   Content,
   CoverLabel,
   GalleryStyled,
-  GiveOverTime,
-  NumberContainer,
-  Recipient,
   RecurringGivesContainer,
+  RecurringGivesList,
+  SectionContentStyled,
   SummaryContent,
 } from './styles';
 type Props = {};
@@ -54,7 +57,7 @@ const breadcrumbItems = [
 
 const DEFAULT_GIVING_SIDE = 'Strong';
 const DEFAULT_NUMBER_OF_GIVES = 3;
-const DEFAULT_TOTAL_AMOUNT_GIVES = '230.00';
+const DEFAULT_TOTAL_AMOUNT_GIVES = 230.0;
 const DEFAULT_RECIPIENT = 'Obama Campaign';
 const DEFAULT_GIVE_COVER = 'covergallery.png';
 const DEFAULT_BY_THE_NUMBERS_VALUE = '1,321';
@@ -70,8 +73,8 @@ const SAMPLE_GIVE = {
 };
 
 const SAMPLE_GIVE2 = {
-  totalAmountOfGives: DEFAULT_TOTAL_AMOUNT_GIVES,
-  recipient: DEFAULT_RECIPIENT,
+  totalAmountOfGives: 400.0,
+  recipient: 'Glory Reborn',
 };
 
 const latestGives = [SAMPLE_GIVE, SAMPLE_GIVE, SAMPLE_GIVE, SAMPLE_GIVE2];
@@ -84,7 +87,6 @@ const topGives = [
   SAMPLE_GIVE2,
   SAMPLE_GIVE2,
 ];
-const topThreeGives = [SAMPLE_GIVE, SAMPLE_GIVE, SAMPLE_GIVE];
 
 const platform = {
   id: DEFAULT_PLATFORM_COVER,
@@ -110,46 +112,118 @@ const topPlatformsSectionStyle = {
 };
 
 const seeGalleryButton = (
-  <Space>
-    <Button type="primary" onClick={handleOpenCreateModal}>
-      See Gallery
-    </Button>
-  </Space>
+  <Col xs={{ span: 0 }} lg={{ span: 4 }}>
+    <Space>
+      <Button type="primary" onClick={handleOpenCreateModal}>
+        See Gallery
+      </Button>
+    </Space>
+  </Col>
 );
 
 const giveSummary = (
-  <Space>
-    <SummaryContent>
-      <Text as={'caption4'} color={'#193B4E'}>
-        Average give amount &nbsp;
-      </Text>
-      <Text as={'caption5'}>$1000.00</Text>
-    </SummaryContent>
-    <SummaryContent>
-      <Text as={'caption4'} color={'#193B4E'}>
-        Median give amount &nbsp;
-      </Text>
-      <Text as={'caption5'}>$1000.00</Text>
-    </SummaryContent>
-  </Space>
+  <Col xs={{ span: 0 }} lg={{ span: 12, push: 1 }}>
+    <Space>
+      <SummaryContent>
+        <Text as={'caption4'} color={'#193B4E'}>
+          Average give amount &nbsp;
+        </Text>
+        <Text as={'caption5'}>$1000.00</Text>
+      </SummaryContent>
+      <SummaryContent>
+        <Text as={'caption4'} color={'#193B4E'}>
+          Median give amount &nbsp;
+        </Text>
+        <Text as={'caption5'}>$1000.00</Text>
+      </SummaryContent>
+    </Space>
+  </Col>
 );
 
-const byTheNumbersContent = (
-  <GalleryStyled>
-    {BY_THE_NUMBERS_TITLES.map((title) => (
-      <NumbersCard
-        key={title}
-        subtitle={title}
-        value={DEFAULT_BY_THE_NUMBERS_VALUE}
-      />
-    ))}
-  </GalleryStyled>
-);
+type MakeColumnParams = {
+  onClickEdit: (giveId: string) => void;
+  onConfirmDelete: (giveId: string) => void;
+};
+
+function makeColumns(params: MakeColumnParams) {
+  const { onClickEdit, onConfirmDelete } = params;
+
+  return [
+    {
+      dataIndex: 'dateCreated',
+      key: 'dateCreated',
+      title: 'Date',
+    },
+    {
+      dataIndex: 'recipient',
+      key: 'recipient',
+      title: 'Recipient',
+    },
+    {
+      dataIndex: 'note',
+      key: 'note',
+      title: 'Note',
+    },
+    {
+      dataIndex: 'contributed',
+      key: 'contributed',
+      title: 'Contributed',
+    },
+    {
+      dataIndex: 'taxDeductible',
+      key: 'taxDeductible',
+      title: 'Tax Deductible',
+    },
+    {
+      key: 'action',
+      title: 'Actions',
+      render: (text: string, record: Indexable) => {
+        function handleConfirmDelete() {
+          onConfirmDelete(record.id);
+        }
+
+        function handleClickEdit() {
+          onClickEdit(record.id);
+        }
+
+        return (
+          <Space size="small">
+            <Button
+              size="small"
+              type="primary-outline"
+              onClick={handleClickEdit}
+            >
+              <EditOutlined />
+            </Button>
+            <Popconfirm
+              title="Are you sure delete this group?"
+              onConfirm={handleConfirmDelete}
+            >
+              <Button size="small" type="primary-outline">
+                <DeleteOutlined />
+              </Button>
+            </Popconfirm>
+          </Space>
+        );
+      },
+    },
+  ];
+}
 
 export default function DashboardPage(props: RouteComponentProps<Props>) {
+  const { data, isLoading } = useGetGives();
   const [givingSide, setGivingSide] = useState<string>(
     DEFAULT_GIVING_SIDE.toUpperCase()
   );
+
+  function handleConfirmDelete(giveId: string) {}
+
+  function handleClickEdit(giveId: string) {}
+
+  const columns = makeColumns({
+    onClickEdit: handleClickEdit,
+    onConfirmDelete: handleConfirmDelete,
+  });
 
   const changeGivingSide = (value: String) => {
     const newValue = value.toUpperCase();
@@ -168,54 +242,89 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
 
   const homeContent = (
     <>
-      <GivingGoalCard goal={400.0} currentDonations={100} />
-      <DonationCarousel gives={latestGives} />
+      <Col xs={{ span: 24 }} lg={{ span: 9 }}>
+        <GivingGoalCard goal={400.0} currentDonations={100} />
+      </Col>
+      <Col xs={{ span: 24 }} lg={{ span: 15 }}>
+        <DonationCarousel gives={latestGives} />
+      </Col>
     </>
-  );
-
-  const galleryContent = (
-    <GalleryStyled>
-      {topGives.map((give) => (
-        <GalleryCard give={give} key={give.recipient} />
-      ))}
-    </GalleryStyled>
   );
 
   const givingOverTimeContent = (
-    <>
-      <Historgram />
-      <RecurringGivesContainer>
-        <Text as="overline">Recurring Gives</Text>
-        {topThreeGives.map((give, key) => (
-          <GiveOverTime key={give.recipient}>
-            <Recipient>
-              <NumberContainer>
-                <Text as="caption1">{key + 1}</Text>
-              </NumberContainer>
-              <Text as="buttonMedium">{give.recipient}</Text>
-            </Recipient>
-            <Text as="buttonRegular" color={'#0ABCC7'}>
-              {give.totalAmountOfGives}
-            </Text>
-          </GiveOverTime>
-        ))}
-      </RecurringGivesContainer>
-    </>
+    <Row>
+      <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+        <Histogram
+          data={topGives}
+          xField={ChartFields.RECIPIENT}
+          yField={ChartFields.TOTAL_AMOUNT_OF_GIVES}
+        />
+      </Col>
+      <Col xs={{ span: 0 }} lg={{ span: 12 }}>
+        <RecurringGivesContainer>
+          <Text as="overline">Recurring Gives</Text>
+          <RecurringGivesList>
+            {topGives.map((give, key) => (
+              <RecurringGiveItem key={key} iteration={key} give={give} />
+            ))}
+          </RecurringGivesList>
+        </RecurringGivesContainer>
+      </Col>
+    </Row>
+  );
+
+  const byTheNumbersContent = (
+    <Row>
+      {BY_THE_NUMBERS_TITLES.map((title) => (
+        <NumbersCard
+          key={title}
+          subtitle={title}
+          value={DEFAULT_BY_THE_NUMBERS_VALUE}
+        />
+      ))}
+    </Row>
   );
 
   const typesOfGivingContent = (
-    <>
-      <Historgram />
-    </>
+    <Row>
+      <Col span={24}>
+        <Histogram
+          data={topGives}
+          xField={ChartFields.GIVING_TYPE}
+          yField={ChartFields.TOTAL_AMOUNT_OF_GIVES}
+        />
+      </Col>
+    </Row>
+  );
+
+  const yourYearGivesContent = (
+    <Row>
+      <Col span={24}>
+        <Table
+          columns={columns}
+          dataSource={data?.data.map(transformToTable)}
+          loading={isLoading}
+          pagination={false}
+        />
+      </Col>
+    </Row>
   );
 
   const topPlatformsContent = (
-    <GalleryStyled>
-      <PlatformCard platform={platform} />
-      <PlatformCard platform={platform} />
-      <PlatformCard platform={platform} />
-      <PlatformCard platform={platform} />
-    </GalleryStyled>
+    <Row>
+      <Col xs={{ span: 12 }} xl={{ span: 6 }}>
+        <PlatformCard platform={platform} />
+      </Col>
+      <Col xs={{ span: 12 }} xl={{ span: 6 }}>
+        <PlatformCard platform={platform} />
+      </Col>
+      <Col xs={{ span: 12 }} xl={{ span: 6 }}>
+        <PlatformCard platform={platform} />
+      </Col>
+      <Col xs={{ span: 12 }} xl={{ span: 6 }}>
+        <PlatformCard platform={platform} />
+      </Col>
+    </Row>
   );
 
   return (
@@ -250,12 +359,19 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
                 extra={seeGalleryButton}
               />
             }
-            content={galleryContent}
+            content={
+              <GalleryStyled>
+                {topGives.map((give) => (
+                  <GalleryCard give={give} key={give.recipient} />
+                ))}
+              </GalleryStyled>
+            }
             style={gallerySectionStyle}
           />
           <Section
             title={<Header title={Sections.GIVING_OVER_TIME} />}
             content={givingOverTimeContent}
+            borded={true}
           />
           <Section content={<DonationCarousel />} />
           <Section
@@ -268,9 +384,15 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
             }
             content={byTheNumbersContent}
           />
+
+          <Section
+            title={<Header title={Sections.YOUR_2021_GIVES} />}
+            content={yourYearGivesContent}
+          />
           <Section
             title={<Header title={Sections.TYPES_OF_GIVING} />}
             content={typesOfGivingContent}
+            borded={true}
           />
           <Section
             title={<Header title={Sections.TOP_GIVING_PLATFORMS} />}

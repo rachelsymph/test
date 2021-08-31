@@ -26,7 +26,7 @@ export function DonationCarousel(props: Props) {
                 {give.recipient}
               </Text>
               <Text as={'subtitle2'} color={'white'}>
-                You have given a total of {give.totalAmountOfGives}
+                You have given a total of {give.totalAmountOfGives.toString()}
               </Text>
             </DonationDetailContent>
           ))}

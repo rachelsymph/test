@@ -9,7 +9,26 @@ import {
   StyledTitleHeader,
 } from './styles';
 
-type HTMLTextElement = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'a';
+type HTMLTextElement =
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'h4'
+  | 'h5'
+  | 'h6'
+  | 'p'
+  | 'a'
+  | 'subtitle1'
+  | 'subtitle2'
+  | 'body'
+  | 'buttonMedium'
+  | 'buttonRegular'
+  | 'overline'
+  | 'caption1'
+  | 'caption2'
+  | 'caption3'
+  | 'caption4'
+  | 'caption5';
 
 type Props = {
   title: string;

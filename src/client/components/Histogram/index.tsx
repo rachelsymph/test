@@ -1,8 +1,11 @@
-import { Column } from '@ant-design/charts';
 import React, { useState, useEffect } from 'react';
+
+import { HistogramStyled } from './styles';
 
 type Props = {
   data?: object[];
+  xField: string;
+  yField: string;
 };
 
 const DEFAULT_DATA = [
@@ -41,11 +44,11 @@ const DEFAULT_DATA = [
 ];
 
 export default function Histogram(props: Props) {
-  const { data = DEFAULT_DATA } = props;
+  const { data = DEFAULT_DATA, xField, yField } = props;
   var config = {
-    data: data,
-    xField: 'type',
-    yField: 'sales',
+    data,
+    xField,
+    yField,
     columnWidthRatio: 0.8,
     xAxis: {
       label: {
@@ -54,10 +57,6 @@ export default function Histogram(props: Props) {
       },
     },
     color: '#0ABCC7',
-    meta: {
-      type: { alias: '类别' },
-      sales: { alias: '销售额' },
-    },
   };
-  return <Column {...config} />;
+  return <HistogramStyled {...config} />;
 }

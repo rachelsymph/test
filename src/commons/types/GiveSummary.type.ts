@@ -3,5 +3,5 @@ export type GiveSummary = {
   isTop?: boolean;
   numberOfGives?: number;
   recipient: string;
-  totalAmountOfGives: string;
+  totalAmountOfGives: number;
 };

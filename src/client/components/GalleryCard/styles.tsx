@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const StyledGalleryCard = styled.div`
   padding 20px;
-  min-width: 258px;
 `;
 
 export const DetailsContainer = styled.div`
@@ -10,6 +9,7 @@ export const DetailsContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 0;
+  width: 100%;
 `;
 
 export const DetailContent = styled.div`

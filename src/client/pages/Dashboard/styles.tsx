@@ -1,11 +1,18 @@
+import { Row } from 'antd';
 import styled from 'styled-components';
+
+import { device } from 'src/commons/constants/device';
 
 export const Container = styled.div``;
 
-export const Content = styled.div`
+export const Content = styled(Row)`
   margin: auto;
-  padding: 95px 15px 15px;
-  max-width: ${(props) => props.theme.extras.maxWidth};
+
+  @media ${device.laptop} {
+    padding: 95px 15px 15px;
+    max-width: ${(props) => props.theme.extras.maxWidth};
+    background-color: none;
+  }
 `;
 
 export const CoverLabel = styled.div`
@@ -27,12 +34,9 @@ export const GalleryStyled = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding-top: 50px;
-`;
-
-export const SubGalleryStyled = styled.div`
-  display: flex;
-  justify-content: center;
+  @media ${device.desktop} {
+    padding-top: 50px;
+  }
 `;
 
 export const SummaryContent = styled.div`
@@ -43,32 +47,16 @@ export const RecurringGivesContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 320px;
-  width: 400px;
-  padding-left: 20px;
+  width: 100%;
+  padding-left: 50px;
 `;
 
-export const Recipient = styled.div`
-  display: flex;
-  text-align: center;
+export const RecurringGivesList = styled(GalleryStyled)`
+  padding-top: 20px;
 `;
 
-export const GiveOverTime = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 400px;
-  justify-content: space-between;
-  padding: 5px 0px;
-  text-align: center;
-`;
-
-export const NumberContainer = styled.div`
-  background-color: ${(props) => props.theme.colors.teal2};
-  color: ${(props) => props.theme.colors.white};
-  border-radius: 20px;
-  width: 25px;
-  height: 25px;
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  margin-right: 5px;
+export const SectionContentStyled = styled(GalleryStyled)`
+  @media ${device.desktop} {
+    flex-flow: nowrap;
+  }
 `;

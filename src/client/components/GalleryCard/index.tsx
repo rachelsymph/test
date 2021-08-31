@@ -17,7 +17,7 @@ export default function GalleryCard(props: Props) {
   const { colors } = useContext(ThemeContext);
   const { give } = props;
   const numberOfGives = give?.numberOfGives;
-  const totalAmountOfGives = give?.totalAmountOfGives;
+  const totalAmountOfGives = give?.totalAmountOfGives.toString();
   const recipient = give?.recipient;
   const cover = give?.cover;
   const isTop = give?.isTop;
