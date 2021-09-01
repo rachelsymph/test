@@ -6,6 +6,7 @@ import GalleryCard from './GalleryCard';
 import GivingGoalCard from './GivingGoalCard';
 import Header from './Header';
 import Histogram from './Histogram';
+import LineGraph from './LineGraph';
 import Movement from './Movement';
 import Navigation from './Navigation';
 import NumbersCard from './NumbersCard';
@@ -24,6 +25,7 @@ export {
   GivingGoalCard,
   Header,
   Histogram,
+  LineGraph,
   Movement,
   Navigation,
   NumbersCard,

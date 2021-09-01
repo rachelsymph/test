@@ -3,6 +3,7 @@ import {
   Col,
   Dropdown,
   Menu,
+  Modal,
   Popconfirm,
   Radio,
   Row,
@@ -21,6 +22,7 @@ import {
   GalleryCard,
   GivingGoalCard,
   Header,
+  LineGraph,
   Navigation,
   NumbersCard,
   PlatformCard,
@@ -170,9 +172,27 @@ function makeColumns(params: MakeColumnParams) {
       title: 'Recipient',
     },
     {
-      dataIndex: 'note',
       key: 'note',
       title: 'Note',
+      render: (text: string, record: Indexable) => {
+        // const [isModalVisible, setIsModalVisible] = useState(false);
+        const showModal = () => {
+          // setIsModalVisible(true);
+        };
+
+        return (
+          <Space size="small">
+            <Button size="small" type="text" onClick={showModal}>
+              See Note
+            </Button>
+            <Modal title="Basic Modal" visible={false}>
+              <p>Some contents...</p>
+              <p>Some contents...</p>
+              <p>Some contents...</p>
+            </Modal>
+          </Space>
+        );
+      },
     },
     {
       dataIndex: 'contributed',
@@ -264,7 +284,7 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
   const givingOverTimeContent = (
     <Row>
       <Col xs={{ span: 24 }} lg={{ span: 12 }}>
-        <Histogram
+        <LineGraph
           data={topGives}
           xField={ChartFields.RECIPIENT}
           yField={ChartFields.TOTAL_AMOUNT_OF_GIVES}

@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+
+import defaultTheme from 'src/client/themes/default';
 
 import { HistogramStyled } from './styles';
 
@@ -56,7 +58,7 @@ export default function Histogram(props: Props) {
         autoRotate: false,
       },
     },
-    color: '#0ABCC7',
+    color: defaultTheme.colors.teal2,
   };
   return <HistogramStyled {...config} />;
 }
