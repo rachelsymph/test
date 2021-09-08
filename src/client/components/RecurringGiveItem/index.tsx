@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Text } from 'src/client/components';
-import { GiveSummary } from 'src/commons/types/GiveSummary.type';
+import { Give, GiveSummary } from 'src/commons/types';
 
 import {
   ColoredNumberContainer,
@@ -9,28 +9,31 @@ import {
   NumberContainer,
   Recipient,
 } from './styles';
+
 type Props = {
   iteration: number;
   give: GiveSummary;
+  isTop?: boolean;
 };
+
 export default function RecurringGiveItem(props: Props) {
-  const { iteration, give } = props;
+  const { iteration, give, isTop } = props;
   const count = iteration + 1;
   return (
     <GiveItemStyle>
       <Recipient>
-        {give.isTop && (
+        {isTop && (
           <ColoredNumberContainer>
             <Text as="caption1">{count}</Text>
           </ColoredNumberContainer>
         )}
 
-        {!give.isTop && (
+        {!isTop && (
           <NumberContainer>
             <Text as="caption1">{count}</Text>
           </NumberContainer>
         )}
-        <Text as="buttonMedium">{give.recipient}</Text>
+        <Text as="buttonMedium">{give.recipientName}</Text>
       </Recipient>
       <Text as="buttonRegular" color={'#0ABCC7'}>
         {give.totalAmountOfGives}

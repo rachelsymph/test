@@ -9,9 +9,10 @@ import {
 import React from 'react';
 
 import defaultTheme from 'src/client/themes/default';
+import { GiveSummary } from 'src/commons/types/GiveSummary.type';
 
 type Props = {
-  data: object[];
+  data: GiveSummary[];
   xField: string;
   yField: string;
 };
@@ -21,6 +22,7 @@ let PreTooltipData: { date: string; value: number };
 type Base = LineConfig | AreaConfig | ColumnConfig;
 
 const PlotMaps: Record<string, Plot<Base>> = {};
+
 export default function LineGraph(props: Props) {
   const { data, xField, yField } = props;
 

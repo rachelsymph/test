@@ -20,10 +20,10 @@ export function DonationCarousel(props: Props) {
     <CarouselContainer>
       <Donations autoplay>
         {gives &&
-          gives?.map((give) => (
-            <DonationDetailContent key={give.recipient}>
+          gives?.map((give, key) => (
+            <DonationDetailContent key={key}>
               <Text as={'subtitle1'} color={'white'}>
-                {give.recipient}
+                {give.recipientName}
               </Text>
               <Text as={'subtitle2'} color={'white'}>
                 You have given a total of {give.totalAmountOfGives.toString()}

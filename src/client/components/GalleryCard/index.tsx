@@ -7,20 +7,25 @@ import { Card, Text } from 'src/client/components';
 
 import { GiveSummary } from 'src/commons/types/GiveSummary.type';
 
-import { DetailContent, DetailsContainer, StyledGalleryCard } from './styles';
+import {
+  DetailContent,
+  DetailsContainer,
+  MiniStyledGalleryCard,
+  StyledGalleryCard,
+} from './styles';
 
 type Props = {
   give?: GiveSummary;
+  isTop?: boolean;
 };
 
 export default function GalleryCard(props: Props) {
   const { colors } = useContext(ThemeContext);
-  const { give } = props;
+  const { give, isTop } = props;
   const numberOfGives = give?.numberOfGives;
   const totalAmountOfGives = give?.totalAmountOfGives.toString();
-  const recipient = give?.recipient;
+  const recipient = String(give?.recipient?.name);
   const cover = give?.cover;
-  const isTop = give?.isTop;
 
   return (
     <>
@@ -49,7 +54,7 @@ export default function GalleryCard(props: Props) {
       )}
       {!isTop && (
         <Card>
-          <StyledGalleryCard>
+          <MiniStyledGalleryCard>
             <Text as={'subtitle2'}>{recipient}</Text>
             <DetailsContainer>
               <DetailContent>
@@ -59,7 +64,7 @@ export default function GalleryCard(props: Props) {
                 </Text>
               </DetailContent>
             </DetailsContainer>
-          </StyledGalleryCard>
+          </MiniStyledGalleryCard>
         </Card>
       )}
     </>

@@ -11,7 +11,7 @@ import {
   Table,
 } from 'antd';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { RouteComponentProps } from 'react-router-dom';
 
@@ -34,12 +34,16 @@ import {
 import Histogram from 'src/client/components/Histogram';
 import { useGetGives } from 'src/client/hooks/queries';
 import DonorSiderLayout from 'src/client/layouts/DonorSiderLayout';
-import { transformToTable } from 'src/client/utils/GiveUtils';
+import {
+  getAggregatedData,
+  transformToTable,
+} from 'src/client/utils/GiveUtils';
 import { BY_THE_NUMBERS_TITLES } from 'src/commons/constants/byTheNumbersTitles';
 import { ChartFields } from 'src/commons/constants/fields';
 import { GIVING_SIDE_TYPES } from 'src/commons/constants/givingSideTypes';
 import routes from 'src/commons/constants/routes';
 import { Sections } from 'src/commons/constants/sectionTitles';
+import { Give, GiveSummary, GiveType, PlatformCount } from 'src/commons/types';
 import { Indexable } from 'src/commons/types/Indexable.type';
 
 import {
@@ -75,18 +79,21 @@ const DEFAULT_GIVE_COVER = 'covergallery.png';
 const DEFAULT_BY_THE_NUMBERS_VALUE = '1,321';
 const DEFAULT_PLATFORM_COVER = 'paypal.png';
 const DEFAULT_PLATFORM = 'paypal';
+const RECURRING_LIMIT = 7;
+const IS_TOP_LIMIT = 3;
+const TOP_PLATFORM_DISPLAY = 4;
 
 const SAMPLE_GIVE = {
   numberOfGives: DEFAULT_NUMBER_OF_GIVES,
   totalAmountOfGives: DEFAULT_TOTAL_AMOUNT_GIVES,
-  recipient: DEFAULT_RECIPIENT,
+  recipientName: DEFAULT_RECIPIENT,
   cover: DEFAULT_GIVE_COVER,
   isTop: true,
 };
 
 const SAMPLE_GIVE2 = {
   totalAmountOfGives: 400.0,
-  recipient: 'Glory Reborn',
+  recipientName: 'Glory Reborn',
 };
 
 const latestGives = [SAMPLE_GIVE, SAMPLE_GIVE, SAMPLE_GIVE, SAMPLE_GIVE2];
@@ -245,6 +252,36 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
   const [givingSide, setGivingSide] = useState<string>(
     DEFAULT_GIVING_SIDE.toUpperCase()
   );
+  const [givingOverTimeData, setGivingOverTimeData] = useState<GiveSummary[]>();
+  const [typesOfGivingData, setTypesOfGivingData] = useState<GiveType[]>();
+  const [topPlatforms, setTopPlatforms] = useState<PlatformCount[]>();
+  const [recipientGivesSummary, setRecipientGivesSummary] = useState<
+    GiveSummary[]
+  >();
+  const [recurringData, setRecurringData] = useState<Give[]>();
+
+  useEffect(() => {
+    if (data) {
+      const givesData = data.data;
+      const {
+        yearlyGivesSummary,
+        recipientGivesSummary,
+        typesOfGivingData,
+        topPlatforms,
+      } = getAggregatedData(givesData);
+      console.log(
+        yearlyGivesSummary,
+        recipientGivesSummary,
+        typesOfGivingData,
+        topPlatforms
+      );
+      setRecurringData(givesData);
+      setGivingOverTimeData(yearlyGivesSummary);
+      setTypesOfGivingData(typesOfGivingData);
+      setTopPlatforms(topPlatforms);
+      setRecipientGivesSummary(recipientGivesSummary);
+    }
+  }, []);
 
   function handleConfirmDelete(giveId: string) {}
 
@@ -262,8 +299,8 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
 
   const menu = (
     <Menu>
-      {GIVING_SIDE_TYPES.map((type) => (
-        <Menu.Item key={type}>
+      {GIVING_SIDE_TYPES.map((type, key) => (
+        <Menu.Item key={key}>
           <a onClick={() => changeGivingSide(type)}>{type}</a>
         </Menu.Item>
       ))}
@@ -276,7 +313,7 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
         <GivingGoalCard goal={400.0} currentDonations={100} />
       </Col>
       <Col xs={{ span: 24 }} lg={{ span: 15 }}>
-        <DonationCarousel gives={latestGives} />
+        <DonationCarousel gives={topGives?.slice(0, TOP_PLATFORM_DISPLAY)} />
       </Col>
     </>
   );
@@ -284,16 +321,35 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
   const givingOverTimeContent = (
     <Row>
       <Col xs={{ span: 24 }} lg={{ span: 12 }}>
-        <LineGraph
-          data={topGives}
-          xField={ChartFields.RECIPIENT}
-          yField={ChartFields.TOTAL_AMOUNT_OF_GIVES}
-        />
+        {givingOverTimeData && (
+          <LineGraph
+            data={givingOverTimeData}
+            xField={ChartFields.YEAR}
+            yField={ChartFields.TOTAL_AMOUNT_OF_GIVES}
+          />
+        )}
       </Col>
       <Col xs={{ span: 0 }} lg={{ span: 12 }}>
         <RecurringGivesContainer>
           <Text as="overline">Recurring Gives</Text>
           <RecurringGivesList>
+            {/* {recurringData?.slice(0, IS_TOP_LIMIT).map((give, key) => (
+              <RecurringGiveItem
+                key={key}
+                iteration={key}
+                give={give}
+                isTop={true}
+              />
+            ))} */}
+            {/* {recurringData
+              ?.slice(IS_TOP_LIMIT + 1, RECURRING_LIMIT)
+              .map((give, key) => (
+                <RecurringGiveItem
+                  key={key + IS_TOP_LIMIT}
+                  iteration={key}
+                  give={give}
+                />
+              ))} */}
             {topGives.map((give, key) => (
               <RecurringGiveItem key={key} iteration={key} give={give} />
             ))}
@@ -319,9 +375,9 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
     <Row>
       <Col span={24}>
         <Histogram
-          data={topGives}
+          data={typesOfGivingData}
           xField={ChartFields.GIVING_TYPE}
-          yField={ChartFields.TOTAL_AMOUNT_OF_GIVES}
+          yField={ChartFields.COUNT}
         />
       </Col>
     </Row>
@@ -343,18 +399,14 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
 
   const topPlatformsContent = (
     <Row>
-      <Col xs={{ span: 12 }} xl={{ span: 6 }}>
-        <PlatformCard platform={platform} />
-      </Col>
-      <Col xs={{ span: 12 }} xl={{ span: 6 }}>
-        <PlatformCard platform={platform} />
-      </Col>
-      <Col xs={{ span: 12 }} xl={{ span: 6 }}>
-        <PlatformCard platform={platform} />
-      </Col>
-      <Col xs={{ span: 12 }} xl={{ span: 6 }}>
-        <PlatformCard platform={platform} />
-      </Col>
+      {topPlatforms?.slice(0, TOP_PLATFORM_DISPLAY).map(
+        (topPlatform, key) =>
+          topPlatform && (
+            <Col xs={{ span: 12 }} xl={{ span: 6 }} key={key}>
+              <PlatformCard platform={topPlatform.platform} />
+            </Col>
+          )
+      )}
     </Row>
   );
 
@@ -415,9 +467,16 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
             content={
               <>
                 <GalleryStyled>
-                  {topGives.map((give) => (
-                    <GalleryCard give={give} key={give.recipient} />
-                  ))}
+                  {recipientGivesSummary
+                    ?.slice(0, IS_TOP_LIMIT)
+                    .map((give, key) => (
+                      <GalleryCard give={give} key={key} isTop={true} />
+                    ))}
+                  {recipientGivesSummary
+                    ?.slice(IS_TOP_LIMIT, RECURRING_LIMIT)
+                    .map((give, key) => (
+                      <GalleryCard give={give} key={key} isTop={false} />
+                    ))}
                 </GalleryStyled>
                 {showAllGivesButton}
               </>

@@ -2,6 +2,13 @@ import styled from 'styled-components';
 
 export const StyledGalleryCard = styled.div`
   padding 20px;
+  width: 350px;
+  place-self: flex-end;
+  align-content: flex-end;
+`;
+
+export const MiniStyledGalleryCard = styled(StyledGalleryCard)`
+  width: 260px;
 `;
 
 export const DetailsContainer = styled.div`

@@ -69,11 +69,7 @@ const homeContent = (
 
 const galleryContent = (
   <GalleryStyled>
-    <GalleryStyled>
-      {topGives.map((give) => (
-        <GalleryCard give={give} key={give.recipient} />
-      ))}
-    </GalleryStyled>
+    <GalleryStyled></GalleryStyled>
   </GalleryStyled>
 );
 
@@ -96,8 +92,8 @@ export default function RootPage(props: RouteComponentProps<Props>) {
 
   const menu = (
     <Menu>
-      {GIVING_SIDE_TYPES.map((type) => (
-        <Menu.Item key={type}>
+      {GIVING_SIDE_TYPES.map((type, key) => (
+        <Menu.Item key={key}>
           <a onClick={() => changeGivingSide(type)}>{type}</a>
         </Menu.Item>
       ))}

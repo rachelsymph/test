@@ -5,5 +5,7 @@ export enum FormField {
 export enum ChartFields {
   TOTAL_AMOUNT_OF_GIVES = 'totalAmountOfGives',
   RECIPIENT = 'recipient',
-  GIVING_TYPE = 'givingType',
+  GIVING_TYPE = 'giveType',
+  YEAR = 'year',
+  COUNT = 'count',
 }
