@@ -81,7 +81,7 @@ const DEFAULT_PLATFORM_COVER = 'paypal.png';
 const DEFAULT_PLATFORM = 'paypal';
 const RECURRING_LIMIT = 7;
 const IS_TOP_LIMIT = 3;
-const TOP_PLATFORM_DISPLAY = 4;
+const TOP_FOUR_DISPLAY = 4;
 
 const SAMPLE_GIVE = {
   numberOfGives: DEFAULT_NUMBER_OF_GIVES,
@@ -96,7 +96,6 @@ const SAMPLE_GIVE2 = {
   recipientName: 'Glory Reborn',
 };
 
-const latestGives = [SAMPLE_GIVE, SAMPLE_GIVE, SAMPLE_GIVE, SAMPLE_GIVE2];
 const topGives = [
   SAMPLE_GIVE,
   SAMPLE_GIVE,
@@ -106,18 +105,6 @@ const topGives = [
   SAMPLE_GIVE2,
   SAMPLE_GIVE2,
 ];
-
-const platform = {
-  id: DEFAULT_PLATFORM_COVER,
-  dateCreated: new Date('2019-01-16'),
-  dateUpdated: new Date('2019-01-16'),
-  isDeleted: false,
-  keywords: [],
-  cover: DEFAULT_PLATFORM_COVER,
-  domainName: DEFAULT_PLATFORM,
-  isSyncing: true,
-  name: DEFAULT_PLATFORM,
-};
 
 const gallerySectionStyle = {
   padding: '60px 30px',
@@ -313,7 +300,7 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
         <GivingGoalCard goal={400.0} currentDonations={100} />
       </Col>
       <Col xs={{ span: 24 }} lg={{ span: 15 }}>
-        <DonationCarousel gives={topGives?.slice(0, TOP_PLATFORM_DISPLAY)} />
+        <DonationCarousel gives={topGives?.slice(0, TOP_FOUR_DISPLAY)} />
       </Col>
     </>
   );
@@ -333,15 +320,15 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
         <RecurringGivesContainer>
           <Text as="overline">Recurring Gives</Text>
           <RecurringGivesList>
-            {/* {recurringData?.slice(0, IS_TOP_LIMIT).map((give, key) => (
+            {topGives?.slice(0, IS_TOP_LIMIT).map((give, key) => (
               <RecurringGiveItem
                 key={key}
                 iteration={key}
                 give={give}
                 isTop={true}
               />
-            ))} */}
-            {/* {recurringData
+            ))}
+            {topGives
               ?.slice(IS_TOP_LIMIT + 1, RECURRING_LIMIT)
               .map((give, key) => (
                 <RecurringGiveItem
@@ -349,10 +336,10 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
                   iteration={key}
                   give={give}
                 />
-              ))} */}
-            {topGives.map((give, key) => (
+              ))}
+            {/* {topGives.map((give, key) => (
               <RecurringGiveItem key={key} iteration={key} give={give} />
-            ))}
+            ))} */}
           </RecurringGivesList>
         </RecurringGivesContainer>
       </Col>
@@ -399,7 +386,7 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
 
   const topPlatformsContent = (
     <Row>
-      {topPlatforms?.slice(0, TOP_PLATFORM_DISPLAY).map(
+      {topPlatforms?.slice(0, TOP_FOUR_DISPLAY).map(
         (topPlatform, key) =>
           topPlatform && (
             <Col xs={{ span: 12 }} xl={{ span: 6 }} key={key}>

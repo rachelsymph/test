@@ -11,4 +11,7 @@ export const StyledFeedback = styled.div`
   align-items: center;
   justify-content: space-around;
   width: 100%;
+  .ant-card-body {
+    width: 100%;
+  }
 `;

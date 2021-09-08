@@ -6,7 +6,6 @@ export const StyledMovement = styled.div`
   border-radius: 20px;
   height: 357px;
   padding: 50px;
-
   @media ${(props) => props.theme.device.laptop} {
     padding: 50px 200px 60px 30px;
   }

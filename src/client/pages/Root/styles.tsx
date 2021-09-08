@@ -36,3 +36,15 @@ export const Section = styled.div`
   padding-bottom: 60px;
   justify-content: space-between;
 `;
+
+export const RecurringGivesContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 320px;
+  width: 100%;
+  padding-left: 50px;
+`;
+
+export const RecurringGivesList = styled(GalleryStyled)`
+  padding-top: 20px;
+`;
