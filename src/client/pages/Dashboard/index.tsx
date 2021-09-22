@@ -35,7 +35,8 @@ import Histogram from 'src/client/components/Histogram';
 import { useGetGives } from 'src/client/hooks/queries';
 import DonorSiderLayout from 'src/client/layouts/DonorSiderLayout';
 import {
-  getAggregatedData,
+  getRecipientGives,
+  getTopPlatforms,
   getTypeGives,
   getYearlyGives,
   transformToTable,
@@ -252,9 +253,8 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
   useEffect(() => {
     if (data) {
       const givesData = data.data;
-      const { recipientGivesSummary, topPlatforms } = getAggregatedData(
-        givesData
-      );
+      const recipientGivesSummary = getRecipientGives(givesData);
+      const topPlatforms = getTopPlatforms(givesData);
       const yearlyGiveSummary = getYearlyGives(givesData);
       const typesGiveSummary = getTypeGives(givesData);
       setRecurringData(givesData);

@@ -20,7 +20,7 @@ import {
 } from 'src/client/components';
 import { useGetGives } from 'src/client/hooks/queries';
 import DonorSiderLayout from 'src/client/layouts/DonorSiderLayout';
-import { getAggregatedData } from 'src/client/utils/GiveUtils';
+import { getRecipientGives } from 'src/client/utils/GiveUtils';
 import { GIVING_SIDE_TYPES } from 'src/commons/constants/givingSideTypes';
 import routes from 'src/commons/constants/routes';
 import { Sections } from 'src/commons/constants/sectionTitles';
@@ -90,9 +90,7 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
   useEffect(() => {
     if (data) {
       const givesData = data.data;
-      const { recipientGivesSummary, topPlatforms } = getAggregatedData(
-        givesData
-      );
+      const recipientGivesSummary = getRecipientGives(givesData);
       setRecipientGivesSummary(recipientGivesSummary);
     }
   }, []);

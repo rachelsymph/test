@@ -74,15 +74,10 @@ export function getTypeGives(gives: Give[]) {
   return typesOfGivingData;
 }
 
-export function getAggregatedData(gives: Give[] | undefined) {
+export function getRecipientGives(gives: Give[]) {
   const recipientGivesSummary: GiveSummary[] = [];
-  const topPlatforms: PlatformCount[] = [];
-
-  const platforms: Platform[] = [];
   const recipients: Recipient[] = [];
-
   gives?.forEach(function (give) {
-    const platform = give.platform;
     const recipient = give.recipient;
     if (recipient && recipients.includes(recipient)) {
       const existingGiveIndex = recipientGivesSummary.findIndex(
@@ -103,6 +98,17 @@ export function getAggregatedData(gives: Give[] | undefined) {
       });
       recipients.push(recipient);
     }
+  });
+
+  return recipientGivesSummary;
+}
+
+export function getTopPlatforms(gives: Give[] | undefined) {
+  const topPlatforms: PlatformCount[] = [];
+  const platforms: Platform[] = [];
+
+  gives?.forEach(function (give) {
+    const platform = give.platform;
 
     if (platform && platforms.includes(platform)) {
       const existingPlatformDataIndex = topPlatforms.findIndex(
@@ -117,8 +123,5 @@ export function getAggregatedData(gives: Give[] | undefined) {
       platforms.push(platform);
     }
   });
-  return {
-    recipientGivesSummary,
-    topPlatforms,
-  };
+  return topPlatforms;
 }
