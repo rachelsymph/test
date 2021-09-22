@@ -90,12 +90,9 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
   useEffect(() => {
     if (data) {
       const givesData = data.data;
-      const {
-        yearlyGivesSummary,
-        recipientGivesSummary,
-        typesOfGivingData,
-        topPlatforms,
-      } = getAggregatedData(givesData);
+      const { recipientGivesSummary, topPlatforms } = getAggregatedData(
+        givesData
+      );
       setRecipientGivesSummary(recipientGivesSummary);
     }
   }, []);

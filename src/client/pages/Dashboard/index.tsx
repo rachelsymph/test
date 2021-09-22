@@ -36,6 +36,8 @@ import { useGetGives } from 'src/client/hooks/queries';
 import DonorSiderLayout from 'src/client/layouts/DonorSiderLayout';
 import {
   getAggregatedData,
+  getTypeGives,
+  getYearlyGives,
   transformToTable,
 } from 'src/client/utils/GiveUtils';
 import { BY_THE_NUMBERS_TITLES } from 'src/commons/constants/byTheNumbersTitles';
@@ -250,21 +252,14 @@ export default function DashboardPage(props: RouteComponentProps<Props>) {
   useEffect(() => {
     if (data) {
       const givesData = data.data;
-      const {
-        yearlyGivesSummary,
-        recipientGivesSummary,
-        typesOfGivingData,
-        topPlatforms,
-      } = getAggregatedData(givesData);
-      console.log(
-        yearlyGivesSummary,
-        recipientGivesSummary,
-        typesOfGivingData,
-        topPlatforms
+      const { recipientGivesSummary, topPlatforms } = getAggregatedData(
+        givesData
       );
+      const yearlyGiveSummary = getYearlyGives(givesData);
+      const typesGiveSummary = getTypeGives(givesData);
       setRecurringData(givesData);
-      setGivingOverTimeData(yearlyGivesSummary);
-      setTypesOfGivingData(typesOfGivingData);
+      setGivingOverTimeData(yearlyGiveSummary);
+      setTypesOfGivingData(typesGiveSummary);
       setTopPlatforms(topPlatforms);
       setRecipientGivesSummary(recipientGivesSummary);
     }

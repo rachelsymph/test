@@ -26,20 +26,10 @@ export function transformToTable(give: Give) {
   };
 }
 
-export function getAggregatedData(gives: Give[] | undefined) {
+export function getYearlyGives(gives: Give[]) {
   const yearlyGivesSummary: GiveSummary[] = [];
-  const recipientGivesSummary: GiveSummary[] = [];
-  const typesOfGivingData: GiveType[] = [];
-  const topPlatforms: PlatformCount[] = [];
-  const typesOfGiving: string[] = [];
-  const platforms: Platform[] = [];
   const years: string[] = [];
-  const recipients: Recipient[] = [];
-
   gives?.forEach(function (give) {
-    const platform = give.platform;
-    const recipient = give.recipient;
-    const giveType = String(platform?.platformTypes);
     const dateInString = String(give.giveDate);
     const date = new Date(dateInString);
     const year = String(date.getFullYear());
@@ -57,6 +47,43 @@ export function getAggregatedData(gives: Give[] | undefined) {
       });
       years.push(year);
     }
+  });
+  return yearlyGivesSummary;
+}
+
+export function getTypeGives(gives: Give[]) {
+  const typesOfGivingData: GiveType[] = [];
+  gives?.forEach(function (give) {
+    const typesOfGiving: string[] = [];
+    const platform = give.platform;
+    const giveType = String(platform?.platformTypes);
+    if (typesOfGiving.includes(giveType)) {
+      const existingGiveTypeDataIndex = typesOfGivingData.findIndex(
+        (existingGive) => existingGive.giveType == giveType
+      );
+      typesOfGivingData[existingGiveTypeDataIndex].count += 1;
+    } else if (giveType) {
+      typesOfGivingData.push({
+        giveType,
+        count: 1,
+      });
+      typesOfGiving.push(giveType);
+    }
+  });
+
+  return typesOfGivingData;
+}
+
+export function getAggregatedData(gives: Give[] | undefined) {
+  const recipientGivesSummary: GiveSummary[] = [];
+  const topPlatforms: PlatformCount[] = [];
+
+  const platforms: Platform[] = [];
+  const recipients: Recipient[] = [];
+
+  gives?.forEach(function (give) {
+    const platform = give.platform;
+    const recipient = give.recipient;
     if (recipient && recipients.includes(recipient)) {
       const existingGiveIndex = recipientGivesSummary.findIndex(
         (existingGive) => existingGive.recipient == recipient
@@ -76,18 +103,7 @@ export function getAggregatedData(gives: Give[] | undefined) {
       });
       recipients.push(recipient);
     }
-    if (typesOfGiving.includes(giveType)) {
-      const existingGiveTypeDataIndex = typesOfGivingData.findIndex(
-        (existingGive) => existingGive.giveType == giveType
-      );
-      typesOfGivingData[existingGiveTypeDataIndex].count += 1;
-    } else if (giveType) {
-      typesOfGivingData.push({
-        giveType,
-        count: 1,
-      });
-      typesOfGiving.push(giveType);
-    }
+
     if (platform && platforms.includes(platform)) {
       const existingPlatformDataIndex = topPlatforms.findIndex(
         (existingPlatform) => existingPlatform.platform == platform
@@ -102,9 +118,7 @@ export function getAggregatedData(gives: Give[] | undefined) {
     }
   });
   return {
-    yearlyGivesSummary,
     recipientGivesSummary,
-    typesOfGivingData,
     topPlatforms,
   };
 }
